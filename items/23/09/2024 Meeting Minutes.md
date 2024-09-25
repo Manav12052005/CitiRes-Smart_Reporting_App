@@ -14,11 +14,11 @@ Stand up Procedure:
 ## Agenda Items
 | Number   |        Item |
 |:---------|------------:|
-| [1] | [Project Overview] |
-| [2] | [App Concept Finalization] |
-| [3] | [Technical Framework Discussion] |
-| [4] | [Design and Task Allocation] |
-| [5] | [Next Steps] |
+| 1 | Project Overview |
+| 2 | App Concept Finalization |
+| 3 | Technical Framework Discussion |
+| 4 | Design and Task Allocation |
+| 5 | Next Steps |
 
 
 ## Meeting Minutes
@@ -61,7 +61,7 @@ Stand up Procedure:
 The following dictates who will scribe in this and the next meeting.
 | Name |
 | :---: |
-| [Yuvraj Singh] |
-| [Amogh Aggarwal] |
-| [Harry Xia] |
-| [Yuan Shi] |
+| Yuvraj Singh |
+| Amogh Aggarwal |
+| Harry Xia |
+| Yuan Shi |
