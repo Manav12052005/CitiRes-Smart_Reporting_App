@@ -50,11 +50,11 @@ Stand up Procedure:
 ## Action Items
 | Task                                   | Assigned To |  Due Date  |
 |:---------------------------------------|:-----------:|:----------:|
-| [Research and recommend XML vs. JSON suitability]                               |  [HX Harry Xia]   | [September 27, 2024] |
-| [Refine the UML diagram with team feedback]                               |  [AA Amogh Agarwal]   | [September 28, 2024] |
-| [Oversee task implementation and add reporting features]                               |  [MS Manav Singh]   | [September 29, 2024] |
-| [Develop a prototype of the login page]                               |  [SS Saheb Yuvraj Singh]   | [September 26, 2024] |
-| [Finalize the report data structure documentation]                               |  [YS Yuan Shi]   | [September 30, 2024] |
+| Research and recommend XML vs. JSON suitability                               |  HX Harry Xia   | September 27, 2024 |
+| Refine the UML diagram with team feedback                               |  AA Amogh Agarwal   | September 28, 2024 |
+| Oversee task implementation and add reporting features                               |  MS Manav Singh  | [September 29, 2024 |
+| Develop a prototype of the login page                               |  SS Saheb Yuvraj Singh   | September 26, 2024 |
+| Finalize the report data structure documentation                              |  YS Yuan Shi   | September 30, 2024 |
 
 
 ## Scribe Rotation
