@@ -11,6 +11,6 @@
 | **Week 3**   | Sep 21 - Sept 28, 2024    | - Develop search functionality for reports<br>- Develop login page prototype                              | MS,HX, SS                            |
 | **Week 4**   | Sept 28 - Oct 4, 2024   | - Backend integration<br>- Implement report data structure                                               | AA, YS                            |
 | **Week 5**   | Oct 4 - Oct 11, 2024   | - UI/UX enhancements<br>- Conduct initial testing and debugging                                          | SS, YS                            |
-| **Week 6**   | Oct 11 - Oct 18, 2024    | - Finalize features<br>-                                                         | All Members                       |
+| **Week 6**   | Oct 11 - Oct 16, 2024    | - Finalize features<br>- Submit Code                                                         | All Members                       |
 
 ---
