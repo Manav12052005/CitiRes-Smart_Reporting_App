@@ -26,7 +26,11 @@
         <!-- MainActivity is accessible after login -->
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"></activity>
+
+        <activity
+            android:name=".ReportActivity"
+            android:exported="false">
         </activity>
     </application>
 </manifest>

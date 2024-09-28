@@ -5,6 +5,8 @@ public class Report {
     private String title;
     private String description;
     private String location;
+    private Priority priority;
+    private User user;
 
 
     public Report(String title, String description, String location) {

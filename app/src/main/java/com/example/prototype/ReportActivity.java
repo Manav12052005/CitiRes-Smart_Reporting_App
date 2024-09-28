@@ -1,5 +1,8 @@
+package com.example.prototype;
+
 import android.app.Activity;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -25,5 +28,13 @@ public class ReportActivity extends Activity {
         buttonSubmit = findViewById(R.id.button_submit);
 
         // TODO: Set up Spinners with adapters and button actions
+        setupSpinner(spinnerCategory, Category.values());
+        setupSpinner(spinnerPriority, Priority.values());
+    }
+
+    private <T extends Enum<T>> void setupSpinner(Spinner spinner, T[] values) {
+        ArrayAdapter<T> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, values);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
     }
 }
