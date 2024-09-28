@@ -10,14 +10,7 @@ public class Report {
     private User user;
     private Category category;
     private LocalDateTime localDateTime;
-
-    public Report(String description, String location, Priority priority, User user, Category category) {
-        this.description = description;
-        this.location = location;
-        this.priority = priority;
-        this.user = user;
-        this.category = category;
-    }
+    private int likes;
 
     public Report(String description, String location, Priority priority, User user, Category category, LocalDateTime localDateTime) {
         this.description = description;
@@ -74,5 +67,13 @@ public class Report {
 
     public void setLocalDateTime(LocalDateTime localDateTime) {
         this.localDateTime = localDateTime;
+    }
+
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
     }
 }
