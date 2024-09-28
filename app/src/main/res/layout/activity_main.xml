@@ -1,98 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:id="@+id/main"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context=".MainActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
 
-<!-- Main Content -->
-<LinearLayout
-    android:id="@+id/content_layout"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    android:orientation="vertical"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintBottom_toTopOf="@+id/bottom_nav"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent">
-
-    <TextView
-        android:id="@+id/dashboard_title"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:textSize="20sp"
-        android:text="@string/dashboard"
-        android:layout_gravity="center"/>
-
-    <SearchView
-        android:id="@+id/search_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:queryHint="Search reports" />
-
-    <Button
-        android:id="@+id/add_report_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/issue_report" />
-
-    <ListView
-        android:id="@+id/reports_list"
-        android:layout_width="match_parent"
+    <!-- Main Content -->
+    <LinearLayout
+        android:id="@+id/content_layout"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
-</LinearLayout>
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/bottom_nav"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-<!-- Bottom Navigation Menu -->
-<LinearLayout
-    android:id="@+id/bottom_nav"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:background="#FFFFFF"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent">
+        <TextView
+            android:id="@+id/dashboard_title"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:text="@string/dashboard"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:shadowColor="#80000000"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="4"
+            android:gravity="center"
+            android:background="@color/lavender"
+            />
 
-    <!-- Dashboard Button -->
-    <ImageView
-        android:id="@+id/menu_dashboard"
+
+        <SearchView
+            android:id="@+id/search_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:queryHint="Search reports" />
+
+        <ListView
+            android:id="@+id/reports_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/add_report_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/lavender"
+            android:padding="16dp"
+            android:text="@string/issue_report"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
+
+    <!-- Bottom Navigation Menu -->
+    <LinearLayout
+        android:id="@+id/bottom_nav"
         android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_weight="1"
-        android:contentDescription="@string/dashboard"
-        android:src="@drawable/home" />
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:orientation="horizontal"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
 
-    <!-- Search Button -->
-    <ImageView
-        android:id="@+id/menu_search"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_weight="1"
-        android:contentDescription="@string/issue_report"
-        android:src="@drawable/search" />
+        <!-- Dashboard Button -->
+        <ImageButton
+            android:id="@+id/menu_dashboard"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:contentDescription="@string/dashboard"
+            android:scaleType="fitCenter"
+            android:src="@drawable/home" />
 
-    <ImageView
-        android:id="@+id/menu_notifications"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_weight="1"
-        android:contentDescription="@string/notification_box"
-        android:src="@drawable/notification" />
+        <!-- Search Button -->
+        <ImageButton
+            android:id="@+id/menu_search"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:contentDescription="@string/issue_report"
+            android:scaleType="fitCenter"
+            android:src="@drawable/search" />
 
-    <ImageView
-        android:id="@+id/menu_accounts"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_weight="1"
-        android:contentDescription="@string/user_center"
-        android:src="@drawable/user" />
+        <!-- Notifications Button -->
+        <ImageButton
+            android:id="@+id/menu_notifications"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:contentDescription="@string/notification_box"
+            android:scaleType="fitCenter"
+            android:src="@drawable/notification" />
 
-    <!-- Notifications Button -->
-
-</LinearLayout>
+        <!-- User Account Button -->
+        <ImageButton
+            android:id="@+id/menu_accounts"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:contentDescription="@string/user_center"
+            android:scaleType="fitCenter"
+            android:src="@drawable/user" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

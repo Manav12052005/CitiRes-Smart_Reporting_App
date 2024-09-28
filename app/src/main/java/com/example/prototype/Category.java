@@ -7,5 +7,6 @@ public enum Category {
     TRANSPORT,
     ENVIRONMENT,
     CRIME,
-    GOVERNANCE
+    GOVERNANCE,
+    WELLBEING
 }

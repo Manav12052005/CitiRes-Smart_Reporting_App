@@ -1,33 +1,31 @@
 package com.example.prototype;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class Report {
-    private String title;
     private String description;
     private String location;
     private Priority priority;
     private User user;
+    private Category category;
+    private LocalDateTime localDateTime;
 
-
-    public Report(String title, String description, String location) {
-        this.title = title;
+    public Report(String description, String location, Priority priority, User user, Category category) {
         this.description = description;
         this.location = location;
+        this.priority = priority;
+        this.user = user;
+        this.category = category;
     }
 
-    @Override
-    public String toString() {
-        StringBuffer sb = new StringBuffer();
-        sb.append(title.toUpperCase()).append("\n").append(description).append("\n").append(location);
-        return sb.toString();
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+    public Report(String description, String location, Priority priority, User user, Category category, LocalDateTime localDateTime) {
+        this.description = description;
+        this.location = location;
+        this.priority = priority;
+        this.user = user;
+        this.category = category;
+        this.localDateTime = localDateTime;
     }
 
     public String getDescription() {
@@ -44,5 +42,37 @@ public class Report {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public Priority getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Priority priority) {
+        this.priority = priority;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public LocalDateTime getLocalDateTime() {
+        return localDateTime;
+    }
+
+    public void setLocalDateTime(LocalDateTime localDateTime) {
+        this.localDateTime = localDateTime;
     }
 }

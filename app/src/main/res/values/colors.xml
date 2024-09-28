@@ -2,5 +2,10 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="grey">#808080</color>
     <color name="lavender">#8692f7</color>
+
+    <color name="priority_low">#4CAF50</color>     <!-- Green -->
+    <color name="priority_middle">#FF5722</color>    <!-- Deep Orange -->
+    <color name="priority_high">#F44336</color><!-- Red -->
 </resources>
