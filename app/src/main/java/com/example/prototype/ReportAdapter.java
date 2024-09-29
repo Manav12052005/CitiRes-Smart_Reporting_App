@@ -17,6 +17,12 @@ import java.util.List;
 public class ReportAdapter extends ArrayAdapter<Report> {
     private Context context;
     private List<Report> reports;
+    TextView description;
+    TextView location;
+    TextView priority;
+    TextView category;
+    TextView user;
+
 
     public ReportAdapter(Context context, List<Report> reports) {
         super(context, 0, reports);
@@ -34,19 +40,19 @@ public class ReportAdapter extends ArrayAdapter<Report> {
 
         Report currentReport = reports.get(position);
 
-        TextView description = listItem.findViewById(R.id.description);
+        description = (TextView) listItem.findViewById(R.id.description);
         description.setText(currentReport.getDescription());
 
-        TextView location = listItem.findViewById(R.id.location);
+        location = (TextView) listItem.findViewById(R.id.location);
         location.setText(currentReport.getLocation());
 
-        TextView priority = listItem.findViewById(R.id.priority);
+        priority = (TextView) listItem.findViewById(R.id.priority);
         setPriorityBackground(priority, currentReport.getPriority());
 
-        TextView category = listItem.findViewById(R.id.category);
+        category = (TextView) listItem.findViewById(R.id.category);
         category.setText(currentReport.getCategory().toString());
 
-        TextView user = listItem.findViewById(R.id.user);
+        user = (TextView) listItem.findViewById(R.id.user);
         user.setText("Reported by: " + currentReport.getUser().getName() + " at " + currentReport.getLocalDateTime());
 
         return listItem;
