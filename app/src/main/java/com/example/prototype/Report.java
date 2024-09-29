@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class Report {
+    private int reportId;//set to be primary key, auto increment.
     private String description;
     private String location;
     private Priority priority;
