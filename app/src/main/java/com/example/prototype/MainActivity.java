@@ -7,6 +7,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,12 +17,15 @@ import androidx.core.view.WindowInsetsCompat;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     ArrayList<Report> arrayList;
+    ArrayList<Report> originalList;
     ReportAdapter adapter;
     ImageButton menuDashboard;
     ImageButton menuSearch;
+    SearchView searchView;
 
 
     @Override
@@ -29,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         arrayList = new ArrayList<>();
+        originalList = new ArrayList<>();
 
         ListView listView = findViewById(R.id.reports_list);
         adapter = new ReportAdapter(this, arrayList);
@@ -40,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
         arrayList.add(new Report("The rent fee is too high", "My home", Priority.MIDDLE, new User("nancy"), Category.GOVERNANCE, LocalDateTime.now()));
         //
 
+        // Copy all original reports to originalList (so the list is populated when the activity is created)
+        originalList.addAll(arrayList);
+
         Button addReportButton = findViewById(R.id.add_report_button);
         addReportButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
 
         menuDashboard = (ImageButton) findViewById(R.id.menu_dashboard);
         menuDashboard.setOnClickListener(new View.OnClickListener() {
@@ -59,5 +68,38 @@ public class MainActivity extends AppCompatActivity {
         });
 
         menuSearch = (ImageButton) findViewById(R.id.menu_search);
+
+        // Handle SearchView functionality
+        searchView = findViewById(R.id.search_view);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchReports(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                searchReports(newText);
+                return true;
+            }
+        });
+    }
+
+    // search reports using Tokenizer and Parser
+    private void searchReports(String query) {
+        if (query.isEmpty()) {
+            arrayList.clear();
+            arrayList.addAll(originalList);
+        } else {
+
+            List<String> tokens = Tokenizer.tokenize(query);
+            List<Report> filteredReports = Parser.parse(tokens, originalList);
+
+            arrayList.clear();
+            arrayList.addAll(filteredReports);
+        }
+
+        adapter.notifyDataSetChanged();
     }
 }
