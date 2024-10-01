@@ -38,22 +38,22 @@ public class ReportAdapter extends ArrayAdapter<Report> {
             listItem = LayoutInflater.from(context).inflate(R.layout.report, parent, false);
         }
 
-        Report currentReport = reports.get(position);
+        Report report = reports.get(position);
 
         description = (TextView) listItem.findViewById(R.id.description);
-        description.setText(currentReport.getDescription());
+        description.setText(report.getDescription());
 
         location = (TextView) listItem.findViewById(R.id.location);
-        location.setText(currentReport.getLocation());
+        location.setText(report.getLocation());
 
         priority = (TextView) listItem.findViewById(R.id.priority);
-        setPriorityBackground(priority, currentReport.getPriority());
+        setPriorityBackground(priority, report.getPriority());
 
         category = (TextView) listItem.findViewById(R.id.category);
-        category.setText(currentReport.getCategory().toString());
+        category.setText(report.getCategory());
 
         user = (TextView) listItem.findViewById(R.id.user);
-        user.setText("Reported by: " + currentReport.getUser().getName() + " at " + currentReport.getLocalDateTime());
+        user.setText("Reported by: " + report.getUser() + " at " + report.getLocalDateTime());
 
         return listItem;
     }

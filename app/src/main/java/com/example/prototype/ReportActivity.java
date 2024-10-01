@@ -28,14 +28,6 @@ public class ReportActivity extends Activity {
         buttonSubmit = findViewById(R.id.button_submit);
 
         // TODO: Set up Spinners with adapters and button actions
-        setupSpinner(spinnerCategory, Category.values());
-        setupSpinner(spinnerPriority, Priority.values());
-    }
 
-
-    private <T extends Enum<T>> void setupSpinner(Spinner spinner, T[] values) {
-        ArrayAdapter<T> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, values);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
     }
 }
