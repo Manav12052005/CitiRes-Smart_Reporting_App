@@ -31,8 +31,8 @@ public class LoginActivity extends AppCompatActivity {
                 String username = usernameEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
 
-                // Dummy credentials check (you would replace this with real authentication)
-                if (username.equals("admin") && password.equals("password123")) {
+                // Use the Singleton AuthenticationManager for login
+                if (Authenticator.getInstance(LoginActivity.this).login(username, password)) {
                     // Login successful, navigate to the MainActivity (dashboard)
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
