@@ -23,7 +23,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     AVLTree<Report> avlTree = new AVLTree<>();
-    ReportAdapter adapter;
+    Listitemadapter adapter;
     ImageButton menuDashboard;
     ImageButton menuSearch;
 
@@ -38,9 +38,9 @@ public class MainActivity extends AppCompatActivity {
         for (Report report : reports) {
             avlTree.put(report.getReportId(), report);
         }
-        //
+
         List<Report> reportList = new ArrayList<>(avlTree.fromLargeToSmall());
-        adapter = new ReportAdapter(this, reportList);
+        adapter = new Listitemadapter(this, reportList);
         listView.setAdapter(adapter);
 
         Button addReportButton = findViewById(R.id.add_report_button);
@@ -60,17 +60,16 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         menuSearch = (ImageButton) findViewById(R.id.menu_search);
     }
 
     public List<Report> loadData(String fileName) {
-
         GsonBuilder gsonBuilder = new GsonBuilder().registerTypeAdapter(Report.class, new ReportAdapterJson());
         Gson gson = gsonBuilder.create();
 
         List<Report> reportList = new ArrayList<>();
-        final Type CUS_LIST_TYPE = new TypeToken<List<Report>>() {
-        }.getType();
+        final Type CUS_LIST_TYPE = new TypeToken<List<Report>>() {}.getType();
 
         try (InputStream inputStream = this.getAssets().open(fileName);
              InputStreamReader reader = new InputStreamReader(inputStream);
