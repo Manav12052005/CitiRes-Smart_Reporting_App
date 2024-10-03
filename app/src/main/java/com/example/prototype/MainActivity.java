@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
     ImageButton menuDashboard;
     ImageButton menuSearch;
     SearchView searchView;
-
     List<Report> reportList = new ArrayList<>();
     List<Report> originalList = new ArrayList<>();  // To store original reports
     Button addReportButton;
@@ -48,12 +47,11 @@ public class MainActivity extends AppCompatActivity {
         listView = findViewById(R.id.reports_list);
         searchView = findViewById(R.id.search_view);
 
-        loadedReports = loadData("reports.json");
+        loadedReports = loadData("reports_dataset.json");
 
         for (Report report : loadedReports) {
             avlTree.put(report.getReportId(), report);
         }
-
         adapter = new ReportAdapter(this, avlTree);
         listView.setAdapter(adapter);
 
@@ -71,6 +69,21 @@ public class MainActivity extends AppCompatActivity {
         menuSearch = (ImageButton) findViewById(R.id.menu_search);
 
         title = findViewById(R.id.dashboard_title);
+
+        // Handle SearchView functionality
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchReports(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                searchReports(newText);
+                return true;
+            }
+        });
     }
 
     Thread streamThread;
@@ -103,24 +116,11 @@ public class MainActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
 
                 }
-
-        menuSearch = findViewById(R.id.menu_search);
-
-        // Handle SearchView functionality
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                searchReports(query);
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                searchReports(newText);
-                return true;
             }
         });
+        streamThread.start();
     }
+
 
     // Function to filter the reports based on the search query
     private void searchReports(String query) {
