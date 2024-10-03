@@ -98,7 +98,6 @@ public class AVLTree<R> {
 
     AVLNode root;
 
-
     public void put(int key, Report value) {
         root = doPut(root, key, value);
     }
@@ -134,5 +133,45 @@ public class AVLTree<R> {
         List<Report> result = new ArrayList<>();
         reverseInOrder(root, result);
         return result;
+    }
+
+    public void empty(){
+        root = null;
+    }
+
+    public void remove(int key) {
+        root = doRemove(root, key);
+    }
+
+    private AVLNode doRemove(AVLNode node, int key) {
+        //1.
+        if (node == null) {
+            return null;
+        }
+        //2.
+        if (key < node.key) {
+            node.left = doRemove(node.left, key);
+        } else if (key > node.key) {
+            node.right = doRemove(node.right, key);
+        } else {
+            //3.
+            if (node.left == null && node.right == null) {
+                return null;
+            } else if (node.left == null) {
+                node = node.right;
+            } else if (node.right == null) {
+                node = node.left;
+            } else {
+                AVLNode s = node.right;
+                while (s.left != null) {
+                    s = s.left;
+                }
+                s.right = doRemove(node.right, s.key);
+                s.left = node.left;
+                node = s;
+            }
+        }
+        updateHeight(node);
+        return balance(node);
     }
 }
