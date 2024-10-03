@@ -4,5 +4,17 @@
     <string name="issue_report">Report New Issue</string>
     <string name="notification_box">Notification Box</string>
     <string name="user_center">User center</string>
+    <string name="retrieving_gps_location">Retrieving GPS Location...</string>
+    <string name="location">Location</string>
+    <string name="category">Category</string>
+    <string name="priority">Priority</string>
+    <string name="description">Description</string>
+    <string name="enter_task_description">Enter task description</string>
+    <string name="user_id">User ID</string>
+    <string name="enter_user_id">Enter User ID</string>
+    <string name="add_picture">Add Picture</string>
+    <string name="submit_report">Submit Report</string>
+    <string name="enter_picture_url">Enter picture URL</string>
+    <string name="picture_link">Picture Link</string>
     <string name="like">Like</string>
 </resources>
