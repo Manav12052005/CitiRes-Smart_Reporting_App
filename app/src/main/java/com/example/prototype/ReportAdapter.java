@@ -6,26 +6,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ReportAdapter extends ArrayAdapter<Report> {
     private Context context;
-    private List<Report> reports;
+    private AVLTree<Report> reports;
     TextView description;
     TextView location;
     TextView priority;
     TextView category;
     TextView user;
+    ImageView locationIcon;
 
-
-    public ReportAdapter(Context context, List<Report> reports) {
-        super(context, 0, reports);
+    public ReportAdapter(Context context, AVLTree<Report> reports) {
+        super(context, 0, new ArrayList<>(reports.fromLargeToSmall()));
         this.context = context;
         this.reports = reports;
     }
@@ -38,13 +41,26 @@ public class ReportAdapter extends ArrayAdapter<Report> {
             listItem = LayoutInflater.from(context).inflate(R.layout.report, parent, false);
         }
 
-        Report report = reports.get(position);
+        Report report = new ArrayList<>(reports.fromLargeToSmall()).get(position);
 
         description = (TextView) listItem.findViewById(R.id.description);
         description.setText(report.getDescription());
 
         location = (TextView) listItem.findViewById(R.id.location);
         location.setText(report.getLocation());
+
+        locationIcon = listItem.findViewById(R.id.location_icon);
+
+        Button deleteButton = listItem.findViewById(R.id.delete);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reports.remove(report.getReportId());
+                clear();
+                addAll(new ArrayList<>(reports.fromLargeToSmall()));
+                notifyDataSetChanged();
+            }
+        });
 
         priority = (TextView) listItem.findViewById(R.id.priority);
         setPriorityBackground(priority, report.getPriority());
