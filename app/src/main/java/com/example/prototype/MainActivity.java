@@ -3,50 +3,53 @@ package com.example.prototype;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SearchView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-import java.time.LocalDateTime;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    ArrayList<Report> arrayList;
-    ArrayList<Report> originalList;
+    AVLTree<Report> avlTree = new AVLTree<>();
     ReportAdapter adapter;
     ImageButton menuDashboard;
     ImageButton menuSearch;
     SearchView searchView;
 
+    List<Report> reportList = new ArrayList<>();
+    List<Report> originalList = new ArrayList<>();  // To store original reports
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        arrayList = new ArrayList<>();
-        originalList = new ArrayList<>();
 
         ListView listView = findViewById(R.id.reports_list);
-        adapter = new ReportAdapter(this, arrayList);
+        searchView = findViewById(R.id.search_view);
+
+        List<Report> reports = loadData("reports_dataset.json");
+        for (Report report : reports) {
+            avlTree.put(report.getReportId(), report);
+        }
+
+        originalList.addAll(avlTree.fromLargeToSmall());
+        reportList.addAll(originalList);
+
+        adapter = new ReportAdapter(this, reportList);
         listView.setAdapter(adapter);
-
-        //TODO load data from data set
-        arrayList.add(new Report("The school needs to be improved", "XX Middle School", Priority.LOW, new User("james"), Category.EDUCATION, LocalDateTime.now()));
-        arrayList.add(new Report("The water outage currently", "My home", Priority.HIGH, new User("john"), Category.WELLBEING, LocalDateTime.now()));
-        arrayList.add(new Report("The rent fee is too high", "My home", Priority.MIDDLE, new User("nancy"), Category.GOVERNANCE, LocalDateTime.now()));
-        //
-
-        // Copy all original reports to originalList (so the list is populated when the activity is created)
-        originalList.addAll(arrayList);
 
         Button addReportButton = findViewById(R.id.add_report_button);
         addReportButton.setOnClickListener(new View.OnClickListener() {
@@ -57,8 +60,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        menuDashboard = (ImageButton) findViewById(R.id.menu_dashboard);
+        menuDashboard = findViewById(R.id.menu_dashboard);
         menuDashboard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,10 +69,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        menuSearch = (ImageButton) findViewById(R.id.menu_search);
+        menuSearch = findViewById(R.id.menu_search);
 
         // Handle SearchView functionality
-        searchView = findViewById(R.id.search_view);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -86,20 +87,36 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    // search reports using Tokenizer and Parser
+    // Function to filter the reports based on the search query
     private void searchReports(String query) {
         if (query.isEmpty()) {
-            arrayList.clear();
-            arrayList.addAll(originalList);
+            reportList.clear();
+            reportList.addAll(originalList);  // Reset to original list if query is empty
         } else {
+            List<String> tokens = Tokenizer.tokenize(query);  // Tokenize the query
+            List<Report> filteredReports = Parser.parse(tokens, originalList);  // Filter reports using Parser
 
-            List<String> tokens = Tokenizer.tokenize(query);
-            List<Report> filteredReports = Parser.parse(tokens, originalList);
-
-            arrayList.clear();
-            arrayList.addAll(filteredReports);
+            reportList.clear();
+            reportList.addAll(filteredReports);  // Update the filtered list
         }
 
-        adapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();  // Notify the adapter about data changes
+    }
+
+    public List<Report> loadData(String fileName) {
+        GsonBuilder gsonBuilder = new GsonBuilder().registerTypeAdapter(Report.class, new ReportAdapterJson());
+        Gson gson = gsonBuilder.create();
+
+        List<Report> reportList = new ArrayList<>();
+        final Type CUS_LIST_TYPE = new TypeToken<List<Report>>() {}.getType();
+
+        try (InputStream inputStream = this.getAssets().open(fileName);
+             InputStreamReader reader = new InputStreamReader(inputStream);
+             JsonReader jsonReader = new JsonReader(reader)) {
+            reportList = gson.fromJson(jsonReader, CUS_LIST_TYPE);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return reportList;
     }
 }

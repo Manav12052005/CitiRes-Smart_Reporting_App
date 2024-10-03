@@ -1,7 +1,6 @@
 package com.example.prototype;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 public class Report {
     private int reportId;//set to be primary key, auto increment.
@@ -9,17 +8,19 @@ public class Report {
     private String location;
     private Priority priority;
     private User user;
-    private Category category;
+    private String category;
     private LocalDateTime localDateTime;
     private int likes;
 
-    public Report(String description, String location, Priority priority, User user, Category category, LocalDateTime localDateTime) {
-        this.description = description;
-        this.location = location;
-        this.priority = priority;
-        this.user = user;
-        this.category = category;
-        this.localDateTime = localDateTime;
+    public Report() {
+    }
+
+    public int getReportId() {
+        return reportId;
+    }
+
+    public void setReportId(int reportId) {
+        this.reportId = reportId;
     }
 
     public String getDescription() {
@@ -54,11 +55,11 @@ public class Report {
         this.user = user;
     }
 
-    public Category getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 

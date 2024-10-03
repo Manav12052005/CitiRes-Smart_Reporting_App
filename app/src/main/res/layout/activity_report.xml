@@ -9,24 +9,25 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Location Dropdown -->
+        <!-- Display GPS Location -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Location"
+            android:text="@string/location"
             android:textStyle="bold" />
 
-        <Spinner
-            android:id="@+id/spinner_location"
+        <TextView
+            android:id="@+id/textview_location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/retrieving_gps_location"
             android:layout_marginBottom="16dp"/>
 
         <!-- Category Dropdown -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Category"
+            android:text="@string/category"
             android:textStyle="bold" />
 
         <Spinner
@@ -39,7 +40,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Priority"
+            android:text="@string/priority"
             android:textStyle="bold" />
 
         <Spinner
@@ -52,46 +53,51 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Description"
+            android:text="@string/description"
             android:textStyle="bold" />
 
         <EditText
             android:id="@+id/edittext_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter task description"
+            android:hint="@string/enter_task_description"
             android:layout_marginBottom="16dp"/>
 
         <!-- Task ID -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="User ID"
+            android:text="@string/user_id"
             android:textStyle="bold" />
 
         <EditText
             android:id="@+id/edittext_task_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter User ID"
+            android:hint="@string/enter_user_id"
             android:inputType="number"
             android:layout_marginBottom="16dp"/>
 
-        <!-- Add Picture Section -->
-        <Button
-            android:id="@+id/button_add_picture"
+        <!-- Add Picture Section as a clickable link -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/picture_link"
+            android:textStyle="bold" />
+        <EditText
+            android:id="@+id/edittext_picture_link"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add Picture"
-            android:layout_marginBottom="16dp"/>
+            android:hint="@string/enter_picture_url"
+            android:layout_marginBottom="16dp" />
 
         <!-- Submit Button -->
         <Button
             android:id="@+id/button_submit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Submit Report" />
+            android:text="@string/submit_report" />
 
     </LinearLayout>
 </ScrollView>
-
