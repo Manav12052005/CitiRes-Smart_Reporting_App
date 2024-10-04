@@ -13,6 +13,7 @@ public class Report {
     private int likes;
 
     public Report() {
+        this.likes = 0;
     }
 
     public int getReportId() {
@@ -78,4 +79,15 @@ public class Report {
     public void setLikes(int likes) {
         this.likes = likes;
     }
+    public void like() {
+        this.likes++;
+    }
+
+    // Method to unlike the report
+    public void unlike() {
+        if (this.likes > 0) {
+            this.likes--;
+        }
+    }
+
 }
