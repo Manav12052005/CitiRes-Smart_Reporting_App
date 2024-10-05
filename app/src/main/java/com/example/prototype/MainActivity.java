@@ -7,8 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 
@@ -18,8 +18,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment; // Import Fragment class
-import androidx.fragment.app.FragmentTransaction; // Import FragmentTransaction class
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -41,10 +40,8 @@ public class MainActivity extends AppCompatActivity {
     AVLTree<Report> avlTree = new AVLTree<>();
     ReportAdapter adapter;
     ListView listView;
-
     ImageButton menuDashboard;
     ImageButton menuSearch;
-    ImageButton menuNotifications; // Declare menuNotifications as ImageButton
     SearchView searchView;
     List<Report> reportList = new ArrayList<>();
     List<Report> originalList = new ArrayList<>();  // To store original reports
@@ -64,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        applyTheme();
         setContentView(R.layout.activity_main);
 
         listView = findViewById(R.id.reports_list);
@@ -101,17 +97,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        menuDashboard = findViewById(R.id.menu_dashboard);
-        menuSearch = findViewById(R.id.menu_search);
-        menuNotifications = findViewById(R.id.menu_notifications); // Find the ImageButton for notifications
+        menuDashboard = (ImageButton) findViewById(R.id.menu_dashboard);
 
-        menuNotifications.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Open the HomeFragment
-                openHomeFragment();
-            }
-        });
+        menuSearch = (ImageButton) findViewById(R.id.menu_search);
 
         title = findViewById(R.id.dashboard_title);
 
@@ -131,21 +119,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void openHomeFragment() {
-        // Create a new instance of HomeFragment
-        Fragment homeFragment = new HomeFragment();
-
-        // Replace the current view with the HomeFragment
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.main, homeFragment); // Make sure R.id.main is the container for your fragments
-        transaction.addToBackStack(null); // Allows users to navigate back
-        transaction.commit();
-    }
-
-    Thread streamThread;
-    private static final LocalTime DAY_START = LocalTime.of(6, 0);
-    private static final LocalTime NIGHT_START = LocalTime.of(18, 0);
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -155,14 +128,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        stopStreamThread();
-    }
-
-    private void stopStreamThread() {
-        super.onStop();
-        if (streamThread != null) {
-            streamThread.interrupt();
-        }
     }
 
 
@@ -223,23 +188,14 @@ public class MainActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();  // Notify the adapter about data changes
     }
 
-    private void applyTheme() {
-        LocalTime currentTime = LocalDateTime.now().toLocalTime();
-
-        if (currentTime.isAfter(DAY_START) && currentTime.isBefore(NIGHT_START)) {
-            runOnUiThread(() -> setTheme(R.style.AppTheme_Day));
-        } else {
-            runOnUiThread(() -> setTheme(R.style.AppTheme_Night));
-        }
-    }
-
     public List<Report> loadData(String fileName) {
 
         GsonBuilder gsonBuilder = new GsonBuilder().registerTypeAdapter(Report.class, new ReportAdapterJson());
         Gson gson = gsonBuilder.create();
 
         List<Report> reportList = new ArrayList<>();
-        final Type CUS_LIST_TYPE = new TypeToken<List<Report>>() {}.getType();
+        final Type CUS_LIST_TYPE = new TypeToken<List<Report>>() {
+        }.getType();
 
         try (InputStream inputStream = this.getAssets().open(fileName);
              InputStreamReader reader = new InputStreamReader(inputStream);
