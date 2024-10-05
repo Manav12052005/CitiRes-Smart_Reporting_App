@@ -17,42 +17,36 @@ import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
 
-
-    String API_KEY ="implementation 'com.github.bumptech.glide:glide:4.16.0" ;
+    String API_KEY = "714b937779fa41a89a608aeb00190fa6";
     RecyclerView recyclerView;
     Adapter adapter;
     ArrayList<Model> modelArrayList;
 
-
-
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-
-        View v = inflater.inflate(R.layout.fragment_home,null);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_home, null);
         recyclerView = v.findViewById(R.id.home_recylerview);
         modelArrayList = new ArrayList<>();
-        adapter = new Adapter(getContext(),modelArrayList);
+        adapter = new Adapter(getContext(), modelArrayList);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         getNews();
         return v;
     }
 
-
-    void getNews(){
-        ApiUtilities.getApiInterface().getNews("us",100,API_KEY).enqueue(new Callback<MainNews>() {
+    void getNews() {
+        ApiUtilities.getApiInterface().getNews("us", 100, API_KEY).enqueue(new Callback<MainNews>() {
             @Override
             public void onResponse(Call<MainNews> call, Response<MainNews> response) {
-                    if(response.isSuccessful()){
-                        modelArrayList.addAll(response.body().getArticles());
-                        adapter.notifyDataSetChanged();
-                    }
+                if (response.isSuccessful()) {
+                    modelArrayList.addAll(response.body().getArticles());
+                    adapter.notifyDataSetChanged();
+                }
             }
 
             @Override
             public void onFailure(Call<MainNews> call, Throwable t) {
-
+                // Handle the failure here
             }
         });
     }
