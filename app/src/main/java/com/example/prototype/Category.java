@@ -1,6 +1,6 @@
 package com.example.prototype;
 
-public enum Categorys {
-    Maintenance, Safety, Public_Work, Utilities,
+public enum Category {
+    Maintenance, Safety, Public, Utilities,
     Environmental, Community, Infrastructure
 }

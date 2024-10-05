@@ -19,4 +19,10 @@
     <string name="like_button">Like</string>
     <string name="search">Search</string>
 
+    <string name="morning">Good morning! Wishing you a vibrant and joyful start to your day!</string>
+    <string name="noon">Good noon! Hope you enjoy a delicious lunch!</string>
+    <string name="afternoon">Happy afternoon! May you stay productive and focused!</string>
+    <string name="evening">Good evening! Hope you have a relaxing night ahead!</string>
+    <string name="night">Good night! Wishing you a peaceful and restful night, sweet dreams!</string>
+
 </resources>
