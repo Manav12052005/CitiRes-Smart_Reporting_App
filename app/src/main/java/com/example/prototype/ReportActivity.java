@@ -27,6 +27,8 @@ public class ReportActivity extends Activity {
     private FusedLocationProviderClient fusedLocationClient;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
+    AVLTree<Report> avlTree;
+    int reportIDCounter = 2501;
 
     double latitude;
     double longitude;
@@ -133,10 +135,25 @@ public class ReportActivity extends Activity {
         String description = editTextDescription.getText().toString();
         String userID = editTextTaskId.getText().toString();
         String pictureLink = editTextPicture.getText().toString();
+        Category selectedCategory = (Category) spinnerCategory.getSelectedItem();
+        Priority selectedPriority = (Priority) spinnerPriority.getSelectedItem();
+        String latitudeStr = String.valueOf(latitude);
+        String longitudeStr = String.valueOf(longitude);
+        String location = latitudeStr+longitudeStr;
+        User user = new User(userID);
         if (description.isEmpty() || userID.isEmpty() || pictureLink.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getApplicationContext(), "Task saved!", Toast.LENGTH_SHORT).show();
+            Report newReport = new Report();
+            newReport.setDescription(description);
+            newReport.setUser(user);
+            newReport.setPictureLink(pictureLink);
+            newReport.setLocation(location);;
+            newReport.setCategory(selectedCategory);
+            newReport.setPriority(selectedPriority);
+            avlTree.put(reportIDCounter,newReport);
+
+            Toast.makeText(getApplicationContext(), "Task saved!", Toast.LENGTH_SHORT).show();
                 }
     }
 }

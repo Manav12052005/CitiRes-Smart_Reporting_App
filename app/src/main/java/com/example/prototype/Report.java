@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 public class Report {
     private int reportId;//set to be primary key, auto increment.
     private String description;
+    private String pictureLink;
     private String location;
     private Priority priority;
     private User user;
@@ -55,7 +56,9 @@ public class Report {
         this.user = user;
     }
 
+    public String getPictureLink(){return pictureLink;}
 
+    public void setPictureLink(String newPictureLink) {this.pictureLink=newPictureLink;}
 
     public LocalDateTime getLocalDateTime() {
         return localDateTime;
