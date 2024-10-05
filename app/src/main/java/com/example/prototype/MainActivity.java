@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
     ImageButton menuDashboard;
     ImageButton menuSearch;
     SearchView searchView;
-    List<Report> reportList = new ArrayList<>();
     List<Report> originalList = new ArrayList<>();  // To store original reports
     Button addReportButton;
     List<Report> loadedReports;
@@ -71,6 +70,10 @@ public class MainActivity extends AppCompatActivity {
         for (Report report : loadedReports) {
             avlTree.put(report.getReportId(), report);
         }
+
+        // Initialize the original list with the loaded data
+        originalList.addAll(loadedReports);
+
         adapter = new ReportAdapter(this, avlTree);
         listView.setAdapter(adapter);
 
@@ -82,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
                     if (intent != null && result.getResultCode() == RESULT_OK) {
                         Report addedReport = (Report) intent.getSerializableExtra("added_report", Report.class);
                         avlTree.put(addedReport.getReportId(), addedReport);
+                        originalList.add(addedReport);
                         adapter.notifyDataSetChanged();
                     }
                 }
@@ -174,19 +178,38 @@ public class MainActivity extends AppCompatActivity {
 
     // Function to filter the reports based on the search query
     private void searchReports(String query) {
-        if (query.isEmpty()) {
-            reportList.clear();
-            reportList.addAll(originalList);  // Reset to original list if query is empty
-        } else {
-            List<String> tokens = Tokenizer.tokenize(query);  // Tokenize the query
-            List<Report> filteredReports = Parser.parse(tokens, originalList);  // Filter reports using Parser
+        Log.d("SearchReports", "Search query: " + query);
 
-            reportList.clear();
-            reportList.addAll(filteredReports);  // Update the filtered list
+        AVLTree<Report> filteredAVLTree = new AVLTree<>();
+
+        if (query.isEmpty()) {
+            // If the query is empty, use the original data
+            Log.d("SearchReports", "Query is empty, using original list.");
+            for (Report report : originalList) {
+                filteredAVLTree.put(report.getReportId(), report);
+            }
+        } else {
+            // Tokenize the query and filter reports using the original list
+            List<String> tokens = Tokenizer.tokenize(query);
+            Log.d("SearchReports", "Tokens: " + tokens);
+
+            List<Report> filteredReports = Parser.parse(tokens, originalList); // Filter reports based on tokens
+            Log.d("SearchReports", "Filtered Reports Count: " + filteredReports.size());
+
+            for (Report report : filteredReports) {
+                Log.d("SearchReports", "Filtered Report: " + report.getDescription());
+                filteredAVLTree.put(report.getReportId(), report);
+            }
         }
 
-        adapter.notifyDataSetChanged();  // Notify the adapter about data changes
+        // Create a new adapter with the filtered AVLTree and set it to the ListView
+        adapter = new ReportAdapter(this, filteredAVLTree);
+        listView.setAdapter(adapter);
+
+        // Notify adapter of the data change
+        adapter.notifyDataSetChanged();
     }
+
 
     public List<Report> loadData(String fileName) {
 
