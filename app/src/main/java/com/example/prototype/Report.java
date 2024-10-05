@@ -8,7 +8,7 @@ public class Report {
     private String location;
     private Priority priority;
     private User user;
-    private String category;
+    private Category category;
     private LocalDateTime localDateTime;
     private int likes;
 
@@ -55,13 +55,7 @@ public class Report {
         this.user = user;
     }
 
-    public String getCategory() {
-        return category;
-    }
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
 
     public LocalDateTime getLocalDateTime() {
         return localDateTime;
@@ -73,6 +67,14 @@ public class Report {
 
     public int getLikes() {
         return likes;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public void setLikes(int likes) {

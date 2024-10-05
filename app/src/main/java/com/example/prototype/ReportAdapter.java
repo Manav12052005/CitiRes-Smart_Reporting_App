@@ -66,7 +66,7 @@ public class ReportAdapter extends ArrayAdapter<Report> {
         setPriorityBackground(priority, report.getPriority());
 
         category = (TextView) listItem.findViewById(R.id.category);
-        category.setText(report.getCategory());
+        category.setText(report.getCategory().toString());
 
         user = (TextView) listItem.findViewById(R.id.user);
         user.setText("Reported by: " + report.getUser() + " at " + report.getLocalDateTime());
