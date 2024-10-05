@@ -148,7 +148,7 @@ public class ReportActivity extends Activity {
             newReport.setDescription(description);
             newReport.setUser(user);
             newReport.setPictureLink(pictureLink);
-            newReport.setLocation(location);;
+            newReport.setLocation(location);
             newReport.setCategory(selectedCategory);
             newReport.setPriority(selectedPriority);
             avlTree.put(reportIDCounter,newReport);
