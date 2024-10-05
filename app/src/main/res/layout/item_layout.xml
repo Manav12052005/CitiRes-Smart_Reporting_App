@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <!-- Main News Headline -->
+    <TextView
+        android:id="@+id/main_news_headline"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Here main news appear and should be"
+        android:textSize="18sp"
+        android:textColor="@android:color/black"
+        android:padding="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Left TextView below headline -->
+
+    <!-- ImageView to the right -->
+
+    <TextView
+        android:id="@+id/text_view_left"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="TextView"
+        android:textColor="@android:color/black"
+        app:layout_constraintBottom_toBottomOf="@id/news_image"
+        app:layout_constraintEnd_toStartOf="@id/news_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_news_headline"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintWidth_percent="0.4" />
+
+    <ImageView
+        android:id="@+id/news_image"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="8dp"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/ic_launcher_background"
+        app:layout_constraintStart_toEndOf="@id/text_view_left"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_news_headline"
+        app:layout_constraintWidth_percent="0.6" />
+
+    <!-- Author TextView -->
+    <TextView
+        android:id="@+id/author_id"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
+        android:padding="8dp"
+        android:text="Author"
+        android:textColor="#E30808"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/news_image" />
+
+    <!-- Published At TextView -->
+    <TextView
+        android:id="@+id/published_id"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Published at"
+        android:fontFamily="@font/roboto_medium"
+        android:textColor="#E30808"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/author_id"
+        android:padding="8dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
