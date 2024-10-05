@@ -30,7 +30,7 @@ locations = [
 priorities = ["LOW", "MIDDLE", "HIGH"]
 
 categories = [
-    "Maintenance", "Safety", "Public Works", "Utilities",
+    "Maintenance", "Safety", "Public_Works", "Utilities",
     "Environmental", "Community", "Infrastructure"
     # Add more categories as needed
 ]
