@@ -1,5 +1,6 @@
 package com.example.prototype;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -135,7 +136,7 @@ public class AVLTree<R> {
         return result;
     }
 
-    public void empty(){
+    public void empty() {
         root = null;
     }
 
@@ -173,5 +174,10 @@ public class AVLTree<R> {
         }
         updateHeight(node);
         return balance(node);
+    }
+
+
+    public int size() {
+        return this.fromLargeToSmall().size();
     }
 }

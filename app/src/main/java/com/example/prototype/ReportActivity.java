@@ -1,6 +1,7 @@
 package com.example.prototype;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,24 +13,24 @@ import android.widget.Toast;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.time.LocalDateTime;
+
 public class ReportActivity extends Activity {
     private Spinner spinnerCategory, spinnerPriority;
-    private EditText editTextDescription, editTextTaskId, editTextPicture;
+    private EditText editTextDescription;
     private Button buttonSubmit;
     private FusedLocationProviderClient fusedLocationClient;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
-
-    AVLTree<Report> avlTree;
-    int reportIDCounter = 2501;
-
     double latitude;
     double longitude;
 
@@ -43,8 +44,8 @@ public class ReportActivity extends Activity {
         spinnerCategory = findViewById(R.id.spinner_category);
         spinnerPriority = findViewById(R.id.spinner_priority);
         editTextDescription = findViewById(R.id.edittext_description);
-        editTextTaskId = findViewById(R.id.edittext_task_id);
-        editTextPicture = findViewById(R.id.edittext_picture_link);
+        //editTextTaskId = findViewById(R.id.edittext_task_id);
+        //editTextPicture = findViewById(R.id.edittext_picture_link);
         buttonSubmit = findViewById(R.id.button_submit);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -97,6 +98,7 @@ public class ReportActivity extends Activity {
             }
         });
     }
+
     private void checkLocationPermissionAndSubmit() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -106,6 +108,7 @@ public class ReportActivity extends Activity {
             getLocationAndSubmitReport();
         }
     }
+
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -115,6 +118,7 @@ public class ReportActivity extends Activity {
             }
         }
     }
+
     private void getLocationAndSubmitReport() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             fusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
@@ -131,29 +135,35 @@ public class ReportActivity extends Activity {
             });
         }
     }
+
     private void submitReport() {
         String description = editTextDescription.getText().toString();
-        String userID = editTextTaskId.getText().toString();
-        String pictureLink = editTextPicture.getText().toString();
         Category selectedCategory = (Category) spinnerCategory.getSelectedItem();
         Priority selectedPriority = (Priority) spinnerPriority.getSelectedItem();
         String latitudeStr = String.valueOf(latitude);
         String longitudeStr = String.valueOf(longitude);
-        String location = latitudeStr+longitudeStr;
-        User user = new User(userID);
-        if (description.isEmpty() || userID.isEmpty() || pictureLink.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
-                } else {
+        String location = latitudeStr + longitudeStr;
+        User user = new User("admin");
+        if (description.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
+        } else {
             Report newReport = new Report();
             newReport.setDescription(description);
             newReport.setUser(user);
-            newReport.setPictureLink(pictureLink);
             newReport.setLocation(location);
             newReport.setCategory(selectedCategory);
             newReport.setPriority(selectedPriority);
-            avlTree.put(reportIDCounter,newReport);
+            newReport.setReportId(ReportCounter.getReportId());
+            newReport.setLocalDateTime(LocalDateTime.now());
+            ReportCounter.inc();
 
+            Intent intent = new Intent();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("added_report", newReport);
+            intent.putExtras(bundle);
+            setResult(Activity.RESULT_OK, intent);
             Toast.makeText(getApplicationContext(), "Task saved!", Toast.LENGTH_SHORT).show();
-                }
+            finish();
+        }
     }
 }

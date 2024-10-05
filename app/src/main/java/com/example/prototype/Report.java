@@ -1,8 +1,9 @@
 package com.example.prototype;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Report {
+public class Report implements Serializable {
     private int reportId;//set to be primary key, auto increment.
     private String description;
     private String pictureLink;
@@ -14,6 +15,17 @@ public class Report {
     private int likes;
 
     public Report() {
+    }
+
+    public Report(int reportId, String description, String location, Priority priority, User user, Category category, LocalDateTime localDateTime, int likes) {
+        this.reportId = reportId;
+        this.description = description;
+        this.location = location;
+        this.priority = priority;
+        this.user = user;
+        this.category = category;
+        this.localDateTime = localDateTime;
+        this.likes = likes;
     }
 
     public int getReportId() {
