@@ -16,6 +16,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 
+import org.w3c.dom.Text;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -37,11 +39,11 @@ public class MainActivity extends AppCompatActivity {
     Button addReportButton;
     List<Report> loadedReports;
     TextView title;
+    TextView streamText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        applyTheme();
         setContentView(R.layout.activity_main);
 
         listView = findViewById(R.id.reports_list);
@@ -87,8 +89,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     Thread streamThread;
-    private static final LocalTime DAY_START = LocalTime.of(6, 0);
-    private static final LocalTime NIGHT_START = LocalTime.of(18, 0);
+    private static final LocalTime MORNING = LocalTime.of(6, 0);
+    private static final LocalTime NOON = LocalTime.of(11, 0);
+    private static final LocalTime AFTERNOON = LocalTime.of(13, 0);
+    private static final LocalTime EVENING = LocalTime.of(18, 0);
+    private static final LocalTime NIGHT = LocalTime.of(22, 0);
 
     @Override
     protected void onStart() {
@@ -114,13 +119,38 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     Thread.sleep(1000 * 60);
                 } catch (InterruptedException e) {
-
                 }
             }
         });
         streamThread.start();
     }
 
+    private void applyTheme() {
+        LocalTime currentTime = LocalDateTime.now().toLocalTime();
+        streamText = findViewById(R.id.streamText);
+
+        if (currentTime.isAfter(MORNING) && currentTime.isBefore(NOON)) {
+            runOnUiThread(() -> {
+                streamText.setText(R.string.morning);
+            });
+        } else if (currentTime.isAfter(NOON) && currentTime.isBefore(AFTERNOON)) {
+            runOnUiThread(() -> {
+                streamText.setText(R.string.noon);
+            });
+        } else if (currentTime.isAfter(AFTERNOON) && currentTime.isBefore(EVENING)) {
+            runOnUiThread(() -> {
+                streamText.setText(R.string.afternoon);
+            });
+        } else if (currentTime.isAfter(EVENING) && currentTime.isBefore(NIGHT)) {
+            runOnUiThread(() -> {
+                streamText.setText(R.string.evening);
+            });
+        } else {
+            runOnUiThread(() -> {
+                streamText.setText(R.string.night);
+            });
+        }
+    }
 
     // Function to filter the reports based on the search query
     private void searchReports(String query) {
@@ -136,21 +166,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         adapter.notifyDataSetChanged();  // Notify the adapter about data changes
-        streamThread.start();
-    }
-
-    private void applyTheme() {
-        LocalTime currentTime = LocalDateTime.now().toLocalTime();
-
-        if (currentTime.isAfter(DAY_START) && currentTime.isBefore(NIGHT_START)) {
-            runOnUiThread(() -> {
-                setTheme(R.style.AppTheme_Day);
-            });
-        } else {
-            runOnUiThread(() -> {
-                setTheme(R.style.AppTheme_Night);
-            });
-        }
     }
 
     public List<Report> loadData(String fileName) {

@@ -35,6 +35,14 @@
             android:background="@color/lavender"
             />
 
+        <TextView
+            android:id="@+id/streamText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="14sp"
+            android:textStyle="italic" />
+
 
         <SearchView
             android:id="@+id/search_view"
