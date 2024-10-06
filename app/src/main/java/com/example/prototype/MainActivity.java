@@ -32,9 +32,8 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnClickPassData {
     AVLTree<Report> avlTree = new AVLTree<>();
-    ReportAdapterOriginal adapterOriginal;
     ReportAdapterSort adapterSort;
     ListView listView;
     Spinner sortSpinner;
@@ -71,13 +70,12 @@ public class MainActivity extends AppCompatActivity {
         for (Report report : loadedReports) {
             avlTree.put(report.getReportId(), report);
         }
-        adapterOriginal = new ReportAdapterOriginal(this, avlTree);
 
         // Initialize the original list with the loaded data
         originalList.addAll(loadedReports);
 
-        adapterOriginal = new ReportAdapterOriginal(this, avlTree);
-        listView.setAdapter(adapterOriginal);
+        adapterSort = new ReportAdapterSort(this, originalList, this);
+        listView.setAdapter(adapterSort);
 
         // Setup Spinner for sorting
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,
@@ -104,9 +102,10 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = result.getData();
                     if (intent != null && result.getResultCode() == RESULT_OK) {
                         Report addedReport = (Report) intent.getSerializableExtra("added_report", Report.class);
+                        originalList.add(0, addedReport);
+                        adapterSort.notifyDataSetChanged();
+
                         avlTree.put(addedReport.getReportId(), addedReport);
-                        originalList.add(addedReport);
-                        adapterOriginal.notifyDataSetChanged();
                     }
                 }
             }
@@ -131,7 +130,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
         menuDashboard = (ImageButton) findViewById(R.id.menu_dashboard);
 
         menuSearch = (ImageButton) findViewById(R.id.menu_search);
@@ -150,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onQueryTextChange(String newText) {
                 if (newText.isEmpty()) {
                     // If search query is empty, reset the adapter to the original list
-                    listView.setAdapter(adapterOriginal);
+                    listView.setAdapter(adapterSort);
                 } else {
                     // Perform search and set the filtered adapter
                     searchReports(newText);
@@ -227,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        adapterSort = new ReportAdapterSort(this, filteredList);
+        adapterSort = new ReportAdapterSort(this, filteredList, this);
         listView.setAdapter(adapterSort);
 
         adapterSort.notifyDataSetChanged();
@@ -237,41 +235,41 @@ public class MainActivity extends AppCompatActivity {
         switch (position) {
             case 0: // Default
                 // Set the original adapter that uses the AVL tree
-                listView.setAdapter(adapterOriginal);
-                adapterOriginal.notifyDataSetChanged();
+                listView.setAdapter(adapterSort);
+                adapterSort.notifyDataSetChanged();
                 break;
             case 1: // Sort by Date (newest First)
                 List<Report> sortedListNewest = new ArrayList<>(originalList);
                 sortedListNewest.sort((report1, report2) -> report2.getLocalDateTime().compareTo(report1.getLocalDateTime()));
-                adapterSort = new ReportAdapterSort(this, sortedListNewest);
+                adapterSort = new ReportAdapterSort(this, sortedListNewest, this);
                 listView.setAdapter(adapterSort);
                 adapterSort.notifyDataSetChanged();
                 break;
             case 2: // Sort by Date (oldest First)
                 List<Report> sortedListOldest = new ArrayList<>(originalList);
                 sortedListOldest.sort((report1, report2) -> report1.getLocalDateTime().compareTo(report2.getLocalDateTime()));
-                adapterSort = new ReportAdapterSort(this, sortedListOldest);
+                adapterSort = new ReportAdapterSort(this, sortedListOldest, this);
                 listView.setAdapter(adapterSort);
                 adapterSort.notifyDataSetChanged();
                 break;
             case 3: // Sort by Priority (High to Low)
                 List<Report> sortedListHighToLow = new ArrayList<>(originalList);
                 sortedListHighToLow.sort((report1, report2) -> comparePriority(report2.getPriority(), report1.getPriority()));
-                adapterSort = new ReportAdapterSort(this, sortedListHighToLow);
+                adapterSort = new ReportAdapterSort(this, sortedListHighToLow, this);
                 listView.setAdapter(adapterSort);
                 adapterSort.notifyDataSetChanged();
                 break;
             case 4: // Sort by Priority (Low to High)
                 List<Report> sortedListLowToHigh = new ArrayList<>(originalList);
                 sortedListLowToHigh.sort((report1, report2) -> comparePriority(report1.getPriority(), report2.getPriority()));
-                adapterSort = new ReportAdapterSort(this, sortedListLowToHigh);
+                adapterSort = new ReportAdapterSort(this, sortedListLowToHigh, this);
                 listView.setAdapter(adapterSort);
                 adapterSort.notifyDataSetChanged();
                 break;
             case 5: // Sort by Likes (most liked first)
                 List<Report> sortedListMostLiked = new ArrayList<>(originalList);
                 sortedListMostLiked.sort((report1, report2) -> Integer.compare(report2.getLikes(), report1.getLikes()));
-                adapterSort = new ReportAdapterSort(this, sortedListMostLiked);
+                adapterSort = new ReportAdapterSort(this, sortedListMostLiked, this);
                 listView.setAdapter(adapterSort);
                 adapterSort.notifyDataSetChanged();
                 break;
@@ -302,9 +300,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-
-
     public List<Report> loadData(String fileName) {
 
         GsonBuilder gsonBuilder = new GsonBuilder().registerTypeAdapter(Report.class, new ReportAdapterJson());
@@ -324,4 +319,8 @@ public class MainActivity extends AppCompatActivity {
         return reportList;
     }
 
+    @Override
+    public void onClickPassData(int reportId) {
+        avlTree.remove(reportId);
+    }
 }

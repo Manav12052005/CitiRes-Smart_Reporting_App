@@ -27,11 +27,13 @@ public class ReportAdapterSort extends ArrayAdapter<Report> {
     TextView category;
     TextView user;
     ImageView locationIcon;
+    private OnClickPassData listener;
 
-    public ReportAdapterSort(Context context, List<Report> reports) {
+    public ReportAdapterSort(Context context, List<Report> reports, OnClickPassData listener) {
         super(context, 0, reports);
         this.context = context;
         this.reports = reports;
+        this.listener = listener;
     }
 
     @NonNull
@@ -56,12 +58,21 @@ public class ReportAdapterSort extends ArrayAdapter<Report> {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                reports.remove(report.getReportId());
-                clear();
-                addAll(new ArrayList<>(reports));
+                int reportId = report.getReportId();
+                for (Report report : reports) {
+                    if (reportId == report.getReportId()) {
+                        reports.remove(report);
+                        break;
+                    }
+                }
+//                clear();
+//                addAll(new ArrayList<>(reports));
                 notifyDataSetChanged();
+
+                listener.onClickPassData(reportId);
             }
         });
+
 
         priority = (TextView) listItem.findViewById(R.id.priority);
         setPriorityBackground(priority, report.getPriority());
@@ -107,6 +118,7 @@ public class ReportAdapterSort extends ArrayAdapter<Report> {
 
         return listItem;
     }
+
     private void updateLikeCountDisplay(TextView likeCountTextView, Report report) {
         likeCountTextView.setText(String.valueOf(report.getLikes())); // Update TextView with new likes count
     }
