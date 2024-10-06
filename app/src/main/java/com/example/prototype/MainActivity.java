@@ -86,8 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Setup Spinner for sorting
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,
-                new String[]{"Not Sorted", "Sort by Priority", "Sort by Location", "Sort by Date (Newest First)",
-                        "Sort by Date (Oldest First)", "Sort by Likes", "Sort by Category", "Sort by User Name"});
+                new String[]{"Default (newest First)", "Sort by Date (Oldest First)"});
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sortSpinner.setAdapter(spinnerAdapter);
 
@@ -277,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("MainActivity", "Sorted by Date (Newest First)");
                 break;
             case 4: // Sort by Date (Oldest First)
-                originalList.sort((report1, report2) -> report1.getLocalDateTime().compareTo(report2.getLocalDateTime()));
+                originalList.sort((report2, report1) -> report2.getLocalDateTime().compareTo(report1.getLocalDateTime()));
                 Log.d("MainActivity", "Sorted by Date (Oldest First)");
                 break;
             case 5: // Sort by Likes
@@ -297,14 +296,21 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
-        // Use the new SortedReportAdapter for the sorted list
-        Log.d("MainActivity", "Creating SortedReportAdapter with the sorted list");
-        SortedReportAdapter sortedAdapter = new SortedReportAdapter(this, originalList);
-        listView.setAdapter(sortedAdapter);
-        sortedAdapter.notifyDataSetChanged();
+        AVLTree<Report> sortedAVLTree = new AVLTree<>();
 
-        // Log after notifying the adapter
-        Log.d("MainActivity", "Adapter updated with sorted data, notifyDataSetChanged called");
+        for (Report report : originalList) {
+
+            sortedAVLTree.put(report.getReportId(), report);
+        }
+
+        // Create a new adapter with the filtered AVLTree and set it to the ListView
+        adapter = new ReportAdapter(this, sortedAVLTree);
+        listView.setAdapter(adapter);
+
+
+        adapter.notifyDataSetChanged();
+
+
     }
 
 
