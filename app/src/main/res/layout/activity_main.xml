@@ -44,6 +44,11 @@
             android:textStyle="italic" />
 
 
+        <Spinner
+            android:id="@+id/sortSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <SearchView
             android:id="@+id/search_view"
             android:layout_width="match_parent"

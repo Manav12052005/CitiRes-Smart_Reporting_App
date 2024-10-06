@@ -4,9 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -40,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     AVLTree<Report> avlTree = new AVLTree<>();
     ReportAdapter adapter;
     ListView listView;
+    Spinner sortSpinner;
     ImageButton menuDashboard;
     ImageButton menuSearch;
     SearchView searchView;
@@ -64,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
         listView = findViewById(R.id.reports_list);
         searchView = findViewById(R.id.search_view);
+        sortSpinner = findViewById(R.id.sortSpinner);
 
         loadedReports = loadData("reports_dataset.json");
 
@@ -76,6 +81,25 @@ public class MainActivity extends AppCompatActivity {
 
         adapter = new ReportAdapter(this, avlTree);
         listView.setAdapter(adapter);
+
+        // Setup Spinner for sorting
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,
+                new String[]{"Not Sorted", "Sort by Priority", "Sort by Location", "Sort by Date (Newest First)",
+                        "Sort by Date (Oldest First)", "Sort by Likes", "Sort by Category", "Sort by User Name"});
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sortSpinner.setAdapter(spinnerAdapter);
+
+        sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                sortReports(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         register = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
@@ -206,8 +230,68 @@ public class MainActivity extends AppCompatActivity {
         adapter = new ReportAdapter(this, filteredAVLTree);
         listView.setAdapter(adapter);
 
-        // Notify adapter of the data change
+
         adapter.notifyDataSetChanged();
+    }
+
+    private void sortReports(int criteriaIndex) {
+        // Log the sorting criteria selected
+        Log.d("MainActivity", "Sorting by criteria index: " + criteriaIndex);
+
+        if (criteriaIndex == 0) {
+            // Not Sorted: Use the original adapter with the AVLTree
+            Log.d("MainActivity", "Using original ReportAdapter (Not Sorted)");
+
+            adapter = new ReportAdapter(this, avlTree);
+            listView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+
+            return;
+        }
+
+        // Sort the original list based on the selected criteria
+        switch (criteriaIndex) {
+            case 1: // Sort by Priority
+                originalList.sort((report1, report2) -> report1.getPriority().compareTo(report2.getPriority()));
+                Log.d("MainActivity", "Sorted by Priority");
+                break;
+            case 2: // Sort by Location
+                originalList.sort((report1, report2) -> report1.getLocation().compareToIgnoreCase(report2.getLocation()));
+                Log.d("MainActivity", "Sorted by Location");
+                break;
+            case 3: // Sort by Date (Newest First)
+                originalList.sort((report1, report2) -> report2.getLocalDateTime().compareTo(report1.getLocalDateTime()));
+                Log.d("MainActivity", "Sorted by Date (Newest First)");
+                break;
+            case 4: // Sort by Date (Oldest First)
+                originalList.sort((report1, report2) -> report1.getLocalDateTime().compareTo(report2.getLocalDateTime()));
+                Log.d("MainActivity", "Sorted by Date (Oldest First)");
+                break;
+            case 5: // Sort by Likes
+                originalList.sort((report1, report2) -> Integer.compare(report2.getLikes(), report1.getLikes()));
+                Log.d("MainActivity", "Sorted by Likes");
+                break;
+            case 6: // Sort by Category
+                originalList.sort((report1, report2) -> report1.getCategory().toString().compareToIgnoreCase(report2.getCategory().toString()));
+                Log.d("MainActivity", "Sorted by Category");
+                break;
+            case 7: // Sort by User Name
+                originalList.sort((report1, report2) -> report1.getUser().getName().compareToIgnoreCase(report2.getUser().getName()));
+                Log.d("MainActivity", "Sorted by User Name");
+                break;
+            default:
+                Log.d("MainActivity", "No valid sorting criteria selected");
+                break;
+        }
+
+        // Use the new SortedReportAdapter for the sorted list
+        Log.d("MainActivity", "Creating SortedReportAdapter with the sorted list");
+        SortedReportAdapter sortedAdapter = new SortedReportAdapter(this, originalList);
+        listView.setAdapter(sortedAdapter);
+        sortedAdapter.notifyDataSetChanged();
+
+        // Log after notifying the adapter
+        Log.d("MainActivity", "Adapter updated with sorted data, notifyDataSetChanged called");
     }
 
 

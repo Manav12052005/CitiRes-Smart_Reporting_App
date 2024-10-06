@@ -46,30 +46,36 @@ users = [
 # Function to Generate Random Timestamp
 # ----------------------------
 
-def generate_random_datetime():
+def generate_incremental_datetime(base_datetime, days_increment=0, seconds_increment=0):
     """
-    Generates a random datetime within the past year.
+    Generates a datetime incremented by a specified number of days and seconds.
+    
+    :param start_datetime: The starting datetime.
+    :param days_increment: The number of days to increment.
+    :param seconds_increment: The number of seconds to increment.
+    :return: Incremented datetime as a formatted string.
     """
-    now = datetime.now()
-    days_back = random.randint(0, 365)
-    seconds_back = random.randint(0, 86400)  # Number of seconds in a day
-    random_datetime = now - timedelta(days=days_back, seconds=seconds_back)
-    return random_datetime.strftime("%Y-%m-%dT%H:%M:%S")
+    return (base_datetime + timedelta(days=days_increment, seconds=seconds_increment)).strftime("%Y-%m-%dT%H:%M:%S")
+
+
 
 # ----------------------------
 # Function to Generate a Single Report Entry
 # ----------------------------
 
-def generate_report(report_id):
+def generate_report(report_id, report_date):
     """
-    Generates a single report entry with randomized data.
+    Generates a single report entry with randomized data and an incremented datetime.
     """
     description = random.choice(descriptions)
     location = random.choice(locations)
     priority = random.choice(priorities)
     category = random.choice(categories)
     user = random.choice(users)
-    localDateTime = generate_random_datetime()
+
+    # Use the provided report_date instead of generating a new one
+    localDateTime = report_date.strftime("%Y-%m-%dT%H:%M:%S")
+    
     likes = random.randint(0, 500)  # Assuming likes range from 0 to 500
 
     report = {
@@ -89,15 +95,27 @@ def generate_report(report_id):
 # Generate the Dataset
 # ----------------------------
 
-def generate_dataset(total_reports=2500):
+def generate_dataset(total_reports=2500, start_date=None):
     """
-    Generates a dataset containing a specified number of report entries.
+    Generates a dataset containing a specified number of report entries,
+    with dates incremented by 1 hour for each report starting from 2020.
+    
+    :param total_reports: The total number of reports to generate.
+    :param start_date: The starting date for the first report (defaults to January 1st, 2020, 00:00).
+    :return: A list of report dictionaries.
     """
+    if start_date is None:
+        # Start from January 1st, 2020, 00:00
+        start_date = datetime(2020, 1, 1, 0, 0)
+    
     dataset = []
     for i in range(1, total_reports + 1):
-        report = generate_report(i)
+        report_date = start_date + timedelta(hours=i-1)  # Increment by 1 hour for each report
+        report = generate_report(i, report_date)
         dataset.append(report)
+    
     return dataset
+
 
 # ----------------------------
 # Save Dataset to JSON File
