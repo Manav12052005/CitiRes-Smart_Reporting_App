@@ -136,6 +136,22 @@ public class AVLTree<R> {
         return result;
     }
 
+    public List<Report> fromSmallToLarge() {
+        List<Report> result = new ArrayList<>();
+        inOrder(root, result);
+        return result;
+    }
+
+    private void inOrder(AVLNode node, List<Report> result) {
+        if(node == null){
+            return;
+        }
+        inOrder(node.left, result);
+        result.add(node.value);
+        inOrder(node.right, result);
+    }
+
+
     public void empty() {
         root = null;
     }
