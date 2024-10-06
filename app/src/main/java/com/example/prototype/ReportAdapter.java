@@ -72,9 +72,9 @@ public class ReportAdapter extends ArrayAdapter<Report> {
 
         user = (TextView) listItem.findViewById(R.id.user);
         user.setText("Reported by: " + report.getUser() + " at " + report.getLocalDateTime());
-
-        TextView user = listItem.findViewById(R.id.user);
-        user.setText("Reported by: " + report.getUser().getName()); // Assuming User has a getName() method
+//
+//        TextView user = listItem.findViewById(R.id.user);
+//        user.setText("Reported by: " + report.getUser().getName()); // Assuming User has a getName() method
 
         TextView likeCountTextView = listItem.findViewById(R.id.like_count_text_view);
         likeCountTextView.setText(String.valueOf(report.getLikes())); // Set initial likes count
