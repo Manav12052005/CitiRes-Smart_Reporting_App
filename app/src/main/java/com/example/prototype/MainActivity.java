@@ -2,7 +2,6 @@ package com.example.prototype;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,12 +11,10 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -26,11 +23,9 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 
-import org.w3c.dom.Text;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -39,7 +34,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     AVLTree<Report> avlTree = new AVLTree<>();
-    ReportAdapter adapter;
+    ReportAdapterOriginal adapterOriginal;
+    ReportAdapterSort adapterSort;
     ListView listView;
     Spinner sortSpinner;
     ImageButton menuDashboard;
@@ -75,17 +71,18 @@ public class MainActivity extends AppCompatActivity {
         for (Report report : loadedReports) {
             avlTree.put(report.getReportId(), report);
         }
-        adapter = new ReportAdapter(this, avlTree, avlTree.fromLargeToSmall());
+        adapterOriginal = new ReportAdapterOriginal(this, avlTree);
 
         // Initialize the original list with the loaded data
         originalList.addAll(loadedReports);
 
-        adapter = new ReportAdapter(this, avlTree, avlTree.fromLargeToSmall());
-        listView.setAdapter(adapter);
+        adapterOriginal = new ReportAdapterOriginal(this, avlTree);
+        listView.setAdapter(adapterOriginal);
 
         // Setup Spinner for sorting
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,
-                new String[]{"Default (newest First)", "Sort by Date (Oldest First)"});
+                new String[]{"Default", "Sort by Date (newest First)", "Sort by Date (oldest First)", "Sort by Priority (High to Low)",
+                        "Sort by Priority (Low to High)", "Sort by Likes (most liked first)"});
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sortSpinner.setAdapter(spinnerAdapter);
 
@@ -97,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
             }
         });
 
@@ -110,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                         Report addedReport = (Report) intent.getSerializableExtra("added_report", Report.class);
                         avlTree.put(addedReport.getReportId(), addedReport);
                         originalList.add(addedReport);
-                        adapter.notifyDataSetChanged();
+                        adapterOriginal.notifyDataSetChanged();
                     }
                 }
             }
@@ -152,7 +148,13 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                searchReports(newText);
+                if (newText.isEmpty()) {
+                    // If search query is empty, reset the adapter to the original list
+                    listView.setAdapter(adapterOriginal);
+                } else {
+                    // Perform search and set the filtered adapter
+                    searchReports(newText);
+                }
                 return true;
             }
         });
@@ -214,99 +216,93 @@ public class MainActivity extends AppCompatActivity {
     // Function to filter the reports based on the search query
     private void searchReports(String query) {
 
+        List<Report> filteredList = new ArrayList<>();
 
-        AVLTree<Report> filteredAVLTree = new AVLTree<>();
+        if (!query.isEmpty()) {
 
-        if (query.isEmpty()) {
-            // If the query is empty, use the original data
-
-            for (Report report : originalList) {
-                filteredAVLTree.put(report.getReportId(), report);
-            }
-        } else {
-            // Tokenize the query and filter reports using the original list
             List<String> tokens = Tokenizer.tokenize(query);
 
+            filteredList = Parser.parseWithGrammar(tokens, originalList);
 
-            List<Report> filteredReports = Parser.parseWithGrammar(tokens, originalList); // Filter reports based on tokens
-
-
-            for (Report report : filteredReports) {
-
-                filteredAVLTree.put(report.getReportId(), report);
-            }
         }
 
-        // Create a new adapter with the filtered AVLTree and set it to the ListView
-        adapter = new ReportAdapter(this, filteredAVLTree, avlTree.fromLargeToSmall());
-        listView.setAdapter(adapter);
 
+        adapterSort = new ReportAdapterSort(this, filteredList);
+        listView.setAdapter(adapterSort);
 
-        adapter.notifyDataSetChanged();
+        adapterSort.notifyDataSetChanged();
     }
 
-    private void sortReports(int criteriaIndex) {
-        // Log the sorting criteria selected
-        Log.d("MainActivity", "Sorting by criteria index: " + criteriaIndex);
-
-        if (criteriaIndex == 0) {
-            // Not Sorted: Use the original adapter with the AVLTree
-            Log.d("MainActivity", "Using original ReportAdapter (Not Sorted)");
-
-            // Logging the number of reports before setting the adapter
-            Log.d("MainActivity", "Original AVLTree Size: " + avlTree.size());
-            adapter.clear();
-            adapter = new ReportAdapter(this, avlTree, avlTree.fromLargeToSmall());
-
-            // Log the list of reports
-            for (Report report : avlTree.fromLargeToSmall()) {
-                Log.d("MainActivity", "Original Report: ID=" + report.getReportId() + ", Date=" + report.getLocalDateTime());
-            }
-
-
-
-            listView.setAdapter(adapter);
-            Log.d("MainActivity", "Original adapter set to ListView");
-
-            adapter.notifyDataSetChanged();
-            Log.d("MainActivity", "Adapter notifyDataSetChanged called for Not Sorted");
-
-            return;
-        }
-
-        // Logging the action of creating a new AVLTree
-        Log.d("MainActivity", "Creating new sorted AVLTree");
-        AVLTree<Report> sortedAVLTree = new AVLTree<>();
-
-        // Adding reports to the sorted AVLTree
-        for (Report report : originalList) {
-            sortedAVLTree.put(report.getReportId(), report);
-            Log.d("MainActivity", "Report added to sorted AVLTree: ID=" + report.getReportId());
-        }
-
-        // Sort based on selected criteria and update the adapter
-        switch (criteriaIndex) {
-            case 1: // Sort by Date (Oldest First)
-                Log.d("MainActivity", "Sorting AVLTree by Date (Oldest First)");
-
-                List<Report> sortedReports = sortedAVLTree.fromSmallToLarge();
-                Log.d("MainActivity", "Sorted AVLTree Size (Oldest First): " + sortedReports.size());
-
-                // Log the sorted reports for verification
-                for (Report report : sortedReports) {
-                    Log.d("MainActivity", "Sorted Report (Oldest First): ID=" + report.getReportId() + ", Date=" + report.getLocalDateTime());
-                }
-
-                // Set the new adapter with the sorted data
-                adapter.addAll(new ArrayList<>(sortedReports));
-                adapter.notifyDataSetChanged();
+    private void sortReports(int position) {
+        switch (position) {
+            case 0: // Default
+                // Set the original adapter that uses the AVL tree
+                listView.setAdapter(adapterOriginal);
+                adapterOriginal.notifyDataSetChanged();
                 break;
-
+            case 1: // Sort by Date (newest First)
+                List<Report> sortedListNewest = new ArrayList<>(originalList);
+                sortedListNewest.sort((report1, report2) -> report2.getLocalDateTime().compareTo(report1.getLocalDateTime()));
+                adapterSort = new ReportAdapterSort(this, sortedListNewest);
+                listView.setAdapter(adapterSort);
+                adapterSort.notifyDataSetChanged();
+                break;
+            case 2: // Sort by Date (oldest First)
+                List<Report> sortedListOldest = new ArrayList<>(originalList);
+                sortedListOldest.sort((report1, report2) -> report1.getLocalDateTime().compareTo(report2.getLocalDateTime()));
+                adapterSort = new ReportAdapterSort(this, sortedListOldest);
+                listView.setAdapter(adapterSort);
+                adapterSort.notifyDataSetChanged();
+                break;
+            case 3: // Sort by Priority (High to Low)
+                List<Report> sortedListHighToLow = new ArrayList<>(originalList);
+                sortedListHighToLow.sort((report1, report2) -> comparePriority(report2.getPriority(), report1.getPriority()));
+                adapterSort = new ReportAdapterSort(this, sortedListHighToLow);
+                listView.setAdapter(adapterSort);
+                adapterSort.notifyDataSetChanged();
+                break;
+            case 4: // Sort by Priority (Low to High)
+                List<Report> sortedListLowToHigh = new ArrayList<>(originalList);
+                sortedListLowToHigh.sort((report1, report2) -> comparePriority(report1.getPriority(), report2.getPriority()));
+                adapterSort = new ReportAdapterSort(this, sortedListLowToHigh);
+                listView.setAdapter(adapterSort);
+                adapterSort.notifyDataSetChanged();
+                break;
+            case 5: // Sort by Likes (most liked first)
+                List<Report> sortedListMostLiked = new ArrayList<>(originalList);
+                sortedListMostLiked.sort((report1, report2) -> Integer.compare(report2.getLikes(), report1.getLikes()));
+                adapterSort = new ReportAdapterSort(this, sortedListMostLiked);
+                listView.setAdapter(adapterSort);
+                adapterSort.notifyDataSetChanged();
+                break;
             default:
-                Log.d("MainActivity", "No valid sorting criteria selected");
-                break;
+                return;
         }
     }
+
+    // Custom priority comparator function
+    private int comparePriority(Priority p1, Priority p2) {
+        // Define the custom order: LOW < MIDDLE < HIGH
+        int priorityValue1 = getPriorityValue(p1);
+        int priorityValue2 = getPriorityValue(p2);
+        return Integer.compare(priorityValue1, priorityValue2);
+    }
+
+    // Helper function to assign custom values to priorities
+    private int getPriorityValue(Priority priority) {
+        switch (priority) {
+            case LOW:
+                return 1;
+            case MIDDLE:
+                return 2;
+            case HIGH:
+                return 3;
+            default:
+                return Integer.MAX_VALUE; // Default case for safety
+        }
+    }
+
+
 
 
     public List<Report> loadData(String fileName) {
