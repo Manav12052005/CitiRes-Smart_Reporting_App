@@ -14,7 +14,6 @@ import android.widget.TextView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
-
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -28,7 +27,6 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 
 import org.w3c.dom.Text;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -77,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         for (Report report : loadedReports) {
             avlTree.put(report.getReportId(), report);
         }
+        adapter = new ReportAdapter(this, avlTree, avlTree.fromLargeToSmall());
 
         // Initialize the original list with the loaded data
         originalList.addAll(loadedReports);

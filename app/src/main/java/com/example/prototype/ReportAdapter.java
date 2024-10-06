@@ -28,11 +28,12 @@ public class ReportAdapter extends ArrayAdapter<Report> {
     TextView user;
     ImageView locationIcon;
 
-    public ReportAdapter(Context context, AVLTree<Report> reports) {
-        super(context, 0, new ArrayList<>(reports.fromLargeToSmall()));
+    public ReportAdapter(Context context, AVLTree<Report> reports, List<Report> list) {
+        super(context, 0, list);
         this.context = context;
         this.reports = reports;
     }
+
 
     @NonNull
     @Override
