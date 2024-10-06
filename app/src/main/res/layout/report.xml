@@ -28,7 +28,7 @@
 
             <ImageView
                 android:id="@+id/location_icon"
-                android:layout_width="26dp"
+                android:layout_width="wrap_content"
                 android:layout_height="26dp"
                 android:layout_marginEnd="10dp"
                 android:src="@android:drawable/ic_menu_mylocation"
@@ -60,7 +60,7 @@
                 android:id="@+id/priority"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="40dp"
+                android:layout_marginEnd="30dp"
                 android:background="@drawable/priority_background"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
@@ -80,6 +80,28 @@
                 android:paddingBottom="4dp"
                 android:textColor="@android:color/white"
                 android:textSize="12sp" />
+            <!-- Add a spacer view to push the like button to the right -->
+            <View
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+
+            <!-- Like Button -->
+            <ImageButton
+                android:id="@+id/like_button"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/unliked"
+                android:contentDescription="@string/like_button" />
+
+            <TextView
+                android:id="@+id/like_count_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Likes: 0"
+                android:textSize="16sp" />
+
         </LinearLayout>
 
         <LinearLayout

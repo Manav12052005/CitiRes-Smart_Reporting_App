@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -71,8 +72,45 @@ public class ReportAdapter extends ArrayAdapter<Report> {
         user = (TextView) listItem.findViewById(R.id.user);
         user.setText("Reported by: " + report.getUser() + " at " + report.getLocalDateTime());
 
+        TextView user = listItem.findViewById(R.id.user);
+        user.setText("Reported by: " + report.getUser().getName()); // Assuming User has a getName() method
+
+        TextView likeCountTextView = listItem.findViewById(R.id.like_count_text_view);
+        likeCountTextView.setText(String.valueOf(report.getLikes())); // Set initial likes count
+
+        ImageButton likeButton = listItem.findViewById(R.id.like_button);
+
+        // Initial state based on current likes
+        if (report.getLikes() > 0) {
+            likeButton.setImageResource(R.drawable.liked);
+        } else {
+            likeButton.setImageResource(R.drawable.unliked);
+        }
+
+        likeButton.setOnClickListener(new View.OnClickListener() {
+            private boolean isLiked = report.getLikes() > 0; // Track the current like state
+
+            @Override
+            public void onClick(View v) {
+                if (isLiked) {
+                    report.unlike(); // Decrement likes
+                    likeButton.setImageResource(R.drawable.unliked); // Change icon to unliked
+                } else {
+                    report.like(); // Increment likes
+                    likeButton.setImageResource(R.drawable.liked); // Change icon to liked
+                }
+                updateLikeCountDisplay(likeCountTextView, report); // Update displayed like count
+                isLiked = !isLiked; // Toggle the like state
+            }
+        });
+
+
         return listItem;
     }
+    private void updateLikeCountDisplay(TextView likeCountTextView, Report report) {
+        likeCountTextView.setText(String.valueOf(report.getLikes())); // Update TextView with new likes count
+    }
+
 
     private void setPriorityBackground(TextView priorityView, Priority priority) {
         int color;

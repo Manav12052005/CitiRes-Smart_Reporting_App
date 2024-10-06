@@ -18,10 +18,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
+import java.io.IOException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+import android.location.Address;
+import android.location.Geocoder;
+import java.util.List;
+import java.util.Locale;
 
 import java.time.LocalDateTime;
 
@@ -140,9 +144,17 @@ public class ReportActivity extends Activity {
         String description = editTextDescription.getText().toString();
         Category selectedCategory = (Category) spinnerCategory.getSelectedItem();
         Priority selectedPriority = (Priority) spinnerPriority.getSelectedItem();
-        String latitudeStr = String.valueOf(latitude);
-        String longitudeStr = String.valueOf(longitude);
-        String location = latitudeStr + longitudeStr;
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        List<Address> addresses = null;
+        try {
+            addresses = geocoder.getFromLocation(latitude,longitude,1);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        assert addresses != null;
+        Address address = addresses.get(0);
+        String locationName = address.getAddressLine(0);
+        String location = address.toString();
         User user = new User("admin");
         if (description.isEmpty()) {
             Toast.makeText(getApplicationContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
@@ -150,7 +162,7 @@ public class ReportActivity extends Activity {
             Report newReport = new Report();
             newReport.setDescription(description);
             newReport.setUser(user);
-            newReport.setLocation(location);
+            newReport.setLocation(locationName);
             newReport.setCategory(selectedCategory);
             newReport.setPriority(selectedPriority);
             newReport.setReportId(ReportCounter.getReportId());
@@ -164,6 +176,4 @@ public class ReportActivity extends Activity {
             setResult(Activity.RESULT_OK, intent);
             Toast.makeText(getApplicationContext(), "Task saved!", Toast.LENGTH_SHORT).show();
             finish();
-        }
-    }
-}
+}}}

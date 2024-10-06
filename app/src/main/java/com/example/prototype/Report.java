@@ -15,6 +15,7 @@ public class Report implements Serializable {
     private int likes;
 
     public Report() {
+        this.likes = 0;
     }
 
     public Report(int reportId, String description, String location, Priority priority, User user, Category category, LocalDateTime localDateTime, int likes) {
@@ -95,4 +96,15 @@ public class Report implements Serializable {
     public void setLikes(int likes) {
         this.likes = likes;
     }
+    public void like() {
+        this.likes++;
+    }
+
+    // Method to unlike the report
+    public void unlike() {
+        if (this.likes > 0) {
+            this.likes--;
+        }
+    }
+
 }
