@@ -2,19 +2,19 @@ package com.example.prototype;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,11 +23,9 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 
-import org.w3c.dom.Text;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -36,12 +34,13 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     AVLTree<Report> avlTree = new AVLTree<>();
-    ReportAdapter adapter;
+    ReportAdapterOriginal adapterOriginal;
+    ReportAdapterSort adapterSort;
     ListView listView;
+    Spinner sortSpinner;
     ImageButton menuDashboard;
     ImageButton menuSearch;
     SearchView searchView;
-    List<Report> reportList = new ArrayList<>();
     List<Report> originalList = new ArrayList<>();  // To store original reports
     Button addReportButton;
     List<Report> loadedReports;
@@ -65,14 +64,38 @@ public class MainActivity extends AppCompatActivity {
 
         listView = findViewById(R.id.reports_list);
         searchView = findViewById(R.id.search_view);
+        sortSpinner = findViewById(R.id.sortSpinner);
 
         loadedReports = loadData("reports_dataset.json");
 
         for (Report report : loadedReports) {
             avlTree.put(report.getReportId(), report);
         }
-        adapter = new ReportAdapter(this, avlTree, avlTree.fromLargeToSmall());
-        listView.setAdapter(adapter);
+        adapterOriginal = new ReportAdapterOriginal(this, avlTree);
+
+        // Initialize the original list with the loaded data
+        originalList.addAll(loadedReports);
+
+        adapterOriginal = new ReportAdapterOriginal(this, avlTree);
+        listView.setAdapter(adapterOriginal);
+
+        // Setup Spinner for sorting
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,
+                new String[]{"Default", "Sort by Date (newest First)", "Sort by Date (oldest First)", "Sort by Priority (High to Low)",
+                        "Sort by Priority (Low to High)", "Sort by Likes (most liked first)"});
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sortSpinner.setAdapter(spinnerAdapter);
+
+        sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                sortReports(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
 
         register = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
@@ -82,7 +105,8 @@ public class MainActivity extends AppCompatActivity {
                     if (intent != null && result.getResultCode() == RESULT_OK) {
                         Report addedReport = (Report) intent.getSerializableExtra("added_report", Report.class);
                         avlTree.put(addedReport.getReportId(), addedReport);
-                        adapter.notifyDataSetChanged();
+                        originalList.add(addedReport);
+                        adapterOriginal.notifyDataSetChanged();
                     }
                 }
             }
@@ -124,7 +148,13 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                searchReports(newText);
+                if (newText.isEmpty()) {
+                    // If search query is empty, reset the adapter to the original list
+                    listView.setAdapter(adapterOriginal);
+                } else {
+                    // Perform search and set the filtered adapter
+                    searchReports(newText);
+                }
                 return true;
             }
         });
@@ -185,19 +215,95 @@ public class MainActivity extends AppCompatActivity {
 
     // Function to filter the reports based on the search query
     private void searchReports(String query) {
-        if (query.isEmpty()) {
-            reportList.clear();
-            reportList.addAll(originalList);  // Reset to original list if query is empty
-        } else {
-            List<String> tokens = Tokenizer.tokenize(query);  // Tokenize the query
-            List<Report> filteredReports = Parser.parse(tokens, originalList);  // Filter reports using Parser
 
-            reportList.clear();
-            reportList.addAll(filteredReports);  // Update the filtered list
+        List<Report> filteredList = new ArrayList<>();
+
+        if (!query.isEmpty()) {
+
+            List<String> tokens = Tokenizer.tokenize(query);
+
+            filteredList = Parser.parseWithGrammar(tokens, originalList);
+
         }
 
-        adapter.notifyDataSetChanged();  // Notify the adapter about data changes
+
+        adapterSort = new ReportAdapterSort(this, filteredList);
+        listView.setAdapter(adapterSort);
+
+        adapterSort.notifyDataSetChanged();
     }
+
+    private void sortReports(int position) {
+        switch (position) {
+            case 0: // Default
+                // Set the original adapter that uses the AVL tree
+                listView.setAdapter(adapterOriginal);
+                adapterOriginal.notifyDataSetChanged();
+                break;
+            case 1: // Sort by Date (newest First)
+                List<Report> sortedListNewest = new ArrayList<>(originalList);
+                sortedListNewest.sort((report1, report2) -> report2.getLocalDateTime().compareTo(report1.getLocalDateTime()));
+                adapterSort = new ReportAdapterSort(this, sortedListNewest);
+                listView.setAdapter(adapterSort);
+                adapterSort.notifyDataSetChanged();
+                break;
+            case 2: // Sort by Date (oldest First)
+                List<Report> sortedListOldest = new ArrayList<>(originalList);
+                sortedListOldest.sort((report1, report2) -> report1.getLocalDateTime().compareTo(report2.getLocalDateTime()));
+                adapterSort = new ReportAdapterSort(this, sortedListOldest);
+                listView.setAdapter(adapterSort);
+                adapterSort.notifyDataSetChanged();
+                break;
+            case 3: // Sort by Priority (High to Low)
+                List<Report> sortedListHighToLow = new ArrayList<>(originalList);
+                sortedListHighToLow.sort((report1, report2) -> comparePriority(report2.getPriority(), report1.getPriority()));
+                adapterSort = new ReportAdapterSort(this, sortedListHighToLow);
+                listView.setAdapter(adapterSort);
+                adapterSort.notifyDataSetChanged();
+                break;
+            case 4: // Sort by Priority (Low to High)
+                List<Report> sortedListLowToHigh = new ArrayList<>(originalList);
+                sortedListLowToHigh.sort((report1, report2) -> comparePriority(report1.getPriority(), report2.getPriority()));
+                adapterSort = new ReportAdapterSort(this, sortedListLowToHigh);
+                listView.setAdapter(adapterSort);
+                adapterSort.notifyDataSetChanged();
+                break;
+            case 5: // Sort by Likes (most liked first)
+                List<Report> sortedListMostLiked = new ArrayList<>(originalList);
+                sortedListMostLiked.sort((report1, report2) -> Integer.compare(report2.getLikes(), report1.getLikes()));
+                adapterSort = new ReportAdapterSort(this, sortedListMostLiked);
+                listView.setAdapter(adapterSort);
+                adapterSort.notifyDataSetChanged();
+                break;
+            default:
+                return;
+        }
+    }
+
+    // Custom priority comparator function
+    private int comparePriority(Priority p1, Priority p2) {
+        // Define the custom order: LOW < MIDDLE < HIGH
+        int priorityValue1 = getPriorityValue(p1);
+        int priorityValue2 = getPriorityValue(p2);
+        return Integer.compare(priorityValue1, priorityValue2);
+    }
+
+    // Helper function to assign custom values to priorities
+    private int getPriorityValue(Priority priority) {
+        switch (priority) {
+            case LOW:
+                return 1;
+            case MIDDLE:
+                return 2;
+            case HIGH:
+                return 3;
+            default:
+                return Integer.MAX_VALUE; // Default case for safety
+        }
+    }
+
+
+
 
     public List<Report> loadData(String fileName) {
 

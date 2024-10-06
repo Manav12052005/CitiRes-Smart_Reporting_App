@@ -18,9 +18,9 @@ import androidx.core.content.ContextCompat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReportAdapter extends ArrayAdapter<Report> {
+public class ReportAdapterSort extends ArrayAdapter<Report> {
     private Context context;
-    private AVLTree<Report> reports;
+    private List<Report> reports;
     TextView description;
     TextView location;
     TextView priority;
@@ -28,12 +28,11 @@ public class ReportAdapter extends ArrayAdapter<Report> {
     TextView user;
     ImageView locationIcon;
 
-    public ReportAdapter(Context context, AVLTree<Report> reports, List<Report> list) {
-        super(context, 0, list);
+    public ReportAdapterSort(Context context, List<Report> reports) {
+        super(context, 0, reports);
         this.context = context;
         this.reports = reports;
     }
-
 
     @NonNull
     @Override
@@ -43,7 +42,7 @@ public class ReportAdapter extends ArrayAdapter<Report> {
             listItem = LayoutInflater.from(context).inflate(R.layout.report, parent, false);
         }
 
-        Report report = new ArrayList<>(reports.fromLargeToSmall()).get(position);
+        Report report = new ArrayList<>(reports).get(position);
 
         description = (TextView) listItem.findViewById(R.id.description);
         description.setText(report.getDescription());
@@ -59,7 +58,7 @@ public class ReportAdapter extends ArrayAdapter<Report> {
             public void onClick(View v) {
                 reports.remove(report.getReportId());
                 clear();
-                addAll(new ArrayList<>(reports.fromLargeToSmall()));
+                addAll(new ArrayList<>(reports));
                 notifyDataSetChanged();
             }
         });
@@ -73,8 +72,8 @@ public class ReportAdapter extends ArrayAdapter<Report> {
         user = (TextView) listItem.findViewById(R.id.user);
         user.setText("Reported by: " + report.getUser() + " at " + report.getLocalDateTime());
 
-        TextView user = listItem.findViewById(R.id.user);
-        user.setText("Reported by: " + report.getUser().getName()); // Assuming User has a getName() method
+//        TextView user = listItem.findViewById(R.id.user);
+//        user.setText("Reported by: " + report.getUser().getName()); // Assuming User has a getName() method
 
         TextView likeCountTextView = listItem.findViewById(R.id.like_count_text_view);
         likeCountTextView.setText(String.valueOf(report.getLikes())); // Set initial likes count
