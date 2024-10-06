@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements OnClickPassData {
     ImageButton menuDashboard;
     ImageButton menuSearch;
     SearchView searchView;
-    List<Report> originalList = new ArrayList<>();  // To store original reports
+    List<Report> reportList = new ArrayList<>();  // To store original reports
     Button addReportButton;
     List<Report> loadedReports;
     TextView title;
@@ -71,10 +71,10 @@ public class MainActivity extends AppCompatActivity implements OnClickPassData {
             avlTree.put(report.getReportId(), report);
         }
 
-        // Initialize the original list with the loaded data
-        originalList.addAll(loadedReports);
 
-        adapterSort = new ReportAdapterSort(this, originalList, this);
+        reportList.addAll(loadedReports);
+
+        adapterSort = new ReportAdapterSort(this, reportList, this);
         listView.setAdapter(adapterSort);
 
         // Setup Spinner for sorting
@@ -102,10 +102,12 @@ public class MainActivity extends AppCompatActivity implements OnClickPassData {
                     Intent intent = result.getData();
                     if (intent != null && result.getResultCode() == RESULT_OK) {
                         Report addedReport = (Report) intent.getSerializableExtra("added_report", Report.class);
-                        originalList.add(0, addedReport);
-                        adapterSort.notifyDataSetChanged();
-
+                        reportList.add(0, addedReport);
+                        loadedReports.add(0,addedReport);
+                        adapterSort = new ReportAdapterSort(MainActivity.this, new ArrayList<>(loadedReports), MainActivity.this);
                         avlTree.put(addedReport.getReportId(), addedReport);
+                        adapterSort.notifyDataSetChanged();
+                        listView.setAdapter(adapterSort);
                     }
                 }
             }
@@ -148,7 +150,9 @@ public class MainActivity extends AppCompatActivity implements OnClickPassData {
             public boolean onQueryTextChange(String newText) {
                 if (newText.isEmpty()) {
                     // If search query is empty, reset the adapter to the original list
+                    adapterSort = new ReportAdapterSort(MainActivity.this, new ArrayList<>(loadedReports), MainActivity.this);
                     listView.setAdapter(adapterSort);
+                    adapterSort.notifyDataSetChanged();
                 } else {
                     // Perform search and set the filtered adapter
                     searchReports(newText);
@@ -220,7 +224,7 @@ public class MainActivity extends AppCompatActivity implements OnClickPassData {
 
             List<String> tokens = Tokenizer.tokenize(query);
 
-            filteredList = Parser.parseWithGrammar(tokens, originalList);
+            filteredList = Parser.parseWithGrammar(tokens, reportList);
 
         }
 
@@ -234,40 +238,41 @@ public class MainActivity extends AppCompatActivity implements OnClickPassData {
     private void sortReports(int position) {
         switch (position) {
             case 0: // Default
-                // Set the original adapter that uses the AVL tree
+                // Reset the adapter to use the original list
+                adapterSort = new ReportAdapterSort(MainActivity.this, new ArrayList<>(reportList), MainActivity.this);
                 listView.setAdapter(adapterSort);
                 adapterSort.notifyDataSetChanged();
                 break;
             case 1: // Sort by Date (newest First)
-                List<Report> sortedListNewest = new ArrayList<>(originalList);
+                List<Report> sortedListNewest = new ArrayList<>(reportList);
                 sortedListNewest.sort((report1, report2) -> report2.getLocalDateTime().compareTo(report1.getLocalDateTime()));
                 adapterSort = new ReportAdapterSort(this, sortedListNewest, this);
                 listView.setAdapter(adapterSort);
                 adapterSort.notifyDataSetChanged();
                 break;
             case 2: // Sort by Date (oldest First)
-                List<Report> sortedListOldest = new ArrayList<>(originalList);
+                List<Report> sortedListOldest = new ArrayList<>(reportList);
                 sortedListOldest.sort((report1, report2) -> report1.getLocalDateTime().compareTo(report2.getLocalDateTime()));
                 adapterSort = new ReportAdapterSort(this, sortedListOldest, this);
                 listView.setAdapter(adapterSort);
                 adapterSort.notifyDataSetChanged();
                 break;
             case 3: // Sort by Priority (High to Low)
-                List<Report> sortedListHighToLow = new ArrayList<>(originalList);
+                List<Report> sortedListHighToLow = new ArrayList<>(reportList);
                 sortedListHighToLow.sort((report1, report2) -> comparePriority(report2.getPriority(), report1.getPriority()));
                 adapterSort = new ReportAdapterSort(this, sortedListHighToLow, this);
                 listView.setAdapter(adapterSort);
                 adapterSort.notifyDataSetChanged();
                 break;
             case 4: // Sort by Priority (Low to High)
-                List<Report> sortedListLowToHigh = new ArrayList<>(originalList);
+                List<Report> sortedListLowToHigh = new ArrayList<>(reportList);
                 sortedListLowToHigh.sort((report1, report2) -> comparePriority(report1.getPriority(), report2.getPriority()));
                 adapterSort = new ReportAdapterSort(this, sortedListLowToHigh, this);
                 listView.setAdapter(adapterSort);
                 adapterSort.notifyDataSetChanged();
                 break;
             case 5: // Sort by Likes (most liked first)
-                List<Report> sortedListMostLiked = new ArrayList<>(originalList);
+                List<Report> sortedListMostLiked = new ArrayList<>(reportList);
                 sortedListMostLiked.sort((report1, report2) -> Integer.compare(report2.getLikes(), report1.getLikes()));
                 adapterSort = new ReportAdapterSort(this, sortedListMostLiked, this);
                 listView.setAdapter(adapterSort);
@@ -321,6 +326,16 @@ public class MainActivity extends AppCompatActivity implements OnClickPassData {
 
     @Override
     public void onClickPassData(int reportId) {
+        // Remove from AVL Tree
         avlTree.remove(reportId);
+
+        // Remove from reportList
+        reportList.removeIf(report -> report.getReportId() == reportId);
+
+        // Remove from loadedReports
+        loadedReports.removeIf(report -> report.getReportId() == reportId);
+
+        // Notify adapter to update view
+        adapterSort.notifyDataSetChanged();
     }
 }
