@@ -7,25 +7,36 @@ import java.util.List;
 
 public class Parser {
 
-    public static List<Report> parse(List<String> tokens, List<Report> reports) {
+    public static List<Report> parseWithGrammar(List<String> tokens, List<Report> reports) {
         List<Report> results = new ArrayList<>(reports);
 
-        // Iterate through tokens and filter based on grammar
+        // Separate key-value pairs from general tokens
+        List<String> keyValueTokens = new ArrayList<>();
+        List<String> generalTokens = new ArrayList<>();
+
         for (String token : tokens) {
             if (token.contains(":")) {
-                // Split the grammar element into key and value
-                String[] keyValue = token.split(":", 2);
-                if (keyValue.length == 2) {
-                    String key = keyValue[0].trim();
-                    String value = keyValue[1].trim();
-
-                    // Filter based on the key (attribute)
-                    results = filterByKeyValue(key, value, results);
-                }
+                keyValueTokens.add(token);
             } else {
-                // If it's not a key-value pair, it's a general search term
-                results = filterByGeneralToken(token, results);
+                generalTokens.add(token);
             }
+        }
+
+        // Apply key-value pair filters first
+        for (String keyValueToken : keyValueTokens) {
+            String[] keyValue = keyValueToken.split(":", 2);
+            if (keyValue.length == 2) {
+                String key = keyValue[0].trim();
+                String value = keyValue[1].trim();
+
+
+                results = filterByKeyValue(key, value, results);
+            }
+        }
+
+        // Apply general tokens filter
+        for (String token : generalTokens) {
+            results = filterByGeneralToken(token, results);
         }
 
         return results;
@@ -47,7 +58,7 @@ public class Parser {
                     }
                     break;
                 case "priority":
-                    if (report.getPriority().toString().toLowerCase().equals(value)) {
+                    if (report.getPriority().toString().toLowerCase().contains(value)) {
                         filteredReports.add(report);
                     }
                     break;

@@ -178,26 +178,26 @@ public class MainActivity extends AppCompatActivity {
 
     // Function to filter the reports based on the search query
     private void searchReports(String query) {
-        Log.d("SearchReports", "Search query: " + query);
+
 
         AVLTree<Report> filteredAVLTree = new AVLTree<>();
 
         if (query.isEmpty()) {
             // If the query is empty, use the original data
-            Log.d("SearchReports", "Query is empty, using original list.");
+
             for (Report report : originalList) {
                 filteredAVLTree.put(report.getReportId(), report);
             }
         } else {
             // Tokenize the query and filter reports using the original list
             List<String> tokens = Tokenizer.tokenize(query);
-            Log.d("SearchReports", "Tokens: " + tokens);
 
-            List<Report> filteredReports = Parser.parse(tokens, originalList); // Filter reports based on tokens
-            Log.d("SearchReports", "Filtered Reports Count: " + filteredReports.size());
+
+            List<Report> filteredReports = Parser.parseWithGrammar(tokens, originalList); // Filter reports based on tokens
+
 
             for (Report report : filteredReports) {
-                Log.d("SearchReports", "Filtered Report: " + report.getDescription());
+
                 filteredAVLTree.put(report.getReportId(), report);
             }
         }
