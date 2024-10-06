@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
     User user;
     ActivityResultLauncher<Intent> register;
     Thread streamThread;
+    ImageButton menuNotifications;
+
     private static final LocalTime MORNING = LocalTime.of(6, 0);
     private static final LocalTime NOON = LocalTime.of(11, 0);
     private static final LocalTime AFTERNOON = LocalTime.of(13, 0);
@@ -87,6 +89,15 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        menuNotifications = findViewById(R.id.menu_notifications);
+        menuNotifications.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Open the NotificationActivity when the button is clicked
+                Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
+                startActivity(intent);
+            }
+        });
 
         addReportButton = findViewById(R.id.add_report_button);
         addReportButton.setOnClickListener(new View.OnClickListener() {
@@ -96,6 +107,8 @@ public class MainActivity extends AppCompatActivity {
                 register.launch(intent);
             }
         });
+
+
 
         menuDashboard = (ImageButton) findViewById(R.id.menu_dashboard);
 
@@ -206,4 +219,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return reportList;
     }
+
 }
