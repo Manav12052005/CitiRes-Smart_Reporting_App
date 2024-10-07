@@ -16,7 +16,7 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryChartActivity extends ChartActivity {
+public class CategoryChartActivity extends BaseActivity {
 
     private PieChart pieChart;
     private List<String> categories;

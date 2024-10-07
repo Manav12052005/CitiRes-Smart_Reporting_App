@@ -1,7 +1,6 @@
 package com.example.prototype;
 
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -17,9 +16,8 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-public class PriorityChartActivity extends ChartActivity {
+public class PriorityChartActivity extends BaseActivity {
 
     private BarChart barChart;
     private int lowCount;

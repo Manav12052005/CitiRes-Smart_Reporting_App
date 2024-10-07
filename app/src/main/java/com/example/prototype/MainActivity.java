@@ -30,12 +30,9 @@ import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class MainActivity extends AppCompatActivity implements OnClickPassData {
-    AVLTree<Report> avlTree = new AVLTree<>();
+public class MainActivity extends BaseActivity implements OnClickPassData {
     ReportAdapterSort adapterSort;
     ListView listView;
     Spinner sortSpinner;
@@ -64,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements OnClickPassData {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setChildContentView(R.layout.activity_main);
 
         listView = findViewById(R.id.reports_list);
         searchView = findViewById(R.id.search_view);
@@ -73,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements OnClickPassData {
         loadedReports = loadData("reports_dataset.json");
 
         for (Report report : loadedReports) {
-            avlTree.put(report.getReportId(), report);
+            DataHolder.avlTree.put(report.getReportId(), report);
         }
 
         reportList.addAll(loadedReports);
@@ -109,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements OnClickPassData {
                         reportList.add(0, addedReport);
                         loadedReports.add(0,addedReport);
                         adapterSort = new ReportAdapterSort(MainActivity.this, new ArrayList<>(loadedReports), MainActivity.this);
-                        avlTree.put(addedReport.getReportId(), addedReport);
+                        DataHolder.avlTree.put(addedReport.getReportId(), addedReport);
                         adapterSort.notifyDataSetChanged();
                         listView.setAdapter(adapterSort);
                     }
@@ -142,18 +139,9 @@ public class MainActivity extends AppCompatActivity implements OnClickPassData {
         menuReports.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Get priority counts
-                Map<String, Integer> priorityCounts = getPriorityCounts();
-
                 // Create an Intent to start PriorityChartActivity
-                Intent intent = new Intent(MainActivity.this, PriorityChartActivity.class);
+                Intent intent = new Intent(MainActivity.this, ChartActivity.class);
 
-                // Pass the counts via Intent extras
-                intent.putExtra("LOW_COUNT", priorityCounts.get("LOW"));
-                intent.putExtra("MIDDLE_COUNT", priorityCounts.get("MIDDLE"));
-                intent.putExtra("HIGH_COUNT", priorityCounts.get("HIGH"));
-
-                startActivity(intent);
             }
         });
 
@@ -353,7 +341,7 @@ public class MainActivity extends AppCompatActivity implements OnClickPassData {
     @Override
     public void onClickPassData(int reportId) {
         // Remove from AVL Tree
-        avlTree.remove(reportId);
+        DataHolder.avlTree.remove(reportId);
 
         // Remove from reportList
         reportList.removeIf(report -> report.getReportId() == reportId);
@@ -363,44 +351,6 @@ public class MainActivity extends AppCompatActivity implements OnClickPassData {
 
         // Notify adapter to update view
         adapterSort.notifyDataSetChanged();
-    }
-
-    private Map<String, Integer> getPriorityCounts() {
-        Map<String, Integer> priorityCounts = new HashMap<>();
-        priorityCounts.put("LOW", 0);
-        priorityCounts.put("MIDDLE", 0);
-        priorityCounts.put("HIGH", 0);
-
-        List<Report> reports = avlTree.fromSmallToLarge(); // Get all reports from the AVL tree
-
-        for (Report report : reports) {
-            String priority = report.getPriority().toString();
-            int count = priorityCounts.getOrDefault(priority, 0);
-            priorityCounts.put(priority, count + 1);
-        }
-
-        return priorityCounts;
-    }
-
-    private Map<String, Integer> getCategoryCounts() {
-        Map<String, Integer> categoryCounts = new HashMap<>();
-
-        // Initialize all categories with 0 count
-        for (Category category : Category.values()) {
-            categoryCounts.put(category.toString(), 0);
-        }
-
-        // Retrieve all reports from the AVL tree
-        List<Report> reports = avlTree.fromSmallToLarge();
-
-        // Count the number of reports in each category
-        for (Report report : reports) {
-            String category = report.getCategory().toString();
-            // Increment the count for the corresponding category
-            categoryCounts.put(category, categoryCounts.get(category) + 1);
-        }
-
-        return categoryCounts;
     }
 
 
