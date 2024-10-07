@@ -18,7 +18,7 @@ import androidx.core.content.ContextCompat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReportAdapterSort extends ArrayAdapter<Report> {
+public class ReportAdapter extends ArrayAdapter<Report> {
     private Context context;
     private List<Report> reports;
     TextView description;
@@ -29,7 +29,7 @@ public class ReportAdapterSort extends ArrayAdapter<Report> {
     ImageView locationIcon;
     private OnClickPassData listener;
 
-    public ReportAdapterSort(Context context, List<Report> reports, OnClickPassData listener) {
+    public ReportAdapter(Context context, List<Report> reports, OnClickPassData listener) {
         super(context, 0, reports);
         this.context = context;
         this.reports = reports;

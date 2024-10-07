@@ -34,7 +34,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements OnClickPassData {
     AVLTree<Report> avlTree = new AVLTree<>();
-    ReportAdapterSort adapterSort;
+    ReportAdapter adapterSort;
     ListView listView;
     Spinner sortSpinner;
     ImageButton menuDashboard;
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements OnClickPassData {
 
         reportList.addAll(loadedReports);
 
-        adapterSort = new ReportAdapterSort(this, reportList, this);
+        adapterSort = new ReportAdapter(this, reportList, this);
         listView.setAdapter(adapterSort);
 
         // Setup Spinner for sorting
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements OnClickPassData {
                         Report addedReport = (Report) intent.getSerializableExtra("added_report", Report.class);
                         reportList.add(0, addedReport);
                         loadedReports.add(0,addedReport);
-                        adapterSort = new ReportAdapterSort(MainActivity.this, new ArrayList<>(loadedReports), MainActivity.this);
+                        adapterSort = new ReportAdapter(MainActivity.this, new ArrayList<>(loadedReports), MainActivity.this);
                         avlTree.put(addedReport.getReportId(), addedReport);
                         adapterSort.notifyDataSetChanged();
                         listView.setAdapter(adapterSort);
@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements OnClickPassData {
             public boolean onQueryTextChange(String newText) {
                 if (newText.isEmpty()) {
                     // If search query is empty, reset the adapter to the original list
-                    adapterSort = new ReportAdapterSort(MainActivity.this, new ArrayList<>(loadedReports), MainActivity.this);
+                    adapterSort = new ReportAdapter(MainActivity.this, new ArrayList<>(loadedReports), MainActivity.this);
                     listView.setAdapter(adapterSort);
                     adapterSort.notifyDataSetChanged();
                 } else {
@@ -229,7 +229,7 @@ public class MainActivity extends AppCompatActivity implements OnClickPassData {
         }
 
 
-        adapterSort = new ReportAdapterSort(this, filteredList, this);
+        adapterSort = new ReportAdapter(this, filteredList, this);
         listView.setAdapter(adapterSort);
 
         adapterSort.notifyDataSetChanged();
@@ -239,42 +239,42 @@ public class MainActivity extends AppCompatActivity implements OnClickPassData {
         switch (position) {
             case 0: // Default
                 // Reset the adapter to use the original list
-                adapterSort = new ReportAdapterSort(MainActivity.this, new ArrayList<>(reportList), MainActivity.this);
+                adapterSort = new ReportAdapter(MainActivity.this, new ArrayList<>(reportList), MainActivity.this);
                 listView.setAdapter(adapterSort);
                 adapterSort.notifyDataSetChanged();
                 break;
             case 1: // Sort by Date (newest First)
                 List<Report> sortedListNewest = new ArrayList<>(reportList);
                 sortedListNewest.sort((report1, report2) -> report2.getLocalDateTime().compareTo(report1.getLocalDateTime()));
-                adapterSort = new ReportAdapterSort(this, sortedListNewest, this);
+                adapterSort = new ReportAdapter(this, sortedListNewest, this);
                 listView.setAdapter(adapterSort);
                 adapterSort.notifyDataSetChanged();
                 break;
             case 2: // Sort by Date (oldest First)
                 List<Report> sortedListOldest = new ArrayList<>(reportList);
                 sortedListOldest.sort((report1, report2) -> report1.getLocalDateTime().compareTo(report2.getLocalDateTime()));
-                adapterSort = new ReportAdapterSort(this, sortedListOldest, this);
+                adapterSort = new ReportAdapter(this, sortedListOldest, this);
                 listView.setAdapter(adapterSort);
                 adapterSort.notifyDataSetChanged();
                 break;
             case 3: // Sort by Priority (High to Low)
                 List<Report> sortedListHighToLow = new ArrayList<>(reportList);
                 sortedListHighToLow.sort((report1, report2) -> comparePriority(report2.getPriority(), report1.getPriority()));
-                adapterSort = new ReportAdapterSort(this, sortedListHighToLow, this);
+                adapterSort = new ReportAdapter(this, sortedListHighToLow, this);
                 listView.setAdapter(adapterSort);
                 adapterSort.notifyDataSetChanged();
                 break;
             case 4: // Sort by Priority (Low to High)
                 List<Report> sortedListLowToHigh = new ArrayList<>(reportList);
                 sortedListLowToHigh.sort((report1, report2) -> comparePriority(report1.getPriority(), report2.getPriority()));
-                adapterSort = new ReportAdapterSort(this, sortedListLowToHigh, this);
+                adapterSort = new ReportAdapter(this, sortedListLowToHigh, this);
                 listView.setAdapter(adapterSort);
                 adapterSort.notifyDataSetChanged();
                 break;
             case 5: // Sort by Likes (most liked first)
                 List<Report> sortedListMostLiked = new ArrayList<>(reportList);
                 sortedListMostLiked.sort((report1, report2) -> Integer.compare(report2.getLikes(), report1.getLikes()));
-                adapterSort = new ReportAdapterSort(this, sortedListMostLiked, this);
+                adapterSort = new ReportAdapter(this, sortedListMostLiked, this);
                 listView.setAdapter(adapterSort);
                 adapterSort.notifyDataSetChanged();
                 break;
@@ -307,7 +307,7 @@ public class MainActivity extends AppCompatActivity implements OnClickPassData {
 
     public List<Report> loadData(String fileName) {
 
-        GsonBuilder gsonBuilder = new GsonBuilder().registerTypeAdapter(Report.class, new ReportAdapterJson());
+        GsonBuilder gsonBuilder = new GsonBuilder().registerTypeAdapter(Report.class, new JsonDeserialiser());
         Gson gson = gsonBuilder.create();
 
         List<Report> reportList = new ArrayList<>();
