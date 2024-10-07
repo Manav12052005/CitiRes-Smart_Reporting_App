@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements OnClickPassData {
     ActivityResultLauncher<Intent> register;
     Thread streamThread;
     ImageButton menuNotifications;
+    TextView reportText;
 
     private static final LocalTime MORNING = LocalTime.of(6, 0);
     private static final LocalTime NOON = LocalTime.of(11, 0);
@@ -67,10 +68,11 @@ public class MainActivity extends AppCompatActivity implements OnClickPassData {
 
         loadedReports = loadData("reports_dataset.json");
 
+        reportText = findViewById(R.id.reportText);
+
         for (Report report : loadedReports) {
             avlTree.put(report.getReportId(), report);
         }
-
 
         reportList.addAll(loadedReports);
 
@@ -103,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements OnClickPassData {
                     if (intent != null && result.getResultCode() == RESULT_OK) {
                         Report addedReport = (Report) intent.getSerializableExtra("added_report", Report.class);
                         reportList.add(0, addedReport);
-                        loadedReports.add(0,addedReport);
+                        loadedReports.add(0, addedReport);
                         adapterSort = new ReportAdapter(MainActivity.this, new ArrayList<>(loadedReports), MainActivity.this);
                         avlTree.put(addedReport.getReportId(), addedReport);
                         adapterSort.notifyDataSetChanged();
@@ -177,12 +179,12 @@ public class MainActivity extends AppCompatActivity implements OnClickPassData {
     private void startStreamThread() {
         streamThread = new Thread(() -> {
             while (true) {
-                applyTheme();
                 try {
-                    Thread.sleep(60 * 1000);
+                    Thread.sleep(10 * 1000); // Initial delay
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
+                applyTheme();
             }
         });
         streamThread.start();
@@ -191,6 +193,9 @@ public class MainActivity extends AppCompatActivity implements OnClickPassData {
     private void applyTheme() {
         LocalTime currentTime = LocalDateTime.now().toLocalTime();
         streamText = findViewById(R.id.streamText);
+        runOnUiThread(() -> {
+            reportText.setText("There are " + avlTree.size() + " reports in total");
+        });
 
         if (currentTime.isAfter(MORNING) && currentTime.isBefore(NOON)) {
             runOnUiThread(() -> {

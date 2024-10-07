@@ -160,7 +160,7 @@ public class AVLTree<R> {
     }
 
     private void inOrder(AVLNode node, List<Report> result) {
-        if(node == null){
+        if (node == null) {
             return;
         }
         inOrder(node.left, result);
@@ -212,5 +212,4 @@ public class AVLTree<R> {
     public int size() {
         return this.fromLargeToSmall().size();
     }
-
 }
