@@ -1,4 +1,4 @@
-pluginManagement {
+    pluginManagement {
     repositories {
         google {
             content {
@@ -8,6 +8,7 @@ pluginManagement {
             }
         }
         mavenCentral()
+
         gradlePluginPortal()
     }
 }
@@ -16,6 +17,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url 'https://jitpack.io' } // Adding this line
     }
 }
 

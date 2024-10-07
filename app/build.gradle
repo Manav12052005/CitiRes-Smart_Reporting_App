@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace 'com.example.prototype'
-    compileSdk 34
+    compileSdk 35
 
     defaultConfig {
         applicationId "com.example.prototype"
@@ -29,6 +29,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    buildToolsVersion '35.0.0'
 }
 
 dependencies {
@@ -39,7 +40,7 @@ dependencies {
     implementation libs.constraintlayout
     implementation 'com.google.code.gson:gson:2.11.0'
     implementation 'com.google.android.gms:play-services-location:21.0.1'
-
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
