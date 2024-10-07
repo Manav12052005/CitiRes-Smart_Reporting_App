@@ -26,8 +26,10 @@ public class ReportAdapter extends ArrayAdapter<Report> {
     TextView priority;
     TextView category;
     TextView user;
+    TextView id;
     ImageView locationIcon;
     private OnClickPassData listener;
+
 
     public ReportAdapter(Context context, List<Report> reports, OnClickPassData listener) {
         super(context, 0, reports);
@@ -53,6 +55,9 @@ public class ReportAdapter extends ArrayAdapter<Report> {
         location.setText(report.getLocation());
 
         locationIcon = listItem.findViewById(R.id.location_icon);
+
+        id = (TextView) listItem.findViewById(R.id.id_text);
+        id.setText("id: " + report.getReportId());
 
         Button deleteButton = listItem.findViewById(R.id.delete);
         deleteButton.setOnClickListener(new View.OnClickListener() {
