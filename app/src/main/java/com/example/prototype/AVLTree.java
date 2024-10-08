@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AVLTree<R> {
-    static class AVLNode {
+    class AVLNode {
         int key;
-        Report value;
+        R value;
         AVLNode left;
         AVLNode right;
         int height = 1;
 
-        public AVLNode(int key, Report value) {
+        public AVLNode(int key, R value) {
             this.key = key;
             this.value = value;
         }
@@ -98,11 +98,11 @@ public class AVLTree<R> {
 
     AVLNode root;
 
-    public void put(int key, Report value) {
+    public void put(int key, R value) {
         root = doPut(root, key, value);
     }
 
-    private AVLNode doPut(AVLNode node, int key, Report value) {
+    private AVLNode doPut(AVLNode node, int key, R value) {
         if (node == null) {
             return new AVLNode(key, value);
         }
@@ -119,11 +119,11 @@ public class AVLTree<R> {
         return balance(node);
     }
 
-    public Report get(int key) {
+    public R get(int key) {
         return doGet(root, key);
     }
 
-    private Report doGet(AVLNode node, int key) {
+    private R doGet(AVLNode node, int key) {
         if (node == null) {
             return null; // Key not found
         }
@@ -137,7 +137,7 @@ public class AVLTree<R> {
         }
     }
 
-    public void reverseInOrder(AVLNode node, List<Report> result) {
+    public void reverseInOrder(AVLNode node, List<R> result) {
         if (node == null) {
             return;
         }
@@ -147,19 +147,13 @@ public class AVLTree<R> {
     }
 
     // traverse the tree from largest key to the smallest key
-    public List<Report> fromLargeToSmall() {
-        List<Report> result = new ArrayList<>();
+    public List<R> fromLargeToSmall() {
+        List<R> result = new ArrayList<>();
         reverseInOrder(root, result);
         return result;
     }
 
-    public List<Report> fromSmallToLarge() {
-        List<Report> result = new ArrayList<>();
-        inOrder(root, result);
-        return result;
-    }
-
-    private void inOrder(AVLNode node, List<Report> result) {
+    private void inOrder(AVLNode node, List<R> result) {
         if (node == null) {
             return;
         }
