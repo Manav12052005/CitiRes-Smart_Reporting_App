@@ -180,7 +180,7 @@ public class MainActivity extends BaseActivity implements Observer {
     private void startStreamThread() {
         streamThread = new Thread(() -> {
             // Load reports from the data stream (JSON file)
-            List<Report> reports = loadData("datastream.json");
+            List<Report> reports = loadData("streams_dataset.json");
 
             for (int i = 0; i < reports.size(); i++) {
                 try {
@@ -198,6 +198,7 @@ public class MainActivity extends BaseActivity implements Observer {
                     adapterSort = new ReportAdapter(MainActivity.this, new ArrayList<>(loadedReports), MainActivity.this);
                     DataHolder.avlTree.put(report.getReportId(), report);
                     runOnUiThread(() -> {
+                        reportCount.setText("There are " + DataHolder.avlTree.size() + " posts in total, " + getPostsToday() + " new posts today");
                         adapterSort.notifyDataSetChanged();
                         listView.setAdapter(adapterSort);
                     });
@@ -209,7 +210,7 @@ public class MainActivity extends BaseActivity implements Observer {
 
     private void applyStream() {
         runOnUiThread(() -> {
-            reportCount.setText("There are " + DataHolder.avlTree.size() + " posts in total, " + getPostsToday() + " new posts today");
+
         });
     }
 

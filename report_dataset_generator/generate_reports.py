@@ -16,7 +16,8 @@ descriptions = [
     "Noise pollution from nearby construction site.",
     "Broken swing set in Greenwood Playground.",
     "Unattended litter around the central fountain.",
-    "Fallen tree branch blocking the sidewalk on Pine Road."
+    "Fallen tree branch blocking the sidewalk on Pine Road.",
+    ""
 ]
 
 locations = [
