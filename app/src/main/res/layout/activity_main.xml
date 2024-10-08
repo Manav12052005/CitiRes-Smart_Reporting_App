@@ -6,6 +6,8 @@
     android:layout_height="match_parent">
 
     <!-- Main Content -->
+
+    <!-- Bottom Navigation Menu -->
     <LinearLayout
         android:id="@+id/content_layout"
         android:layout_width="match_parent"
@@ -16,31 +18,15 @@
             android:id="@+id/dashboard_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/lavender"
+            android:gravity="center"
             android:padding="10dp"
             android:text="@string/dashboard"
             android:textSize="24sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:background="@color/lavender" />
+            android:textStyle="bold" />
 
         <!-- Other UI components like TextViews, Spinners, SearchView, ListView, etc. -->
         <!-- Remove the Bottom Navigation Menu from this layout -->
-
-        <TextView
-            android:id="@+id/streamText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textSize="14sp"
-            android:textStyle="italic" />
-
-        <TextView
-            android:id="@+id/reportText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textSize="14sp"
-            android:textStyle="normal" />
 
         <Spinner
             android:id="@+id/sortSpinner"
@@ -71,7 +57,6 @@
 
     </LinearLayout>
 
-    <!-- Bottom Navigation Menu -->
     <LinearLayout
         android:id="@+id/bottom_nav"
         android:layout_width="0dp"

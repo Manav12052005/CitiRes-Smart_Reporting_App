@@ -72,8 +72,6 @@ public class MainActivity extends BaseActivity implements OnClickPassData {
 
         loadedReports = loadData("reports_dataset.json");
 
-        reportText = findViewById(R.id.reportText);
-
         for (Report report : loadedReports) {
             DataHolder.avlTree.put(report.getReportId(), report);
         }
@@ -85,8 +83,8 @@ public class MainActivity extends BaseActivity implements OnClickPassData {
 
         // Setup Spinner for sorting
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,
-                new String[]{"Default", "Sort by Date (newest First)", "Sort by Date (oldest First)", "Sort by Priority (High to Low)",
-                        "Sort by Priority (Low to High)", "Sort by Likes (most liked first)"});
+                new String[]{"Default", "Sort by Date (Newest First)", "Sort by Date (Oldest First)", "Sort by Priority (High to Low)",
+                        "Sort by Priority (Low to High)", "Sort by Likes (Most Liked First)"});
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sortSpinner.setAdapter(spinnerAdapter);
 
@@ -175,41 +173,11 @@ public class MainActivity extends BaseActivity implements OnClickPassData {
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-                applyTheme();
             }
         });
         streamThread.start();
     }
 
-    private void applyTheme() {
-        LocalTime currentTime = LocalDateTime.now().toLocalTime();
-        streamText = findViewById(R.id.streamText);
-        runOnUiThread(() -> {
-            reportText.setText("Hello, " + username + "There are " + DataHolder.avlTree.size() + " posts in total, " + getPostsToday() + " new posts today");
-        });
-
-        if (currentTime.isAfter(MORNING) && currentTime.isBefore(NOON)) {
-            runOnUiThread(() -> {
-                streamText.setText(R.string.morning);
-            });
-        } else if (currentTime.isAfter(NOON) && currentTime.isBefore(AFTERNOON)) {
-            runOnUiThread(() -> {
-                streamText.setText(R.string.noon);
-            });
-        } else if (currentTime.isAfter(AFTERNOON) && currentTime.isBefore(EVENING)) {
-            runOnUiThread(() -> {
-                streamText.setText(R.string.afternoon);
-            });
-        } else if (currentTime.isAfter(EVENING) && currentTime.isBefore(NIGHT)) {
-            runOnUiThread(() -> {
-                streamText.setText(R.string.evening);
-            });
-        } else {
-            runOnUiThread(() -> {
-                streamText.setText(R.string.night);
-            });
-        }
-    }
 
     // Function to filter the reports based on the search query
     private void searchReports(String query) {
