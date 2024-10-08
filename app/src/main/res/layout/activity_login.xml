@@ -34,7 +34,8 @@
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="36sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:fontFamily="@font/poppins"/>
 
             <EditText
                 android:id="@+id/username"
@@ -49,7 +50,8 @@
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:fontFamily="@font/poppins"/>
 
 
             <EditText
@@ -66,7 +68,8 @@
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/username" />
+                app:layout_constraintTop_toBottomOf="@id/username"
+                android:fontFamily="@font/poppins"/>
 
             <Button
                 android:id="@+id/login_button"
@@ -76,6 +79,7 @@
                 android:backgroundTint="@color/black"
                 android:text="Login"
                 android:textSize="18dp"
+                android:fontFamily="@font/poppins"
 
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"

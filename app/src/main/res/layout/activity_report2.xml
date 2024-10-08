@@ -17,7 +17,8 @@
             android:layout_height="wrap_content"
             android:text="@string/location"
             android:textStyle="bold"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins"/>
 
         <TextView
             android:id="@+id/textview_location"
@@ -25,7 +26,8 @@
             android:layout_height="wrap_content"
             android:text="@string/retrieving_gps_location"
             android:layout_marginBottom="16dp"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins"/>
 
         <!-- Category Dropdown -->
         <TextView
@@ -33,13 +35,15 @@
             android:layout_height="wrap_content"
             android:text="@string/category"
             android:textStyle="bold"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins"/>
 
         <Spinner
             android:id="@+id/spinner_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
+            android:fontFamily="@font/poppins"
             />
 
         <!-- Priority Dropdown -->
@@ -48,13 +52,15 @@
             android:layout_height="wrap_content"
             android:text="@string/priority"
             android:textStyle="bold"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins"/>
 
         <Spinner
             android:id="@+id/spinner_priority"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/poppins"/>
 
         <!-- Task Description -->
         <TextView
@@ -62,14 +68,16 @@
             android:layout_height="wrap_content"
             android:text="@string/description"
             android:textStyle="bold"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins"/>
 
         <EditText
             android:id="@+id/edittext_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/enter_task_description"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/poppins"/>
 
         <!-- Submit Button -->
         <Button
@@ -78,7 +86,8 @@
             android:layout_height="wrap_content"
             android:text="@string/submit_report"
             android:textColor="@color/white"
-            android:backgroundTint="@color/black"/>
+            android:backgroundTint="@color/black"
+            android:fontFamily="@font/poppins"/>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
