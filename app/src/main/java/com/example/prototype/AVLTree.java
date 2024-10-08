@@ -1,6 +1,5 @@
 package com.example.prototype;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -120,6 +119,24 @@ public class AVLTree<R> {
         return balance(node);
     }
 
+    public Report get(int key) {
+        return doGet(root, key);
+    }
+
+    private Report doGet(AVLNode node, int key) {
+        if (node == null) {
+            return null; // Key not found
+        }
+
+        if (key < node.key) {
+            return doGet(node.left, key);
+        } else if (key > node.key) {
+            return doGet(node.right, key);
+        } else {
+            return node.value;
+        }
+    }
+
     public void reverseInOrder(AVLNode node, List<Report> result) {
         if (node == null) {
             return;
@@ -143,7 +160,7 @@ public class AVLTree<R> {
     }
 
     private void inOrder(AVLNode node, List<Report> result) {
-        if(node == null){
+        if (node == null) {
             return;
         }
         inOrder(node.left, result);
@@ -192,9 +209,7 @@ public class AVLTree<R> {
         return balance(node);
     }
 
-
     public int size() {
         return this.fromLargeToSmall().size();
     }
-
 }

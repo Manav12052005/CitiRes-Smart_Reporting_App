@@ -34,6 +34,13 @@
             android:textSize="14sp"
             android:textStyle="italic" />
 
+        <TextView
+            android:id="@+id/reportText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="14sp"
+            android:textStyle="normal" />
 
         <Spinner
             android:id="@+id/sortSpinner"
