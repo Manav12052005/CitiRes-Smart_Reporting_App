@@ -9,7 +9,7 @@ import com.google.gson.JsonParseException;
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 
-public class ReportAdapterJson implements JsonDeserializer<Report> {
+public class JsonDeserialiser implements JsonDeserializer<Report> {
     @Override
     public Report deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
         JsonObject jsonObject = jsonElement.getAsJsonObject();

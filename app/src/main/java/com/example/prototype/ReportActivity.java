@@ -18,12 +18,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
 import java.io.IOException;
+
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+
 import android.location.Address;
 import android.location.Geocoder;
+
 import java.util.List;
 import java.util.Locale;
 
@@ -147,7 +151,7 @@ public class ReportActivity extends Activity {
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         List<Address> addresses = null;
         try {
-            addresses = geocoder.getFromLocation(latitude,longitude,1);
+            addresses = geocoder.getFromLocation(latitude, longitude, 1);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -176,4 +180,6 @@ public class ReportActivity extends Activity {
             setResult(Activity.RESULT_OK, intent);
             Toast.makeText(getApplicationContext(), "Task saved!", Toast.LENGTH_SHORT).show();
             finish();
-}}}
+        }
+    }
+}
