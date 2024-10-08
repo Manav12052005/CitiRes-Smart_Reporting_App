@@ -88,6 +88,7 @@ public class ChartActivity extends BaseActivity {
         });
 
     }
+
     private Map<String, Integer> getPriorityCounts() {
         Map<String, Integer> priorityCounts = new HashMap<>();
         priorityCounts.put("LOW", 0);

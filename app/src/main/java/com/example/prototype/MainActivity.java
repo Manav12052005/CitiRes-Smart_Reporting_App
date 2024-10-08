@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -99,7 +100,7 @@ public class MainActivity extends BaseActivity implements OnClickPassData {
             }
         });
 
-        username = getIntent().getStringExtra("USER");
+
 
         register = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
@@ -119,12 +120,13 @@ public class MainActivity extends BaseActivity implements OnClickPassData {
             }
         });
 
+        username = getIntent().getStringExtra("USER");
+
         addReportButton = findViewById(R.id.add_report_button);
         addReportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ReportActivity.class);
-                intent.putExtra("USER", username);
                 register.launch(intent);
             }
         });
