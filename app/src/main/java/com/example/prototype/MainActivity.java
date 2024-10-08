@@ -1,5 +1,7 @@
 package com.example.prototype;
 
+import static com.example.prototype.TimeUtil.isToday;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,7 +13,6 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -39,28 +40,14 @@ public class MainActivity extends BaseActivity implements OnClickPassData {
     ReportAdapter adapterSort;
     ListView listView;
     Spinner sortSpinner;
-    ImageButton menuDashboard;
-    ImageButton menuSearch;
     SearchView searchView;
     List<Report> reportList = new ArrayList<>();  // To store original reports
     Button addReportButton;
     List<Report> loadedReports;
-    TextView title;
-    TextView streamText;
     String username;
     ActivityResultLauncher<Intent> register;
     Thread streamThread;
-    ImageButton menuNotifications;
-    // Declare the reports button
-    ImageButton menuReports;
-    TextView reportText;
-
-
-    private static final LocalTime MORNING = LocalTime.of(6, 0);
-    private static final LocalTime NOON = LocalTime.of(11, 0);
-    private static final LocalTime AFTERNOON = LocalTime.of(13, 0);
-    private static final LocalTime EVENING = LocalTime.of(18, 0);
-    private static final LocalTime NIGHT = LocalTime.of(22, 0);
+    TextView reportCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +87,7 @@ public class MainActivity extends BaseActivity implements OnClickPassData {
             }
         });
 
-
+        username = getIntent().getStringExtra("USER");
 
         register = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
@@ -120,13 +107,14 @@ public class MainActivity extends BaseActivity implements OnClickPassData {
             }
         });
 
-        username = getIntent().getStringExtra("USER");
+        reportCount = findViewById(R.id.report_count);
 
         addReportButton = findViewById(R.id.add_report_button);
         addReportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ReportActivity.class);
+                intent.putExtra("USER", username);
                 register.launch(intent);
             }
         });
@@ -166,7 +154,6 @@ public class MainActivity extends BaseActivity implements OnClickPassData {
         super.onStop();
     }
 
-
     private void startStreamThread() {
         streamThread = new Thread(() -> {
             while (true) {
@@ -175,11 +162,17 @@ public class MainActivity extends BaseActivity implements OnClickPassData {
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
+                applyStream();
             }
         });
         streamThread.start();
     }
 
+    private void applyStream() {
+        runOnUiThread(() -> {
+            reportCount.setText("There are " + DataHolder.avlTree.size() + " posts in total, " + getPostsToday() + " new posts today");
+        });
+    }
 
     // Function to filter the reports based on the search query
     private void searchReports(String query) {
@@ -308,18 +301,11 @@ public class MainActivity extends BaseActivity implements OnClickPassData {
         int count = 0;
         List<Report> reports = DataHolder.avlTree.fromLargeToSmall();
         for (Report report : reports) {
-            String name = null;
             if (isToday(report.getLocalDateTime())) {
                 count++;
             }
         }
         return count;
-    }
-
-    public static boolean isToday(LocalDateTime time) {
-        LocalDate today = LocalDate.now();
-        LocalDate date = time.toLocalDate();
-        return date.equals(today);
     }
 }
 
