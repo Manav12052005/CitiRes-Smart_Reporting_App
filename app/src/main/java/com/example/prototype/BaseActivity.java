@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -48,17 +49,18 @@ public class BaseActivity extends AppCompatActivity {
         menuDashboard.setOnClickListener(v -> {
             // Navigate to DashboardActivity or handle dashboard functionality
             Toast.makeText(this, "Dashboard Clicked", Toast.LENGTH_SHORT).show();
-            // Example:
-            // Intent intent = new Intent(ChartActivity.this, DashboardActivity.class);
-            // startActivity(intent);
+            // Create an Intent to start MainActivity
+            Intent intent = new Intent(BaseActivity.this, MainActivity.class);
+            startActivity(intent);
         });
 
         menuSearch.setOnClickListener(v -> {
             // Navigate to SearchActivity
             Toast.makeText(this, "Search Clicked", Toast.LENGTH_SHORT).show();
-            // Example:
-            // Intent intent = new Intent(ChartActivity.this, SearchActivity.class);
-            // startActivity(intent);
+            // Create an Intent to start MainActivity
+            Intent intent = new Intent(BaseActivity.this, MainActivity.class);
+            startActivity(intent);
+            
         });
 
         menuNotifications.setOnClickListener(v -> {
@@ -72,27 +74,9 @@ public class BaseActivity extends AppCompatActivity {
         menuReports.setOnClickListener(v -> {
             // Navigate to ReportsActivity or another ChartActivity
             Toast.makeText(this, "Reports Clicked", Toast.LENGTH_SHORT).show();
-            // Example:
-            // Intent intent = new Intent(ChartActivity.this, ReportsActivity.class);
-            // startActivity(intent);
-        });
-
-        // Initialize the reports button
-        menuReports = findViewById(R.id.menu_reports);
-
-        // Set an OnClickListener to navigate to PriorityChartActivity
-        menuReports.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-                // Create an Intent to start PriorityChartActivity
-                Intent intent = new Intent(BaseActivity.this, ChartActivity.class);
-
-
-
-                startActivity(intent);
-            }
+            // Create an Intent to start PriorityChartActivity
+            Intent intent = new Intent(BaseActivity.this, ChartActivity.class);
+            startActivity(intent);
         });
     }
 
