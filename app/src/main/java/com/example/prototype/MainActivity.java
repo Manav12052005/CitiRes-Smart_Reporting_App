@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -157,15 +158,50 @@ public class MainActivity extends BaseActivity implements Observer {
         super.onStop();
     }
 
+//    private void startStreamThread() {
+//        streamThread = new Thread(() -> {
+//            List<Report> reports = loadData("datastream.json");
+//
+//            for (int i = 0; i < reports.size(); i++) {
+//
+//                {
+//                    try {
+//                        Thread.sleep(5 * 1000); // Initial delay
+//                    } catch (InterruptedException e) {
+//                        throw new RuntimeException(e);
+//                    }
+//                    applyStream();
+//                }
+//            });
+//            streamThread.start();
+//        }
+//    }
+
     private void startStreamThread() {
         streamThread = new Thread(() -> {
-            while (true) {
+            // Load reports from the data stream (JSON file)
+            List<Report> reports = loadData("datastream.json");
+
+            for (int i = 0; i < reports.size(); i++) {
                 try {
-                    Thread.sleep(5 * 1000); // Initial delay
+                    // Wait for 5 seconds between processing each report
+                    Thread.sleep(15 * 1000);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-                applyStream();
+                Report report = reports.get(i);
+                int reportId = report.getReportId();
+                if (DataHolder.avlTree.get(reportId) == null) {
+                    report.setLocalDateTime(LocalDateTime.now());
+                    reportList.add(0, report);
+                    loadedReports.add(0, report);
+                    adapterSort = new ReportAdapter(MainActivity.this, new ArrayList<>(loadedReports), MainActivity.this);
+                    DataHolder.avlTree.put(report.getReportId(), report);
+                    runOnUiThread(() -> {
+                        adapterSort.notifyDataSetChanged();
+                        listView.setAdapter(adapterSort);
+                    });
+                }
             }
         });
         streamThread.start();
@@ -185,7 +221,6 @@ public class MainActivity extends BaseActivity implements Observer {
         if (!query.isEmpty()) {
 
             List<String> tokens = Tokenizer.tokenize(query);
-
             filteredList = Parser.parseWithGrammar(tokens, reportList);
         }
 
@@ -285,6 +320,11 @@ public class MainActivity extends BaseActivity implements Observer {
         return reportList;
     }
 
+    public void loadStream() {
+
+
+    }
+
     @Override
     public void onClickPassData(int reportId) {
         // Remove from AVL Tree
@@ -310,8 +350,6 @@ public class MainActivity extends BaseActivity implements Observer {
         }
         return count;
     }
-
-
 }
 
 
