@@ -2,7 +2,6 @@ package com.example.prototype;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -25,23 +24,23 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.login_button);
 
         // Set onClickListener for the login button
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String username = usernameEditText.getText().toString();
-                String password = passwordEditText.getText().toString();
+        loginButton.setOnClickListener(view -> {
+            String username = usernameEditText.getText().toString();
+            String password = passwordEditText.getText().toString();
 
-                // Use the Singleton AuthenticationManager for login
-                if (Authenticator.getInstance(LoginActivity.this).login(username, password)) {
-                    // Login successful, navigate to the MainActivity (dashboard)
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    intent.putExtra("USER", username);
-                    startActivity(intent);
-                    finish(); // Close the login activity
-                } else {
-                    // Login failed, show an error message
-                    Toast.makeText(LoginActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
-                }
+            // Use the Singleton AuthenticationManager for login
+            if (Authenticator.getInstance(LoginActivity.this).login(username, password)) {
+                // Store the current user in UserSession
+                UserSession.setCurrentUser(username);
+
+                // Login successful, navigate to the MainActivity (dashboard)
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                intent.putExtra("USER", username);
+                startActivity(intent);
+                finish(); // Close the login activity
+            } else {
+                // Login failed, show an error message
+                Toast.makeText(LoginActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
             }
         });
     }

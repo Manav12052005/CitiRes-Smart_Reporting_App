@@ -54,15 +54,16 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <com.google.android.material.button.MaterialButton
+        <ImageButton
             android:id="@+id/add_report_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:backgroundTint="@color/black"
-            android:padding="16dp"
+            android:backgroundTint="@color/white"
+            android:padding="5dp"
             android:text="@string/issue_report"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:src="@drawable/plus"/>
 
     </LinearLayout>
 

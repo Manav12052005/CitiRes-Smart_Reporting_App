@@ -25,6 +25,7 @@ public class BaseActivity extends AppCompatActivity {
     private ImageButton menuSearch;
     private ImageButton menuNotifications;
     private ImageButton menuReports;
+    String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,7 @@ public class BaseActivity extends AppCompatActivity {
         menuNotifications = findViewById(R.id.menu_notifications);
         menuReports = findViewById(R.id.menu_reports);
 
+
         // Set OnClickListeners for Navigation Buttons
         menuDashboard.setOnClickListener(v -> {
             // Navigate to DashboardActivity or handle dashboard functionality
@@ -60,7 +62,7 @@ public class BaseActivity extends AppCompatActivity {
             // Create an Intent to start MainActivity
             Intent intent = new Intent(BaseActivity.this, MainActivity.class);
             startActivity(intent);
-            
+
         });
 
         menuNotifications.setOnClickListener(v -> {

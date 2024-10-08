@@ -33,7 +33,7 @@ import java.util.Locale;
 
 import java.time.LocalDateTime;
 
-public class ReportActivity extends Activity {
+public class ReportActivity extends BaseActivity {
     private Spinner spinnerCategory, spinnerPriority;
     private EditText editTextDescription;
     private Button buttonSubmit;
@@ -46,10 +46,11 @@ public class ReportActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_report2);
+        setChildContentView(R.layout.activity_report2);
 
+        // Retrieve the username from intent extras
         username = getIntent().getStringExtra("USER");
-
+        Toast.makeText(this, "Current User: " + username, Toast.LENGTH_SHORT).show();
         // Initialize UI elements
         //spinnerLocation = findViewById(R.id.spinner_location);
         spinnerCategory = findViewById(R.id.spinner_category);
@@ -121,6 +122,7 @@ public class ReportActivity extends Activity {
     }
 
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 getLocationAndSubmitReport();
@@ -178,9 +180,11 @@ public class ReportActivity extends Activity {
 
             Intent intent = new Intent();
             Bundle bundle = new Bundle();
+
             bundle.putSerializable("added_report", newReport);
             intent.putExtras(bundle);
             setResult(Activity.RESULT_OK, intent);
+
             Toast.makeText(getApplicationContext(), "Task saved!", Toast.LENGTH_SHORT).show();
             finish();
         }
