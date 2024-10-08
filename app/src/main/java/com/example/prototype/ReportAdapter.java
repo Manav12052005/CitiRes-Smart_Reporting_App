@@ -18,6 +18,17 @@ import androidx.core.content.ContextCompat;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.widget.TimePicker;
+import android.app.TimePickerDialog;
+import java.util.Calendar;
+import android.content.Intent;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.os.Handler;
+import android.os.Looper;
+
 public class ReportAdapter extends ArrayAdapter<Report> {
     private Context context;
     private List<Report> reports;
@@ -63,15 +74,36 @@ public class ReportAdapter extends ArrayAdapter<Report> {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int reportId = report.getReportId();
-                for (Report report : reports) {
-                    if (reportId == report.getReportId()) {
-                        reports.remove(report);
-                        break;
-                    }
-                }
-                notifyDataSetChanged();
-                listener.onClickPassData(reportId);
+                // Create an AlertDialog builder
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+                // Set title and message for the popup
+                builder.setTitle("Delete Report")
+                        .setMessage("Do you want to delete this report now or schedule it for later?")
+                        .setCancelable(true)
+                        // Set 'Delete Now' button
+                        .setPositiveButton("Delete Now", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Immediate delete action
+                                int reportId = report.getReportId();
+                                deleteReport(reportId);
+                                dialog.dismiss();
+                            }
+                        })
+                        // Set 'Schedule Later' button
+                        .setNegativeButton("Schedule Later", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Show time picker dialog to schedule the deletion
+                                showTimePickerDialog(report);
+                                dialog.dismiss();
+                            }
+                        });
+
+                // Create and show the dialog
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
             }
         });
 
@@ -119,6 +151,66 @@ public class ReportAdapter extends ArrayAdapter<Report> {
 
 
         return listItem;
+    }
+
+    // Delete a report immediately
+    private void deleteReport(int reportId) {
+        for (Report r : reports) {
+            if (reportId == r.getReportId()) {
+                reports.remove(r);
+                notifyDataSetChanged();
+                listener.onClickPassData(reportId);
+                break;
+            }
+        }
+    }
+
+    // Schedule the deletion using AlarmManager
+    private void scheduleDeletion(Report report, long delayInMillis) {
+        // Create a new Handler to handle delayed execution
+        Handler handler = new Handler(Looper.getMainLooper());
+
+        // Schedule the deletion after the specified delay
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // Invoke the same logic as "Delete Now"
+                deleteReport(report.getReportId());
+            }
+        }, delayInMillis);
+    }
+
+    // Show the time picker to schedule deletion
+    private void showTimePickerDialog(Report report) {
+        // Get the current time
+        Calendar currentTime = Calendar.getInstance();
+        int hour = currentTime.get(Calendar.HOUR_OF_DAY);
+        int minute = currentTime.get(Calendar.MINUTE);
+
+        // Create a TimePickerDialog to pick a time
+        TimePickerDialog timePicker = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int selectedHour, int selectedMinute) {
+                // Get the current time
+                Calendar now = Calendar.getInstance();
+                Calendar deleteTime = Calendar.getInstance();
+                deleteTime.set(Calendar.HOUR_OF_DAY, selectedHour);
+                deleteTime.set(Calendar.MINUTE, selectedMinute);
+                deleteTime.set(Calendar.SECOND, 0);
+
+                // Calculate the delay in milliseconds
+                long delayInMillis = deleteTime.getTimeInMillis() - now.getTimeInMillis();
+                if (delayInMillis > 0) {
+                    // Schedule the deletion with the calculated delay
+                    scheduleDeletion(report, delayInMillis);
+                } else {
+                    // If the selected time is in the past or immediate, delete it now
+                    deleteReport(report.getReportId());
+                }
+            }
+        }, hour, minute, true); // Use 24-hour time format
+        timePicker.setTitle("Select Time to Delete");
+        timePicker.show();
     }
 
     private void updateLikeCountDisplay(TextView likeCountTextView, Report report) {
