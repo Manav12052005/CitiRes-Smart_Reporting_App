@@ -142,6 +142,7 @@ public class MainActivity extends BaseActivity implements OnClickPassData {
                 // Create an Intent to start PriorityChartActivity
                 Intent intent = new Intent(MainActivity.this, ChartActivity.class);
 
+                startActivity(intent);
             }
         });
 

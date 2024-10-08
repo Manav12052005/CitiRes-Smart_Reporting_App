@@ -29,7 +29,7 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this); // Ensure EdgeToEdge is correctly implemented
-        setContentView(R.layout.activity_chart);
+        setContentView(R.layout.activity_base);
 
         // Handle window insets for edge-to-edge display
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -84,16 +84,12 @@ public class BaseActivity extends AppCompatActivity {
         menuReports.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Get priority counts
-                Map<String, Integer> priorityCounts = getPriorityCounts();
+
 
                 // Create an Intent to start PriorityChartActivity
                 Intent intent = new Intent(BaseActivity.this, ChartActivity.class);
 
-                // Pass the counts via Intent extras
-                intent.putExtra("LOW_COUNT", priorityCounts.get("LOW"));
-                intent.putExtra("MIDDLE_COUNT", priorityCounts.get("MIDDLE"));
-                intent.putExtra("HIGH_COUNT", priorityCounts.get("HIGH"));
+
 
                 startActivity(intent);
             }
@@ -110,43 +106,5 @@ public class BaseActivity extends AppCompatActivity {
         View childView = inflater.inflate(layoutResID, contentFrame, false);
         contentFrame.removeAllViews();
         contentFrame.addView(childView);
-    }
-
-    private Map<String, Integer> getPriorityCounts() {
-        Map<String, Integer> priorityCounts = new HashMap<>();
-        priorityCounts.put("LOW", 0);
-        priorityCounts.put("MIDDLE", 0);
-        priorityCounts.put("HIGH", 0);
-
-        List<Report> reports = DataHolder.avlTree.fromSmallToLarge(); // Get all reports from the AVL tree
-
-        for (Report report : reports) {
-            String priority = report.getPriority().toString();
-            int count = priorityCounts.getOrDefault(priority, 0);
-            priorityCounts.put(priority, count + 1);
-        }
-
-        return priorityCounts;
-    }
-
-    private Map<String, Integer> getCategoryCounts() {
-        Map<String, Integer> categoryCounts = new HashMap<>();
-
-        // Initialize all categories with 0 count
-        for (Category category : Category.values()) {
-            categoryCounts.put(category.toString(), 0);
-        }
-
-        // Retrieve all reports from the AVL tree
-        List<Report> reports = DataHolder.avlTree.fromSmallToLarge();
-
-        // Count the number of reports in each category
-        for (Report report : reports) {
-            String category = report.getCategory().toString();
-            // Increment the count for the corresponding category
-            categoryCounts.put(category, categoryCounts.get(category) + 1);
-        }
-
-        return categoryCounts;
     }
 }

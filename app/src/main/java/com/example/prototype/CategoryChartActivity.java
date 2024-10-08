@@ -2,6 +2,7 @@ package com.example.prototype;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
 import androidx.core.graphics.Insets;
@@ -15,6 +16,7 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class CategoryChartActivity extends BaseActivity {
 
@@ -25,13 +27,13 @@ public class CategoryChartActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
+        EdgeToEdge.enable(this); // Ensure EdgeToEdge is correctly implemented
 
-        // Inject the child layout into the content_frame of ChartActivity
+        // Inject the child layout into the content_frame of BaseActivity
         setChildContentView(R.layout.activity_category_chart);
 
         // Handle window insets for the PieChart if necessary
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.pieChart), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.chart_activity_layout), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
@@ -47,6 +49,11 @@ public class CategoryChartActivity extends BaseActivity {
         // Retrieve category counts from Intent
         retrieveCategoryCountsFromIntent();
 
+        // Log the retrieved counts for debugging
+        for (int i = 0; i < categories.size(); i++) {
+            Log.d("CategoryChartActivity", categories.get(i) + ": " + counts.get(i));
+        }
+
         // Set up and load the PieChart
         setupPieChart();
         loadPieChartData();
@@ -56,10 +63,11 @@ public class CategoryChartActivity extends BaseActivity {
         categories = new ArrayList<>();
         counts = new ArrayList<>();
 
+        // Iterate through all possible categories
         for (Category category : Category.values()) {
-            String categoryName = category.toString();
+            String categoryName = category.name(); // Use name() for consistency
             int count = getIntent().getIntExtra(categoryName + "_COUNT", 0);
-            if (count > 0) {
+            if (count > 0) { // Only add categories with non-zero counts
                 categories.add(categoryName);
                 counts.add(count);
             }
