@@ -1,5 +1,7 @@
 package com.example.prototype;
 
+import static com.example.prototype.TimeUtil.isToday;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -38,28 +40,14 @@ public class MainActivity extends BaseActivity implements OnClickPassData {
     ReportAdapter adapterSort;
     ListView listView;
     Spinner sortSpinner;
-    ImageButton menuDashboard;
-    ImageButton menuSearch;
     SearchView searchView;
     List<Report> reportList = new ArrayList<>();  // To store original reports
     Button addReportButton;
     List<Report> loadedReports;
-    TextView title;
-    TextView streamText;
     String username;
     ActivityResultLauncher<Intent> register;
     Thread streamThread;
-    ImageButton menuNotifications;
-    // Declare the reports button
-    ImageButton menuReports;
     TextView reportCount;
-
-
-    private static final LocalTime MORNING = LocalTime.of(6, 0);
-    private static final LocalTime NOON = LocalTime.of(11, 0);
-    private static final LocalTime AFTERNOON = LocalTime.of(13, 0);
-    private static final LocalTime EVENING = LocalTime.of(18, 0);
-    private static final LocalTime NIGHT = LocalTime.of(22, 0);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,7 +169,6 @@ public class MainActivity extends BaseActivity implements OnClickPassData {
     }
 
     private void applyStream() {
-        LocalTime currentTime = LocalDateTime.now().toLocalTime();
         runOnUiThread(() -> {
             reportCount.setText("There are " + DataHolder.avlTree.size() + " posts in total, " + getPostsToday() + " new posts today");
         });
@@ -314,18 +301,11 @@ public class MainActivity extends BaseActivity implements OnClickPassData {
         int count = 0;
         List<Report> reports = DataHolder.avlTree.fromLargeToSmall();
         for (Report report : reports) {
-            String name = null;
             if (isToday(report.getLocalDateTime())) {
                 count++;
             }
         }
         return count;
-    }
-
-    public static boolean isToday(LocalDateTime time) {
-        LocalDate today = LocalDate.now();
-        LocalDate date = time.toLocalDate();
-        return date.equals(today);
     }
 }
 
