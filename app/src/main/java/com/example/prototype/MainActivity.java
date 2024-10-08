@@ -52,7 +52,7 @@ public class MainActivity extends BaseActivity implements OnClickPassData {
     ImageButton menuNotifications;
     // Declare the reports button
     ImageButton menuReports;
-    TextView reportText;
+    TextView reportCount;
 
 
     private static final LocalTime MORNING = LocalTime.of(6, 0);
@@ -119,6 +119,8 @@ public class MainActivity extends BaseActivity implements OnClickPassData {
             }
         });
 
+        reportCount = findViewById(R.id.report_count);
+
         addReportButton = findViewById(R.id.add_report_button);
         addReportButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,7 +166,6 @@ public class MainActivity extends BaseActivity implements OnClickPassData {
         super.onStop();
     }
 
-
     private void startStreamThread() {
         streamThread = new Thread(() -> {
             while (true) {
@@ -173,11 +174,18 @@ public class MainActivity extends BaseActivity implements OnClickPassData {
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
+                applyStream();
             }
         });
         streamThread.start();
     }
 
+    private void applyStream() {
+        LocalTime currentTime = LocalDateTime.now().toLocalTime();
+        runOnUiThread(() -> {
+            reportCount.setText("There are " + DataHolder.avlTree.size() + " posts in total, " + getPostsToday() + " new posts today");
+        });
+    }
 
     // Function to filter the reports based on the search query
     private void searchReports(String query) {
