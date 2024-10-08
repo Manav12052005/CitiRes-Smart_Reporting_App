@@ -18,18 +18,26 @@ import androidx.core.content.ContextCompat;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.widget.TimePicker;
+import android.app.TimePickerDialog;
+import java.util.Calendar;
+import android.content.Intent;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+
 public class ReportAdapter extends ArrayAdapter<Report> {
     private Context context;
     private List<Report> reports;
-    TextView description;
-    TextView location;
-    TextView priority;
-    TextView category;
-    TextView user;
-    TextView id;
-    ImageView locationIcon;
+    private TextView description;
+    private TextView location;
+    private TextView priority;
+    private TextView category;
+    private TextView user;
+    private TextView id;
+    private ImageView locationIcon;
     private OnClickPassData listener;
-
 
     public ReportAdapter(Context context, List<Report> reports, OnClickPassData listener) {
         super(context, 0, reports);
@@ -48,48 +56,69 @@ public class ReportAdapter extends ArrayAdapter<Report> {
 
         Report report = new ArrayList<>(reports).get(position);
 
-        description = (TextView) listItem.findViewById(R.id.description);
+        description = listItem.findViewById(R.id.description);
         description.setText(report.getDescription());
 
-        location = (TextView) listItem.findViewById(R.id.location);
+        location = listItem.findViewById(R.id.location);
         location.setText(report.getLocation());
 
         locationIcon = listItem.findViewById(R.id.location_icon);
 
-        id = (TextView) listItem.findViewById(R.id.id_text);
+        id = listItem.findViewById(R.id.id_text);
         id.setText("id: " + report.getReportId());
 
         Button deleteButton = listItem.findViewById(R.id.delete);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int reportId = report.getReportId();
-                for (Report report : reports) {
-                    if (reportId == report.getReportId()) {
-                        reports.remove(report);
-                        break;
-                    }
-                }
-//                clear();
-//                addAll(new ArrayList<>(reports));
-                notifyDataSetChanged();
+                // Create an AlertDialog builder
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
-                listener.onClickPassData(reportId);
+                // Set title and message for the popup
+                builder.setTitle("Delete Report")
+                        .setMessage("Do you want to delete this report now or schedule it for later?")
+                        .setCancelable(true)
+                        // Set 'Delete Now' button
+                        .setPositiveButton("Delete Now", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Immediate delete action
+                                int reportId = report.getReportId();
+                                for (Report r : reports) {
+                                    if (reportId == r.getReportId()) {
+                                        reports.remove(r);
+                                        break;
+                                    }
+                                }
+                                notifyDataSetChanged();
+                                listener.onClickPassData(reportId);
+                                dialog.dismiss();
+                            }
+                        })
+                        // Set 'Schedule' button
+                        .setNegativeButton("Schedule Later", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Show time picker dialog to schedule the deletion
+                                showTimePickerDialog(report);
+                                dialog.dismiss();
+                            }
+                        });
+
+                // Create and show the dialog
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
             }
         });
 
-
-        priority = (TextView) listItem.findViewById(R.id.priority);
+        priority = listItem.findViewById(R.id.priority);
         setPriorityBackground(priority, report.getPriority());
 
-        category = (TextView) listItem.findViewById(R.id.category);
+        category = listItem.findViewById(R.id.category);
         category.setText(report.getCategory().toString());
 
-        user = (TextView) listItem.findViewById(R.id.user);
+        user = listItem.findViewById(R.id.user);
         user.setText("Reported by: " + report.getUser().getName() + " at " + report.getLocalDateTime());
-
-//        TextView user = listItem.findViewById(R.id.user);
-//        user.setText("Reported by: " + report.getUser().getName()); // Assuming User has a getName() method
 
         TextView likeCountTextView = listItem.findViewById(R.id.like_count_text_view);
         likeCountTextView.setText(String.valueOf(report.getLikes())); // Set initial likes count
@@ -120,14 +149,54 @@ public class ReportAdapter extends ArrayAdapter<Report> {
             }
         });
 
-
         return listItem;
+    }
+
+    // Schedule the deletion
+    private void scheduleDeletion(Report report, long scheduledTimeInMillis) {
+        // Create an Intent to trigger a broadcast receiver for deletion
+        Intent intent = new Intent(context, DeleteReportReceiver.class);
+        intent.putExtra("reportId", report.getReportId());
+
+        // Create a PendingIntent for the AlarmManager
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                context, report.getReportId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        // Get the AlarmManager service
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
+        // Schedule the deletion at the selected time
+        alarmManager.set(AlarmManager.RTC_WAKEUP, scheduledTimeInMillis, pendingIntent);
+    }
+
+    // Show the time picker to schedule deletion
+    private void showTimePickerDialog(Report report) {
+        // Get the current time
+        Calendar currentTime = Calendar.getInstance();
+        int hour = currentTime.get(Calendar.HOUR_OF_DAY);
+        int minute = currentTime.get(Calendar.MINUTE);
+
+        // Create a TimePickerDialog to pick a time
+        TimePickerDialog timePicker = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int selectedHour, int selectedMinute) {
+                // Get the time for deletion
+                Calendar deleteTime = Calendar.getInstance();
+                deleteTime.set(Calendar.HOUR_OF_DAY, selectedHour);
+                deleteTime.set(Calendar.MINUTE, selectedMinute);
+                deleteTime.set(Calendar.SECOND, 0);
+
+                // Schedule the deletion
+                scheduleDeletion(report, deleteTime.getTimeInMillis());
+            }
+        }, hour, minute, true); // Use 24-hour time format
+        timePicker.setTitle("Select Time to Delete");
+        timePicker.show();
     }
 
     private void updateLikeCountDisplay(TextView likeCountTextView, Report report) {
         likeCountTextView.setText(String.valueOf(report.getLikes())); // Update TextView with new likes count
     }
-
 
     private void setPriorityBackground(TextView priorityView, Priority priority) {
         int color;
