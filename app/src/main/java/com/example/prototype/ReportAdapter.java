@@ -28,10 +28,10 @@ public class ReportAdapter extends ArrayAdapter<Report> {
     TextView user;
     TextView id;
     ImageView locationIcon;
-    private OnClickPassData listener;
+    private Observer listener;
 
 
-    public ReportAdapter(Context context, List<Report> reports, OnClickPassData listener) {
+    public ReportAdapter(Context context, List<Report> reports, Observer listener) {
         super(context, 0, reports);
         this.context = context;
         this.reports = reports;
@@ -70,10 +70,7 @@ public class ReportAdapter extends ArrayAdapter<Report> {
                         break;
                     }
                 }
-//                clear();
-//                addAll(new ArrayList<>(reports));
                 notifyDataSetChanged();
-
                 listener.onClickPassData(reportId);
             }
         });

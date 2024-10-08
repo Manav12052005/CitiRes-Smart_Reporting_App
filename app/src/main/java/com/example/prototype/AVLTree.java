@@ -168,11 +168,6 @@ public class AVLTree<R> {
         inOrder(node.right, result);
     }
 
-
-    public void empty() {
-        root = null;
-    }
-
     public void remove(int key) {
         root = doRemove(root, key);
     }
@@ -211,6 +206,10 @@ public class AVLTree<R> {
 
     public int size() {
         return this.fromLargeToSmall().size();
+    }
+
+    public boolean isEmpty() {
+        return this.size() == 0;
     }
 
 }

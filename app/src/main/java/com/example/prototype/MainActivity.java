@@ -36,7 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class MainActivity extends BaseActivity implements OnClickPassData {
+public class MainActivity extends BaseActivity implements Observer {
     ReportAdapter adapterSort;
     ListView listView;
     Spinner sortSpinner;
@@ -60,11 +60,14 @@ public class MainActivity extends BaseActivity implements OnClickPassData {
 
         loadedReports = loadData("reports_dataset.json");
 
-        for (Report report : loadedReports) {
-            DataHolder.avlTree.put(report.getReportId(), report);
+        if (DataHolder.getInstance().avlTree.isEmpty()) {
+            List<Report> loadedReports = loadData("reports_dataset.json");
+            for (Report report : loadedReports) {
+                DataHolder.getInstance().avlTree.put(report.getReportId(), report);
+            }
         }
 
-        reportList.addAll(loadedReports);
+        reportList.addAll(DataHolder.getInstance().avlTree.fromLargeToSmall());
 
         adapterSort = new ReportAdapter(this, reportList, this);
         listView.setAdapter(adapterSort);
@@ -307,6 +310,8 @@ public class MainActivity extends BaseActivity implements OnClickPassData {
         }
         return count;
     }
+
+
 }
 
 
