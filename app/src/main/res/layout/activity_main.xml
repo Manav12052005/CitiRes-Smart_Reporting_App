@@ -18,10 +18,11 @@
             android:id="@+id/dashboard_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/lavender"
+            android:background="@color/black"
             android:gravity="center"
             android:padding="10dp"
             android:text="@string/dashboard"
+            android:textColor="@android:color/white"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -50,7 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:backgroundTint="@color/lavender"
+            android:backgroundTint="@color/black"
             android:padding="16dp"
             android:text="@string/issue_report"
             android:textColor="@android:color/white" />
