@@ -30,13 +30,6 @@ import android.app.PendingIntent;
 public class ReportAdapter extends ArrayAdapter<Report> {
     private Context context;
     private List<Report> reports;
-    private TextView description;
-    private TextView location;
-    private TextView priority;
-    private TextView category;
-    private TextView user;
-    private TextView id;
-    private ImageView locationIcon;
     private OnClickPassData listener;
 
     public ReportAdapter(Context context, List<Report> reports, OnClickPassData listener) {
@@ -54,17 +47,17 @@ public class ReportAdapter extends ArrayAdapter<Report> {
             listItem = LayoutInflater.from(context).inflate(R.layout.report, parent, false);
         }
 
-        Report report = new ArrayList<>(reports).get(position);
+        Report report = reports.get(position);
 
-        description = listItem.findViewById(R.id.description);
+        TextView description = listItem.findViewById(R.id.description);
         description.setText(report.getDescription());
 
-        location = listItem.findViewById(R.id.location);
+        TextView location = listItem.findViewById(R.id.location);
         location.setText(report.getLocation());
 
-        locationIcon = listItem.findViewById(R.id.location_icon);
+        ImageView locationIcon = listItem.findViewById(R.id.location_icon);
 
-        id = listItem.findViewById(R.id.id_text);
+        TextView id = listItem.findViewById(R.id.id_text);
         id.setText("id: " + report.getReportId());
 
         Button deleteButton = listItem.findViewById(R.id.delete);
@@ -84,18 +77,11 @@ public class ReportAdapter extends ArrayAdapter<Report> {
                             public void onClick(DialogInterface dialog, int which) {
                                 // Immediate delete action
                                 int reportId = report.getReportId();
-                                for (Report r : reports) {
-                                    if (reportId == r.getReportId()) {
-                                        reports.remove(r);
-                                        break;
-                                    }
-                                }
-                                notifyDataSetChanged();
-                                listener.onClickPassData(reportId);
+                                deleteReport(reportId);
                                 dialog.dismiss();
                             }
                         })
-                        // Set 'Schedule' button
+                        // Set 'Schedule Later' button
                         .setNegativeButton("Schedule Later", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -111,13 +97,14 @@ public class ReportAdapter extends ArrayAdapter<Report> {
             }
         });
 
-        priority = listItem.findViewById(R.id.priority);
+        // Rest of the code related to priority, category, etc.
+        TextView priority = listItem.findViewById(R.id.priority);
         setPriorityBackground(priority, report.getPriority());
 
-        category = listItem.findViewById(R.id.category);
+        TextView category = listItem.findViewById(R.id.category);
         category.setText(report.getCategory().toString());
 
-        user = listItem.findViewById(R.id.user);
+        TextView user = listItem.findViewById(R.id.user);
         user.setText("Reported by: " + report.getUser().getName() + " at " + report.getLocalDateTime());
 
         TextView likeCountTextView = listItem.findViewById(R.id.like_count_text_view);
@@ -152,11 +139,23 @@ public class ReportAdapter extends ArrayAdapter<Report> {
         return listItem;
     }
 
-    // Schedule the deletion
+    // Delete a report immediately
+    private void deleteReport(int reportId) {
+        for (Report r : reports) {
+            if (reportId == r.getReportId()) {
+                reports.remove(r);
+                notifyDataSetChanged();
+                listener.onClickPassData(reportId);
+                break;
+            }
+        }
+    }
+
+    // Schedule the deletion using AlarmManager
     private void scheduleDeletion(Report report, long scheduledTimeInMillis) {
         // Create an Intent to trigger a broadcast receiver for deletion
         Intent intent = new Intent(context, DeleteReportReceiver.class);
-        intent.putExtra("reportId", report.getReportId());
+        intent.putExtra("reportId", report.getReportId()); // Pass the report ID
 
         // Create a PendingIntent for the AlarmManager
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
@@ -166,7 +165,15 @@ public class ReportAdapter extends ArrayAdapter<Report> {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         // Schedule the deletion at the selected time
-        alarmManager.set(AlarmManager.RTC_WAKEUP, scheduledTimeInMillis, pendingIntent);
+        if (alarmManager != null) {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                // Set exact alarm for API 23 and above
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, scheduledTimeInMillis, pendingIntent);
+            } else {
+                // Set exact alarm for lower API levels
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, scheduledTimeInMillis, pendingIntent);
+            }
+        }
     }
 
     // Show the time picker to schedule deletion
