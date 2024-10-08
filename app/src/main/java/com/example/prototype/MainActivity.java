@@ -113,15 +113,6 @@ public class MainActivity extends BaseActivity implements OnClickPassData {
                 }
             }
         });
-        menuNotifications = findViewById(R.id.menu_notifications);
-        menuNotifications.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Open the NotificationActivity when the button is clicked
-                Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
-                startActivity(intent);
-            }
-        });
 
         addReportButton = findViewById(R.id.add_report_button);
         addReportButton.setOnClickListener(new View.OnClickListener() {
@@ -131,27 +122,6 @@ public class MainActivity extends BaseActivity implements OnClickPassData {
                 register.launch(intent);
             }
         });
-
-        // Initialize the reports button
-        menuReports = findViewById(R.id.menu_reports);
-
-        // Set an OnClickListener to navigate to PriorityChartActivity
-        menuReports.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Create an Intent to start PriorityChartActivity
-                Intent intent = new Intent(MainActivity.this, ChartActivity.class);
-
-                startActivity(intent);
-            }
-        });
-
-
-        menuDashboard = (ImageButton) findViewById(R.id.menu_dashboard);
-
-        menuSearch = (ImageButton) findViewById(R.id.menu_search);
-
-        title = findViewById(R.id.dashboard_title);
 
         // Handle SearchView functionality
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
