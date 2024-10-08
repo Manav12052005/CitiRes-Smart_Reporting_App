@@ -32,9 +32,8 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements OnClickPassData {
-    AVLTree<Report> avlTree = new AVLTree<>();
-    ReportAdapter adapterSort;
+public class MainActivity extends BaseActivity implements OnClickPassData {
+    ReportAdapterSort adapterSort;
     ListView listView;
     Spinner sortSpinner;
     ImageButton menuDashboard;
@@ -49,7 +48,9 @@ public class MainActivity extends AppCompatActivity implements OnClickPassData {
     ActivityResultLauncher<Intent> register;
     Thread streamThread;
     ImageButton menuNotifications;
-    TextView reportText;
+    // Declare the reports button
+    ImageButton menuReports;
+
 
     private static final LocalTime MORNING = LocalTime.of(6, 0);
     private static final LocalTime NOON = LocalTime.of(11, 0);
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements OnClickPassData {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setChildContentView(R.layout.activity_main);
 
         listView = findViewById(R.id.reports_list);
         searchView = findViewById(R.id.search_view);
@@ -71,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements OnClickPassData {
         reportText = findViewById(R.id.reportText);
 
         for (Report report : loadedReports) {
-            avlTree.put(report.getReportId(), report);
+            DataHolder.avlTree.put(report.getReportId(), report);
         }
 
         reportList.addAll(loadedReports);
@@ -105,9 +106,9 @@ public class MainActivity extends AppCompatActivity implements OnClickPassData {
                     if (intent != null && result.getResultCode() == RESULT_OK) {
                         Report addedReport = (Report) intent.getSerializableExtra("added_report", Report.class);
                         reportList.add(0, addedReport);
-                        loadedReports.add(0, addedReport);
-                        adapterSort = new ReportAdapter(MainActivity.this, new ArrayList<>(loadedReports), MainActivity.this);
-                        avlTree.put(addedReport.getReportId(), addedReport);
+                        loadedReports.add(0,addedReport);
+                        adapterSort = new ReportAdapterSort(MainActivity.this, new ArrayList<>(loadedReports), MainActivity.this);
+                        DataHolder.avlTree.put(addedReport.getReportId(), addedReport);
                         adapterSort.notifyDataSetChanged();
                         listView.setAdapter(adapterSort);
                     }
@@ -130,6 +131,20 @@ public class MainActivity extends AppCompatActivity implements OnClickPassData {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ReportActivity.class);
                 register.launch(intent);
+            }
+        });
+
+        // Initialize the reports button
+        menuReports = findViewById(R.id.menu_reports);
+
+        // Set an OnClickListener to navigate to PriorityChartActivity
+        menuReports.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Create an Intent to start PriorityChartActivity
+                Intent intent = new Intent(MainActivity.this, ChartActivity.class);
+
+                startActivity(intent);
             }
         });
 
@@ -332,7 +347,7 @@ public class MainActivity extends AppCompatActivity implements OnClickPassData {
     @Override
     public void onClickPassData(int reportId) {
         // Remove from AVL Tree
-        avlTree.remove(reportId);
+        DataHolder.avlTree.remove(reportId);
 
         // Remove from reportList
         reportList.removeIf(report -> report.getReportId() == reportId);
@@ -343,4 +358,8 @@ public class MainActivity extends AppCompatActivity implements OnClickPassData {
         // Notify adapter to update view
         adapterSort.notifyDataSetChanged();
     }
+
+
 }
+
+

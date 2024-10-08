@@ -1,39 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/main_content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
 
     <!-- Main Content -->
     <LinearLayout
         android:id="@+id/content_layout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@id/bottom_nav"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/dashboard_title"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="@string/dashboard"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:shadowColor="#80000000"
-            android:shadowDx="2"
-            android:shadowDy="2"
-            android:shadowRadius="4"
             android:gravity="center"
-            android:background="@color/lavender"
-            />
+            android:background="@color/lavender" />
+
+        <!-- Other UI components like TextViews, Spinners, SearchView, ListView, etc. -->
+        <!-- Remove the Bottom Navigation Menu from this layout -->
 
         <TextView
             android:id="@+id/streamText"
@@ -68,7 +59,6 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/add_report_button"
             android:layout_width="wrap_content"
@@ -87,51 +77,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
+        android:elevation="8dp"
         android:orientation="horizontal"
-        android:scrollbars="vertical"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
-
-        <!-- Dashboard Button -->
-        <ImageButton
-            android:id="@+id/menu_dashboard"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:contentDescription="@string/dashboard"
-            android:scaleType="fitCenter"
-            android:src="@drawable/home" />
-
-        <!-- Search Button -->
-        <ImageButton
-            android:id="@+id/menu_search"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:contentDescription="@string/issue_report"
-            android:scaleType="fitCenter"
-            android:src="@drawable/search" />
-
-        <!-- Notifications Button -->
-        <ImageButton
-            android:id="@+id/menu_notifications"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:contentDescription="@string/notification_box"
-            android:scaleType="fitCenter"
-            android:src="@drawable/notification" />
-
-        <!-- User Account Button -->
-        <ImageButton
-            android:id="@+id/menu_accounts"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:contentDescription="@string/user_center"
-            android:scaleType="fitCenter"
-            android:src="@drawable/user" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

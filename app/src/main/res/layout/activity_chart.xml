@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ChartActivity">
+
+    <!-- Container for the Report Buttons -->
+<LinearLayout
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:orientation="vertical"
+android:gravity="center"
+android:layout_gravity="center"
+android:padding="16dp">
+
+<!-- Priority Chart Report Button -->
+<Button
+    android:id="@+id/button_priority_chart"
+    android:layout_width="250dp"
+    android:layout_height="wrap_content"
+    android:text="Priority Chart Report"
+    android:textColor="@android:color/white"
+    android:padding="16dp"
+    android:layout_marginBottom="16dp"
+    />  <!-- Optional: Rounded corners -->
+
+<!-- Category Chart Report Button -->
+<Button
+    android:id="@+id/button_category_chart"
+    android:layout_width="250dp"
+    android:layout_height="wrap_content"
+    android:text="Category Chart Report"
+    android:textColor="@android:color/white"
+    android:padding="16dp"
+    android:layout_marginBottom="16dp"
+     />
+
+<!-- Location Chart Report Button -->
+<Button
+    android:id="@+id/button_location_chart"
+    android:layout_width="250dp"
+    android:layout_height="wrap_content"
+    android:text="Location Chart Report"
+    android:textColor="@android:color/white"
+    android:padding="16dp"
+     />
+
+</LinearLayout>
+
+    </FrameLayout>

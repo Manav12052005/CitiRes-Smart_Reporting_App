@@ -17,14 +17,12 @@ descriptions = [
     "Broken swing set in Greenwood Playground.",
     "Unattended litter around the central fountain.",
     "Fallen tree branch blocking the sidewalk on Pine Road."
-    # Add more descriptions as needed
 ]
 
 locations = [
     "Main Street", "5th Avenue", "Elm Street", "Maple Avenue",
     "Oak Boulevard", "Pine Road", "Cedar Lane", "Birch Street",
     "Spruce Drive", "Willow Way"
-    # Add more locations as needed
 ]
 
 priorities = ["LOW", "MIDDLE", "HIGH"]
@@ -32,14 +30,12 @@ priorities = ["LOW", "MIDDLE", "HIGH"]
 categories = [
     "Maintenance", "Safety", "Public", "Utilities",
     "Environmental", "Community", "Infrastructure"
-    # Add more categories as needed
 ]
 
 users = [
     "Alice Johnson", "Bob Smith", "Charlie Davis", "David Wilson",
     "Eve Martinez", "Frank Brown", "Grace Lee", "Hannah Taylor",
     "Ian Thomas", "Jane Moore"
-    # Add more user names as needed
 ]
 
 # ----------------------------
