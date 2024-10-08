@@ -17,12 +17,24 @@ android:gravity="center"
 android:layout_gravity="center"
 android:padding="16dp">
 
+    <!-- Heading for the page -->
+    <TextView
+        android:id="@+id/text_heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Graphical Report Generator"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/poppins"
+        android:layout_marginBottom="32dp" />
+
 <!-- Priority Chart Report Button -->
 <Button
     android:id="@+id/button_priority_chart"
     android:layout_width="250dp"
     android:layout_height="wrap_content"
-    android:text="Priority Chart Report"
+    android:text="Priority Data"
     android:textColor="@android:color/white"
     android:padding="16dp"
     android:layout_marginBottom="16dp"
@@ -35,7 +47,7 @@ android:padding="16dp">
     android:id="@+id/button_category_chart"
     android:layout_width="250dp"
     android:layout_height="wrap_content"
-    android:text="Category Chart Report"
+    android:text="Category Data"
     android:textColor="@android:color/white"
     android:padding="16dp"
     android:layout_marginBottom="16dp"
@@ -48,7 +60,7 @@ android:padding="16dp">
     android:id="@+id/button_location_chart"
     android:layout_width="250dp"
     android:layout_height="wrap_content"
-    android:text="Location Chart Report"
+    android:text="Location Data"
     android:textColor="@android:color/white"
     android:padding="16dp"
     android:backgroundTint="@color/black"

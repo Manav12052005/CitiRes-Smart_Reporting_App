@@ -127,9 +127,9 @@ public class ReportAdapter extends ArrayAdapter<Report> {
 
         // Initial state based on current likes
         if (report.getLikes() > 0) {
-            likeButton.setImageResource(R.drawable.liked);
+            likeButton.setImageResource(R.drawable.liked_heart);
         } else {
-            likeButton.setImageResource(R.drawable.unliked);
+            likeButton.setImageResource(R.drawable.unlike);
         }
 
         likeButton.setOnClickListener(new View.OnClickListener() {
@@ -139,10 +139,10 @@ public class ReportAdapter extends ArrayAdapter<Report> {
             public void onClick(View v) {
                 if (isLiked) {
                     report.unlike(); // Decrement likes
-                    likeButton.setImageResource(R.drawable.unliked); // Change icon to unliked
+                    likeButton.setImageResource(R.drawable.unlike); // Change icon to unliked
                 } else {
                     report.like(); // Increment likes
-                    likeButton.setImageResource(R.drawable.liked); // Change icon to liked
+                    likeButton.setImageResource(R.drawable.liked_heart); // Change icon to liked
                 }
                 updateLikeCountDisplay(likeCountTextView, report); // Update displayed like count
                 isLiked = !isLiked; // Toggle the like state

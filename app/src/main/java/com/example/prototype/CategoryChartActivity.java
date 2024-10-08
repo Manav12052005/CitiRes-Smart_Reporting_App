@@ -87,7 +87,7 @@ public class CategoryChartActivity extends BaseActivity {
 
         // Set the center text
         pieChart.setCenterText("Reports by Category");
-        pieChart.setCenterTextSize(18f);
+        pieChart.setCenterTextSize(13f);
         pieChart.setCenterTextColor(Color.BLACK);
 
         // Customize legend
