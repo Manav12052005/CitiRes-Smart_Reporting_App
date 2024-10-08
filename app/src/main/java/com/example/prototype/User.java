@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 import java.io.Serializable;
 
 public class User implements Serializable {
-    private String name;
+    private final String name;
     private String password;
 
     public User(String name) {

@@ -27,13 +27,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends BaseActivity implements OnClickPassData {
-    ReportAdapterSort adapterSort;
+    ReportAdapter adapterSort;
     ListView listView;
     Spinner sortSpinner;
     ImageButton menuDashboard;
@@ -44,12 +46,13 @@ public class MainActivity extends BaseActivity implements OnClickPassData {
     List<Report> loadedReports;
     TextView title;
     TextView streamText;
-    User user;
+    String username;
     ActivityResultLauncher<Intent> register;
     Thread streamThread;
     ImageButton menuNotifications;
     // Declare the reports button
     ImageButton menuReports;
+    TextView reportText;
 
 
     private static final LocalTime MORNING = LocalTime.of(6, 0);
@@ -98,6 +101,8 @@ public class MainActivity extends BaseActivity implements OnClickPassData {
             }
         });
 
+        username = getIntent().getStringExtra("USER");
+
         register = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
@@ -106,8 +111,8 @@ public class MainActivity extends BaseActivity implements OnClickPassData {
                     if (intent != null && result.getResultCode() == RESULT_OK) {
                         Report addedReport = (Report) intent.getSerializableExtra("added_report", Report.class);
                         reportList.add(0, addedReport);
-                        loadedReports.add(0,addedReport);
-                        adapterSort = new ReportAdapterSort(MainActivity.this, new ArrayList<>(loadedReports), MainActivity.this);
+                        loadedReports.add(0, addedReport);
+                        adapterSort = new ReportAdapter(MainActivity.this, new ArrayList<>(loadedReports), MainActivity.this);
                         DataHolder.avlTree.put(addedReport.getReportId(), addedReport);
                         adapterSort.notifyDataSetChanged();
                         listView.setAdapter(adapterSort);
@@ -121,6 +126,7 @@ public class MainActivity extends BaseActivity implements OnClickPassData {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ReportActivity.class);
+                intent.putExtra("USER", username);
                 register.launch(intent);
             }
         });
@@ -165,7 +171,7 @@ public class MainActivity extends BaseActivity implements OnClickPassData {
         streamThread = new Thread(() -> {
             while (true) {
                 try {
-                    Thread.sleep(10 * 1000); // Initial delay
+                    Thread.sleep(5 * 1000); // Initial delay
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -179,7 +185,7 @@ public class MainActivity extends BaseActivity implements OnClickPassData {
         LocalTime currentTime = LocalDateTime.now().toLocalTime();
         streamText = findViewById(R.id.streamText);
         runOnUiThread(() -> {
-            reportText.setText("There are " + avlTree.size() + " reports in total");
+            reportText.setText("Hello, " + username + "There are " + DataHolder.avlTree.size() + " posts in total, " + getPostsToday() + " new posts today");
         });
 
         if (currentTime.isAfter(MORNING) && currentTime.isBefore(NOON)) {
@@ -215,7 +221,6 @@ public class MainActivity extends BaseActivity implements OnClickPassData {
             List<String> tokens = Tokenizer.tokenize(query);
 
             filteredList = Parser.parseWithGrammar(tokens, reportList);
-
         }
 
 
@@ -329,7 +334,23 @@ public class MainActivity extends BaseActivity implements OnClickPassData {
         adapterSort.notifyDataSetChanged();
     }
 
+    public int getPostsToday() {
+        int count = 0;
+        List<Report> reports = DataHolder.avlTree.fromLargeToSmall();
+        for (Report report : reports) {
+            String name = null;
+            if (isToday(report.getLocalDateTime())) {
+                count++;
+            }
+        }
+        return count;
+    }
 
+    public static boolean isToday(LocalDateTime time) {
+        LocalDate today = LocalDate.now();
+        LocalDate date = time.toLocalDate();
+        return date.equals(today);
+    }
 }
 
 

@@ -35,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (Authenticator.getInstance(LoginActivity.this).login(username, password)) {
                     // Login successful, navigate to the MainActivity (dashboard)
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    intent.putExtra("USER", username);
                     startActivity(intent);
                     finish(); // Close the login activity
                 } else {

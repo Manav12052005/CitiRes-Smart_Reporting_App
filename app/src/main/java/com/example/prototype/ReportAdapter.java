@@ -86,7 +86,7 @@ public class ReportAdapter extends ArrayAdapter<Report> {
         category.setText(report.getCategory().toString());
 
         user = (TextView) listItem.findViewById(R.id.user);
-        user.setText("Reported by: " + report.getUser() + " at " + report.getLocalDateTime());
+        user.setText("Reported by: " + report.getUser().getName() + " at " + report.getLocalDateTime());
 
 //        TextView user = listItem.findViewById(R.id.user);
 //        user.setText("Reported by: " + report.getUser().getName()); // Assuming User has a getName() method

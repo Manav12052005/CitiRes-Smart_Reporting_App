@@ -41,11 +41,14 @@ public class ReportActivity extends Activity {
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     double latitude;
     double longitude;
+    String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report2);
+
+        username = getIntent().getStringExtra("USER");
 
         // Initialize UI elements
         //spinnerLocation = findViewById(R.id.spinner_location);
@@ -159,13 +162,13 @@ public class ReportActivity extends Activity {
         Address address = addresses.get(0);
         String locationName = address.getAddressLine(0);
         String location = address.toString();
-        User user = new User("admin");
+
         if (description.isEmpty()) {
             Toast.makeText(getApplicationContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
         } else {
             Report newReport = new Report();
             newReport.setDescription(description);
-            newReport.setUser(user);
+            newReport.setUser(new User(username));
             newReport.setLocation(locationName);
             newReport.setCategory(selectedCategory);
             newReport.setPriority(selectedPriority);
