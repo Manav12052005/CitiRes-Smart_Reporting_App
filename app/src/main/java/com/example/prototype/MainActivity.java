@@ -42,7 +42,7 @@ public class MainActivity extends BaseActivity implements Observer {
     Spinner sortSpinner;
     SearchView searchView;
     List<Report> reportList = new ArrayList<>();  // To store original reports
-    Button addReportButton;
+    ImageButton addReportButton;
     List<Report> loadedReports;
     String username;
     ActivityResultLauncher<Intent> register;
