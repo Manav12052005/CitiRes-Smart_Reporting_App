@@ -153,6 +153,12 @@ public class AVLTree<R> {
         return result;
     }
 
+    public List<R> fromSmallToLarge() {
+        List<R> result = new ArrayList<>();
+        inOrder(root, result);
+        return result;
+    }
+
     private void inOrder(AVLNode node, List<R> result) {
         if (node == null) {
             return;
@@ -206,4 +212,5 @@ public class AVLTree<R> {
     public int size() {
         return this.fromLargeToSmall().size();
     }
+
 }
