@@ -26,6 +26,8 @@ import java.util.Calendar;
 import android.content.Intent;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.os.Handler;
+import android.os.Looper;
 
 public class ReportAdapter extends ArrayAdapter<Report> {
     private Context context;
@@ -152,28 +154,18 @@ public class ReportAdapter extends ArrayAdapter<Report> {
     }
 
     // Schedule the deletion using AlarmManager
-    private void scheduleDeletion(Report report, long scheduledTimeInMillis) {
-        // Create an Intent to trigger a broadcast receiver for deletion
-        Intent intent = new Intent(context, DeleteReportReceiver.class);
-        intent.putExtra("reportId", report.getReportId()); // Pass the report ID
+    private void scheduleDeletion(Report report, long delayInMillis) {
+        // Create a new Handler to handle delayed execution
+        Handler handler = new Handler(Looper.getMainLooper());
 
-        // Create a PendingIntent for the AlarmManager
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                context, report.getReportId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        // Get the AlarmManager service
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-
-        // Schedule the deletion at the selected time
-        if (alarmManager != null) {
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                // Set exact alarm for API 23 and above
-                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, scheduledTimeInMillis, pendingIntent);
-            } else {
-                // Set exact alarm for lower API levels
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP, scheduledTimeInMillis, pendingIntent);
+        // Schedule the deletion after the specified delay
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // Invoke the same logic as "Delete Now"
+                deleteReport(report.getReportId());
             }
-        }
+        }, delayInMillis);
     }
 
     // Show the time picker to schedule deletion
@@ -187,14 +179,22 @@ public class ReportAdapter extends ArrayAdapter<Report> {
         TimePickerDialog timePicker = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int selectedHour, int selectedMinute) {
-                // Get the time for deletion
+                // Get the current time
+                Calendar now = Calendar.getInstance();
                 Calendar deleteTime = Calendar.getInstance();
                 deleteTime.set(Calendar.HOUR_OF_DAY, selectedHour);
                 deleteTime.set(Calendar.MINUTE, selectedMinute);
                 deleteTime.set(Calendar.SECOND, 0);
 
-                // Schedule the deletion
-                scheduleDeletion(report, deleteTime.getTimeInMillis());
+                // Calculate the delay in milliseconds
+                long delayInMillis = deleteTime.getTimeInMillis() - now.getTimeInMillis();
+                if (delayInMillis > 0) {
+                    // Schedule the deletion with the calculated delay
+                    scheduleDeletion(report, delayInMillis);
+                } else {
+                    // If the selected time is in the past or immediate, delete it now
+                    deleteReport(report.getReportId());
+                }
             }
         }, hour, minute, true); // Use 24-hour time format
         timePicker.setTitle("Select Time to Delete");
