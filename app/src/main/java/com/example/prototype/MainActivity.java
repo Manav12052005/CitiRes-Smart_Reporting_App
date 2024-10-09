@@ -158,34 +158,15 @@ public class MainActivity extends BaseActivity implements Observer {
         super.onStop();
     }
 
-//    private void startStreamThread() {
-//        streamThread = new Thread(() -> {
-//            List<Report> reports = loadData("datastream.json");
-//
-//            for (int i = 0; i < reports.size(); i++) {
-//
-//                {
-//                    try {
-//                        Thread.sleep(5 * 1000); // Initial delay
-//                    } catch (InterruptedException e) {
-//                        throw new RuntimeException(e);
-//                    }
-//                    applyStream();
-//                }
-//            });
-//            streamThread.start();
-//        }
-//    }
 
     private void startStreamThread() {
         streamThread = new Thread(() -> {
-            // Load reports from the data stream (JSON file)
             List<Report> reports = loadData("streams_dataset.json");
 
             for (int i = 0; i < reports.size(); i++) {
                 try {
                     // Wait for 5 seconds between processing each report
-                    Thread.sleep(15 * 1000);
+                    Thread.sleep(5 * 1000);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -206,12 +187,6 @@ public class MainActivity extends BaseActivity implements Observer {
             }
         });
         streamThread.start();
-    }
-
-    private void applyStream() {
-        runOnUiThread(() -> {
-
-        });
     }
 
     // Function to filter the reports based on the search query
@@ -319,11 +294,6 @@ public class MainActivity extends BaseActivity implements Observer {
             e.printStackTrace();
         }
         return reportList;
-    }
-
-    public void loadStream() {
-
-
     }
 
     @Override
