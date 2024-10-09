@@ -6,6 +6,7 @@ Firstly, PREVENTION
 By clearly assigning work to each  team-member of the group and outlining their expectations, we attempt to prevent any disagreements from occurring in the first place. It is the duty of every team member to communicate freely to prevent misunderstandings.
 If conflicts do occur, they ought to be brought up right away during meetings.
 
+-----
 
 2. Step-by-Step Resolution Process
 
