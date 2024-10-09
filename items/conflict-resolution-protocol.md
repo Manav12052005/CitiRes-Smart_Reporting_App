@@ -1,36 +1,38 @@
 Conflict Resolution Protocol
---
-1. Prevention
-Each team member is responsible for maintaining clear and respectful communication to avoid misunderstandings.
-All disagreements should be raised early in meetings, rather than letting them fester.
 
+
+--
+Firstly, PREVENTION
+
+By clearly assigning work to each  team-member of the group and outlining their expectations, we attempt to prevent any disagreements from occurring in the first place. It is the duty of every team member to communicate freely to prevent misunderstandings.
+If conflicts do occur, they ought to be brought up right away during meetings.
+----
 
 2. Step-by-Step Resolution Process
 
-Step 1: Direct Discussion
+Step 1: Have Direct One-on-One Talk
 
-The team members involved in the conflict will engage in a private, constructive discussion to resolve the issue.
-If the conflict concerns work distribution or technical decisions, both parties should present their views with supporting evidence (e.g., from project minutes, documentation, or coding guidelines).
-
-
-Step 2: Mediation by a Team Leader
-If direct discussion does not resolve the issue, the matter will be brought to the attention of the team leader (or a neutral team member chosen by both parties).
-The team leader will mediate a discussion and propose a solution after hearing both sides.
+It is expected that the team members have a private, productive conversation to figure out a solution on their own(this is ideally he best solution).
+Both sides should provide evidence to support their positions if the disagreement is about how work is divided, technical choice, or the functionality of the code (such as from meeting minutes, documentation, or coding rules).
 
 
-Step 3: Group Discussion and Voting
-If the conflict persists, it will be discussed during a team meeting.
-Each team member will have the opportunity to voice their opinion, after which a democratic vote will decide the course of action.
-The decision made by the majority vote will be final and must be respected by all team members.
+Step 2: A team member or outsider mediates the conflict
+The subject will be brought to the attention of a member (a neutral team member selected by both sides) only and only if a direct discussion fails to settle the issue.
+After hearing all perspectives, the team member will arbitrate the conversation and offer a solution.
 
-Step 4: Escalation to Instructor/Advisor
+Step 3: Voting and Group Discussion
+A team meeting will be called to discuss the conflict if it continues.
+After giving each team member a chance to express their thoughts, they will vote to determine the best plan of action for resolving the situation.
 
-If the team cannot resolve the conflict internally after voting, the issue will be escalated to the course instructor or advisor for final resolution.
-The instructor’s decision will be binding.
+The decision taken by the majority vote will be final and must be respected by all team members.
 
-3. Documentation
-All conflicts and their resolutions will be documented in the project minutes to ensure transparency.
-If any significant change in task allocation or decisions arises from the conflict resolution, this must be recorded in the report.
+Step 3 is the final step and the decision taken here cannot be challenged so as to keep the work flow steady.
+
+-----
+
+3. Record-keeping
+   To maintain openness and a clear record for the future course of action, all conflicts must be explicitly stated in the meeting minutes.
+   The settlement of conflicts may lead to important changes in job distribution or decision-making, which also need to be documented in the report.
 
 4. Final Agreement
-All team members agree to follow this protocol to maintain a professional and productive working environment.
+   All team members must abide by this agreement to maintain a  productive working environment.
