@@ -34,6 +34,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -72,6 +73,9 @@ public class MainActivity extends BaseActivity implements Observer {
 
         adapterSort = new ReportAdapter(this, reportList, this);
         listView.setAdapter(adapterSort);
+
+        reportCount = findViewById(R.id.report_count);
+        reportCount.setText("There are " + DataHolder.avlTree.size() + " posts in total, " + getPostsToday() + " new posts today");
 
         // Setup Spinner for sorting
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,
@@ -147,6 +151,9 @@ public class MainActivity extends BaseActivity implements Observer {
         });
     }
 
+    //flag for whether the thread is running
+    private boolean isRunning = false;
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -156,21 +163,34 @@ public class MainActivity extends BaseActivity implements Observer {
     @Override
     protected void onStop() {
         super.onStop();
+        stopStreamThread();
     }
 
+    //the list for data used for streaming
+    public List<Report> streamReports = new ArrayList<>();
+    int currentIndex = 0;
 
     private void startStreamThread() {
-        streamThread = new Thread(() -> {
-            List<Report> reports = loadData("streams_dataset.json");
+        isRunning = true;
 
-            for (int i = 0; i < reports.size(); i++) {
+        streamThread = new Thread(() -> {
+            if (streamReports.isEmpty()) {
+                streamReports = loadData("streams_dataset.json");
+            }
+
+            for (int i = currentIndex; i < streamReports.size(); i++) {
+                if (!isRunning) {
+                    currentIndex = i;
+                    break;
+                }
                 try {
-                    // Wait for 5 seconds between processing each report
                     Thread.sleep(5 * 1000);
                 } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+                    streamThread.interrupt();
+                    currentIndex = i;
+                    break;
                 }
-                Report report = reports.get(i);
+                Report report = streamReports.get(i);
                 int reportId = report.getReportId();
                 if (DataHolder.avlTree.get(reportId) == null) {
                     report.setLocalDateTime(LocalDateTime.now());
@@ -188,6 +208,14 @@ public class MainActivity extends BaseActivity implements Observer {
         });
         streamThread.start();
     }
+
+    private void stopStreamThread() {
+        isRunning = false;  //the thread should stop running
+        if (streamThread != null && streamThread.isAlive()) {
+            streamThread.interrupt();  // Interrupt the thread
+        }
+    }
+
 
     // Function to filter the reports based on the search query
     private void searchReports(String query) {
