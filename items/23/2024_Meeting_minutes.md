@@ -1,5 +1,5 @@
 
-## Team Meeting 2 - Week 10 - October 8, 2024 (3:00 PM - 4:30 PM)
+## Team Meeting 5 - Week 10 - October 8, 2024 (3:00 PM - 4:30 PM)
 **Absent:**
 <br> 
 **Lead/Scribe: Yuvraj Singh**
