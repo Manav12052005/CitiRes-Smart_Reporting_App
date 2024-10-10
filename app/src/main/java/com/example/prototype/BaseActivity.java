@@ -22,8 +22,6 @@ import java.util.Map;
 public class BaseActivity extends AppCompatActivity {
 
     private ImageButton menuDashboard;
-    private ImageButton menuSearch;
-    private ImageButton menuNotifications;
     private ImageButton menuReports;
     String username;
 
@@ -42,8 +40,6 @@ public class BaseActivity extends AppCompatActivity {
 
         // Initialize Bottom Navigation Buttons
         menuDashboard = findViewById(R.id.menu_dashboard);
-        menuSearch = findViewById(R.id.menu_search);
-        menuNotifications = findViewById(R.id.menu_notifications);
         menuReports = findViewById(R.id.menu_reports);
 
 
@@ -54,23 +50,6 @@ public class BaseActivity extends AppCompatActivity {
             // Create an Intent to start MainActivity
             Intent intent = new Intent(BaseActivity.this, MainActivity.class);
             startActivity(intent);
-        });
-
-        menuSearch.setOnClickListener(v -> {
-            // Navigate to SearchActivity
-            Toast.makeText(this, "Search Clicked", Toast.LENGTH_SHORT).show();
-            // Create an Intent to start MainActivity
-            Intent intent = new Intent(BaseActivity.this, MainActivity.class);
-            startActivity(intent);
-
-        });
-
-        menuNotifications.setOnClickListener(v -> {
-            // Navigate to NotificationsActivity
-            Toast.makeText(this, "Notifications Clicked", Toast.LENGTH_SHORT).show();
-            // Example:
-            // Intent intent = new Intent(ChartActivity.this, NotificationsActivity.class);
-            // startActivity(intent);
         });
 
         menuReports.setOnClickListener(v -> {
