@@ -1,4 +1,4 @@
-# [G0 - Team Name] Report
+# G0 - 20 Report
 
 The following is a report template to help your team successfully provide all the details necessary for your report in a structured and organised manner. Please give a straightforward and concise report that best demonstrates your project. Note that a good report will give a better impression of your project to the reviewers.
 
@@ -31,21 +31,22 @@ Note that you should have removed ALL TEMPLATE/INSTRUCTION textes in your submis
 
 *Instruction: please place the CORRECT link to your firebase repository here (with comp21006442@gmail.com added as an Editor)*
 
-- Firebase Repository Link: <insert-link-to-firebase-repository OR write "I do not use Firebase"> // TODO
+- Firebase Repository Link: <I do not use Firebase> // TODO
    - Confirm: [ ] I have already added comp21006442@gmail.com as a Editor to the Firebase project prior to due date.
 - Two user accounts for markers' access are usable on the app's APK (do not change the username and password unless there are exceptional circumstances. Note that they are not real e-mail addresses in use):
-   - Username: comp2100@anu.edu.au	Password: comp2100 [ ] // TODO: check if done
-   - Username: comp6442@anu.edu.au	Password: comp6442 [ ] // TODO: check if done
+   - Username: comp2100@anu.edu.au	Password: comp2100 [ x ] // TODO: check if done
+   - Username: comp6442@anu.edu.au	Password: comp6442 [ x ] // TODO: check if done
 
 ## Team Members and Roles
 The key area(s) of responsibilities for each member
 
-| UID   |  Name  |   Role |
-|:------|:------:|-------:|
-| [uid] | [name] | [role] |
-| [uid] | [name] | [role] |
-| [uid] | [name] | [role] |
-| [uid] | [name] | [role] |
+| UID                      |      Name      |                    Role |
+|:-------------------------|:--------------:|------------------------:|
+| u7782612                 |  Manav Singh   |          UI-UX Designer |
+| u7787385                 |    Yuan Shi    | Data Structure Designer |
+| u7782814                 | Amogh Aggarwal |        Testing Engineer |
+| u7556816                 |   Harry Xia    |         Search Engineer |
+| u7781798                 |  Yuvraj Singh  | Design Pattern Engineer |
 
 
 ## Summary of Individual Contributions
@@ -156,17 +157,54 @@ Here is a partial (short) example for the subsection `Data Structures`:*
 
 *I used the following data structures in my project:*
 
-1. *LinkedList*
-   * *Objective: used for storing xxxx for xxx feature.*
-   * *Code Locations: defined in [Class X, methods Z, Y](https://gitlab.cecs.anu.edu.au/comp2100/group-project/ga-23s2/-/blob/main/items/media/_examples/Dummy.java#L22-43) and [class AnotherClass, lines l1-l2](url); processed using [dataStructureHandlerMethod](url) and ...
-   * *Reasons:*
-      * *It is more efficient than Arraylist for insertion with a time complexity O(1)*
-      * *We don't need to access the item by index for xxx feature because...*
-      * For the (part), the data ... (characteristics) ...
+1. **AVLTree**
+    - **Objective:**  
+      Used for storing and managing citizen reports efficiently.
 
-2. ...
+    - **Code Locations:**  
+      Defined in the `AVLTree` class within the `com.example.prototype` package. The AVLTree is utilized in the `DataHolder` class to store, retrieve, and manage reports.
 
-3. ...
+    - **Reasons:**
+        - **Efficiency:**  
+          AVLTree ensures that insertion, deletion, and search operations are performed in O(log n) time complexity, which is more efficient than using linear data structures like `ArrayList` for large datasets.
+        - **Balanced Structure:**  
+          Maintains a balanced tree automatically after each operation, preventing skewed trees and ensuring consistent performance.
+        - **Sorted Data:**  
+          Keeps the reports sorted based on their `reportId`, facilitating quick retrieval and organized data management.
+        - **Dynamic Size:**  
+          The tree can dynamically adjust its size as reports are added or removed, providing flexibility in handling varying amounts of data.
+
+2. **Tokenizer**
+    - **Objective:**  
+      Used for parsing and processing user input in the `SearchView` to facilitate effective search functionality.
+
+    - **Code Locations:**  
+      Defined in the `Tokenizer` class within the `com.example.prototype` package. It is utilized in the `Parser` class to tokenize and normalize search queries before processing.
+
+    - **Reasons:**
+        - **Efficient Parsing:**  
+          Breaks down complex search queries into manageable tokens, enabling more precise and relevant search results.
+        - **Normalization:**  
+          Converts input to lowercase and removes non-word characters to ensure consistency in search processing, reducing the likelihood of mismatches due to case sensitivity or unwanted characters.
+        - **Streamlined Processing:**  
+          Utilizes Java Streams and regular expressions for efficient tokenization and filtering of input, enhancing performance for real-time search features.
+        - **Modularity:**  
+          Encapsulates tokenization logic within a separate class, improving code readability, maintainability, and reusability across different components of the app.
+
+3. **ArrayList**
+    - **Objective:**  
+      Used for storing lists of reports during tree traversal and for passing data to adapters for UI components.
+
+    - **Code Locations:**  
+      Utilized in methods such as `fromLargeToSmall()` and `fromSmallToLarge()` in the `AVLTree` class to store and return ordered lists of reports.
+
+    - **Reasons:**
+        - **Dynamic Resizing:**  
+          Allows for dynamic addition and removal of elements without predefined size constraints.
+        - **Random Access:**  
+          Provides quick access to elements by index, which is useful for displaying reports in the UI.
+        - **Integration with Adapters:**  
+          Compatible with Android's `ListView` adapter, making it suitable for displaying reports in the app's user interface.
 
 <hr>
 
