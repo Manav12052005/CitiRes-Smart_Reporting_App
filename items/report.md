@@ -40,13 +40,13 @@ Note that you should have removed ALL TEMPLATE/INSTRUCTION textes in your submis
 ## Team Members and Roles
 The key area(s) of responsibilities for each member
 
-| UID                      |      Name      |                    Role |
-|:-------------------------|:--------------:|------------------------:|
-| u7782612                 |  Manav Singh   |          UI-UX Designer |
-| u7787385                 |    Yuan Shi    | Data Structure Designer |
-| u7782814                 | Amogh Aggarwal |        Testing Engineer |
-| u7556816                 |   Harry Xia    |         Search Engineer |
-| u7781798                 |  Yuvraj Singh  | Design Pattern Engineer |
+| UID                      |     Name      |                    Role |
+|:-------------------------|:-------------:|------------------------:|
+| u7782612                 |  Manav Singh  |          UI-UX Designer |
+| u7787385                 |   Yuan Shi    | Data Structure Designer |
+| u7782814                 | Amogh Agarwal |        Testing Engineer |
+| u7556816                 |   Harry Xia   |         Search Engineer |
+| u7781798                 | Yuvraj Singh  | Design Pattern Engineer |
 
 
 ## Summary of Individual Contributions
@@ -211,11 +211,16 @@ Here is a partial (short) example for the subsection `Data Structures`:*
 ### Design Patterns
 *[What design patterns did your team utilise? Where and why?]*
 
-1. *xxx Pattern*
-   * *Objective: used for storing xxxx for xxx feature.*
-   * *Code Locations: defined in [Class X, methods Z, Y](https://gitlab.cecs.anu.edu.au/comp2100/group-project/ga-23s2/-/blob/main/items/media/_examples/Dummy.java#L22-43) and [class AnotherClass, lines l1-l2](url); processed using [dataStructureHandlerMethod](url) and ...
-   * *Reasons:*
-      * ...
+1. Singleton Pattern
+   * *Objective: Assures that a class is produced just once and offers a global point of access to that one instance.*
+   * *Code Locations: Class Authenticator: Throughout the app's lifetime, just one instance of Authenticator is produced thanks to the getInstance() method.
+      Class DataHolder: Here, the same method is used to keep the AVL tree single-handed throughout the program.*
+   * *Reasons:When we desire a single source of truth for the authentication logic used throughout the application, such as with Authenticator, we use singletons to govern the creation of objects. It is employed in DataHolder to guarantee data consistency (the AVL tree) between various components.*
+
+2. Observer Pattern
+    * *Objective: Enables an object (subject) to communicate any changes in state to its dependents (observers), usually in a decoupled fashion.*
+    * *Code Locations: MainActivity implements Observer: This pattern allows MainActivity to observe and respond to data changes or events, such as when a report is added or removed, or when sorting is updated.*
+    * *Reasons:The observer design helps to maintain the user interface current with modifications to the data (e.g., when report data changes in MainActivity).*
 
 <hr>
 
