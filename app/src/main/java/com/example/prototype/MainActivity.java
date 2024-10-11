@@ -131,18 +131,22 @@ public class MainActivity extends BaseActivity implements Observer {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                stopStreamThread();
                 searchReports(query);
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
+
                 if (newText.isEmpty()) {
+                    startStreamThread();
                     // If search query is empty, reset the adapter to the original list
                     adapterSort = new ReportAdapter(MainActivity.this, new ArrayList<>(loadedReports), MainActivity.this);
                     listView.setAdapter(adapterSort);
                     adapterSort.notifyDataSetChanged();
                 } else {
+                    stopStreamThread();
                     // Perform search and set the filtered adapter
                     searchReports(newText);
                 }
@@ -158,6 +162,7 @@ public class MainActivity extends BaseActivity implements Observer {
     protected void onStart() {
         super.onStart();
         startStreamThread();
+
     }
 
     @Override
@@ -184,7 +189,7 @@ public class MainActivity extends BaseActivity implements Observer {
                     break;
                 }
                 try {
-                    Thread.sleep(5 * 1000);
+                    Thread.sleep(2 * 1000);
                 } catch (InterruptedException e) {
                     streamThread.interrupt();
                     currentIndex = i;
@@ -196,7 +201,7 @@ public class MainActivity extends BaseActivity implements Observer {
                     report.setLocalDateTime(LocalDateTime.now());
                     reportList.add(0, report);
                     loadedReports.add(0, report);
-                    adapterSort = new ReportAdapter(MainActivity.this, new ArrayList<>(loadedReports), MainActivity.this);
+                    adapterSort = new ReportAdapter(MainActivity.this, new ArrayList<>(reportList), MainActivity.this);
                     DataHolder.avlTree.put(report.getReportId(), report);
                     runOnUiThread(() -> {
                         reportCount.setText("There are " + DataHolder.avlTree.size() + " posts in total, " + getPostsToday() + " new posts today");
@@ -215,7 +220,6 @@ public class MainActivity extends BaseActivity implements Observer {
             streamThread.interrupt();  // Interrupt the thread
         }
     }
-
 
     // Function to filter the reports based on the search query
     private void searchReports(String query) {
@@ -306,7 +310,6 @@ public class MainActivity extends BaseActivity implements Observer {
     }
 
     public List<Report> loadData(String fileName) {
-
         GsonBuilder gsonBuilder = new GsonBuilder().registerTypeAdapter(Report.class, new JsonDeserialiser());
         Gson gson = gsonBuilder.create();
 
