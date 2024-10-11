@@ -11,6 +11,3 @@ Read all sections below carefully. They contain the specifications, rules, and i
 - [Examples and FAQ](5_Examples_FAQ.md)
 - [Appendices and Rubrics](6_Appendices_Rubrics.md)
 
-
-## The SURPRISE feature has been released!
-- [SURPRISE](SURPRISE.md)
