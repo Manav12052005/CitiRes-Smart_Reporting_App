@@ -250,9 +250,9 @@ The tokenizer cleans the input by removing non-word characters and splitting the
 spaces. Key-value pairs are easily identified because they contain a colon (:).**
 
 *Parsers:*
-**The parser is responsible for interpreting the tokens and applying them to the search. The parser first
+**The parser is responsible for interpreting the tokens and applying them to the search. The parser either
 processes key-value pairs, filtering reports based on attributes like location, description, priority, 
-and so on. Then, it processes general tokens, which apply to any field in the reports.**
+and so on or it processes general tokens, which apply to any field in the reports.**
 **Design:
 The parser breaks the tokens into two categories: key-value pairs and general tokens. It uses production 
 rules to filter the reports based on the token type. For key-value pairs, it applies filters to specific
