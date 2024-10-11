@@ -2,6 +2,7 @@ package com.example.prototype;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Report implements Serializable {
     private int reportId;//set to be primary key, auto increment.
@@ -107,4 +108,16 @@ public class Report implements Serializable {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Report report = (Report) o;
+        return reportId == report.reportId && likes == report.likes && Objects.equals(description, report.description) && Objects.equals(pictureLink, report.pictureLink) && Objects.equals(location, report.location) && priority == report.priority && Objects.equals(user, report.user) && category == report.category && Objects.equals(localDateTime, report.localDateTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(reportId, description, pictureLink, location, priority, user, category, localDateTime, likes);
+    }
 }
