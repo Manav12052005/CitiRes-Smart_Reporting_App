@@ -43,27 +43,6 @@
             android:scaleType="fitCenter"
             android:src="@drawable/home" />
 
-        <!-- Search Button -->
-        <ImageButton
-            android:id="@+id/menu_search"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:contentDescription="@string/issue_report"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:scaleType="fitCenter"
-            android:src="@drawable/search" />
-
-        <!-- Notifications Button -->
-        <ImageButton
-            android:id="@+id/menu_notifications"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:contentDescription="@string/notification_box"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:scaleType="fitCenter"
-            android:src="@drawable/notification" />
 
         <!-- User Account Button -->
         <ImageButton

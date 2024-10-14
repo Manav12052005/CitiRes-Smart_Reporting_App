@@ -1,4 +1,4 @@
-# [G0 - Team Name] Report
+# G0 - 20 Report
 
 The following is a report template to help your team successfully provide all the details necessary for your report in a structured and organised manner. Please give a straightforward and concise report that best demonstrates your project. Note that a good report will give a better impression of your project to the reviewers.
 
@@ -31,21 +31,22 @@ Note that you should have removed ALL TEMPLATE/INSTRUCTION textes in your submis
 
 *Instruction: please place the CORRECT link to your firebase repository here (with comp21006442@gmail.com added as an Editor)*
 
-- Firebase Repository Link: <insert-link-to-firebase-repository OR write "I do not use Firebase"> // TODO
+- Firebase Repository Link: <I do not use Firebase> // TODO
    - Confirm: [ ] I have already added comp21006442@gmail.com as a Editor to the Firebase project prior to due date.
 - Two user accounts for markers' access are usable on the app's APK (do not change the username and password unless there are exceptional circumstances. Note that they are not real e-mail addresses in use):
-   - Username: comp2100@anu.edu.au	Password: comp2100 [ ] // TODO: check if done
-   - Username: comp6442@anu.edu.au	Password: comp6442 [ ] // TODO: check if done
+   - Username: comp2100@anu.edu.au	Password: comp2100 [ x ] // TODO: check if done
+   - Username: comp6442@anu.edu.au	Password: comp6442 [ x ] // TODO: check if done
 
 ## Team Members and Roles
 The key area(s) of responsibilities for each member
 
-| UID   |  Name  |   Role |
-|:------|:------:|-------:|
-| [uid] | [name] | [role] |
-| [uid] | [name] | [role] |
-| [uid] | [name] | [role] |
-| [uid] | [name] | [role] |
+| UID                      |     Name      |                    Role |
+|:-------------------------|:-------------:|------------------------:|
+| u7782612                 |  Manav Singh  |          UI-UX Designer |
+| u7787385                 |   Yuan Shi    | Data Structure Designer |
+| u7782814                 | Amogh Agarwal |        Testing Engineer |
+| u7556816                 |   Harry Xia   |         Search Engineer |
+| u7781798                 | Yuvraj Singh  | Design Pattern Engineer |
 
 
 ## Summary of Individual Contributions
@@ -156,47 +157,106 @@ Here is a partial (short) example for the subsection `Data Structures`:*
 
 *I used the following data structures in my project:*
 
-1. *LinkedList*
-   * *Objective: used for storing xxxx for xxx feature.*
-   * *Code Locations: defined in [Class X, methods Z, Y](https://gitlab.cecs.anu.edu.au/comp2100/group-project/ga-23s2/-/blob/main/items/media/_examples/Dummy.java#L22-43) and [class AnotherClass, lines l1-l2](url); processed using [dataStructureHandlerMethod](url) and ...
-   * *Reasons:*
-      * *It is more efficient than Arraylist for insertion with a time complexity O(1)*
-      * *We don't need to access the item by index for xxx feature because...*
-      * For the (part), the data ... (characteristics) ...
+1. **AVLTree**
+    - **Objective:**  
+      Used for storing and managing citizen reports efficiently.
 
-2. ...
+    - **Code Locations:**  
+      Defined in the `AVLTree` class within the `com.example.prototype` package. The AVLTree is utilized in the `DataHolder` class to store, retrieve, and manage reports.
 
-3. ...
+    - **Reasons:**
+        - **Efficiency:**  
+          AVLTree ensures that insertion, deletion, and search operations are performed in O(log n) time complexity, which is more efficient than using linear data structures like `ArrayList` for large datasets.
+        - **Balanced Structure:**  
+          Maintains a balanced tree automatically after each operation, preventing skewed trees and ensuring consistent performance.
+        - **Sorted Data:**  
+          Keeps the reports sorted based on their `reportId`, facilitating quick retrieval and organized data management.
+        - **Dynamic Size:**  
+          The tree can dynamically adjust its size as reports are added or removed, providing flexibility in handling varying amounts of data.
+
+2. **Tokenizer**
+    - **Objective:**  
+      Used for parsing and processing user input in the `SearchView` to facilitate effective search functionality.
+
+    - **Code Locations:**  
+      Defined in the `Tokenizer` class within the `com.example.prototype` package. It is utilized in the `Parser` class to tokenize and normalize search queries before processing.
+
+    - **Reasons:**
+        - **Efficient Parsing:**  
+          Breaks down complex search queries into manageable tokens, enabling more precise and relevant search results.
+        - **Normalization:**  
+          Converts input to lowercase and removes non-word characters to ensure consistency in search processing, reducing the likelihood of mismatches due to case sensitivity or unwanted characters.
+        - **Streamlined Processing:**  
+          Utilizes Java Streams and regular expressions for efficient tokenization and filtering of input, enhancing performance for real-time search features.
+        - **Modularity:**  
+          Encapsulates tokenization logic within a separate class, improving code readability, maintainability, and reusability across different components of the app.
+
+3. **ArrayList**
+    - **Objective:**  
+      Used for storing lists of reports during tree traversal and for passing data to adapters for UI components.
+
+    - **Code Locations:**  
+      Utilized in methods such as `fromLargeToSmall()` and `fromSmallToLarge()` in the `AVLTree` class to store and return ordered lists of reports.
+
+    - **Reasons:**
+        - **Dynamic Resizing:**  
+          Allows for dynamic addition and removal of elements without predefined size constraints.
+        - **Random Access:**  
+          Provides quick access to elements by index, which is useful for displaying reports in the UI.
+        - **Integration with Adapters:**  
+          Compatible with Android's `ListView` adapter, making it suitable for displaying reports in the app's user interface.
 
 <hr>
 
 ### Design Patterns
 *[What design patterns did your team utilise? Where and why?]*
 
-1. *xxx Pattern*
-   * *Objective: used for storing xxxx for xxx feature.*
-   * *Code Locations: defined in [Class X, methods Z, Y](https://gitlab.cecs.anu.edu.au/comp2100/group-project/ga-23s2/-/blob/main/items/media/_examples/Dummy.java#L22-43) and [class AnotherClass, lines l1-l2](url); processed using [dataStructureHandlerMethod](url) and ...
-   * *Reasons:*
-      * ...
+1. Singleton Pattern
+   * *Objective: Assures that a class is produced just once and offers a global point of access to that one instance.*
+   * *Code Locations: Class Authenticator: Throughout the app's lifetime, just one instance of Authenticator is produced thanks to the getInstance() method.
+      Class DataHolder: Here, the same method is used to keep the AVL tree single-handed throughout the program.*
+   * *Reasons:When we desire a single source of truth for the authentication logic used throughout the application, such as with Authenticator, we use singletons to govern the creation of objects. It is employed in DataHolder to guarantee data consistency (the AVL tree) between various components.*
+
+2. Observer Pattern
+    * *Objective: Enables an object (subject) to communicate any changes in state to its dependents (observers), usually in a decoupled fashion.*
+    * *Code Locations: MainActivity implements Observer: This pattern allows MainActivity to observe and respond to data changes or events, such as when a report is added or removed, or when sorting is updated.*
+    * *Reasons:The observer design helps to maintain the user interface current with modifications to the data (e.g., when report data changes in MainActivity).*
 
 <hr>
 
 ### Parser
 
 ### <u>Grammar(s)</u>
-*[How do you design the grammar? What are the advantages of your designs?]*
-*If there are several grammars, list them all under this section and what they relate to.*
-
-Production Rules:
-```
-    <Non-Terminal> ::= <some output>
-    <Non-Terminal> ::= <some output>
-```
+*Grammar design defines how the input queries are structured and interpreted by the parser. 
+The key advantage of this design is that it separates key-value pairs from general tokens, 
+llowing efficient filtering based on user queries. The grammar allows for flexible and 
+human-readable search queries by supporting a wide range of input structures.*
+*In this case, there are two main types of grammars:*
+**Key-Value Grammar: This grammar identifies tokens in the form of key-value pairs, where the key represents an attribute (e.g., description, location) and the value is the filter criterion.**
+***<KeyValueToken> ::= <key> ":" <value>***
+**General Token Grammar: These tokens represent general search terms that apply to any attribute of the reports (e.g., description, category). Example production rule:**
+***<GeneralToken> ::= <word>***
 
 ### <u>Tokenizers and Parsers</u>
 
 *[Where do you use tokenisers and parsers? How are they built? What are the advantages of the designs?]*
+*Tokenizers:*
+**The tokenizer is used to break the user input into discrete tokens. It identifies both key-value pairs
+(such as location: 5th Avenue) and general tokens (e.g., middle, maintenance). The tokenizer ensures input
+is standardized by removing special characters and splitting the input based on spaces.**
 
+**Design:
+The tokenizer cleans the input by removing non-word characters and splitting the cleaned string by 
+spaces. Key-value pairs are easily identified because they contain a colon (:).**
+
+*Parsers:*
+**The parser is responsible for interpreting the tokens and applying them to the search. The parser either
+processes key-value pairs, filtering reports based on attributes like location, description, priority, 
+and so on or it processes general tokens, which apply to any field in the reports.**
+**Design:
+The parser breaks the tokens into two categories: key-value pairs and general tokens. It uses production 
+rules to filter the reports based on the token type. For key-value pairs, it applies filters to specific
+fields (e.g., location or priority). For general tokens, it checks all fields to find matches.**
 <hr>
 
 ### Others

@@ -8,6 +8,7 @@
     <!-- Main Content -->
 
     <!-- Bottom Navigation Menu -->
+
     <LinearLayout
         android:id="@+id/content_layout"
         android:layout_width="match_parent"
@@ -19,45 +20,49 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/black"
+            android:fontFamily="@font/poppins"
             android:gravity="center"
             android:padding="10dp"
             android:text="@string/dashboard"
             android:textColor="@android:color/white"
             android:textSize="24sp"
-            android:textStyle="bold"
-            android:fontFamily="@font/poppins"/>
+            android:textStyle="bold" />
 
         <!-- Other UI components like TextViews, Spinners, SearchView, ListView, etc. -->
         <!-- Remove the Bottom Navigation Menu from this layout -->
 
-        <TextView
-            android:id="@+id/report_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textSize="15sp"
-            android:textStyle="normal"
-            android:fontFamily="@font/poppins"/>
 
-        <Spinner
-            android:id="@+id/sortSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins"/>
+
 
         <SearchView
             android:id="@+id/search_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:queryHint="Search reports"
-            android:fontFamily="@font/poppins"/>
+            android:fontFamily="@font/poppins"
+            android:queryHint="Search reports" />
+
+        <Spinner
+            android:id="@+id/sortSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins" />
 
         <ListView
             android:id="@+id/reports_list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:fontFamily="@font/poppins"/>
+            android:fontFamily="@font/poppins" />
+
+        <TextView
+            android:id="@+id/report_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/poppins"
+            android:textSize="15sp"
+            android:textStyle="normal" />
+
 
         <ImageButton
             android:id="@+id/add_report_button"
@@ -66,10 +71,9 @@
             android:layout_gravity="center"
             android:backgroundTint="@color/white"
             android:padding="5dp"
-            android:text="@string/issue_report"
-            android:textColor="@android:color/white"
             android:src="@drawable/plus"
-            />
+            android:text="@string/issue_report"
+            android:textColor="@android:color/white" />
 
     </LinearLayout>
 
