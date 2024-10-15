@@ -1,4 +1,4 @@
-package com.example.prototype;
+package com.example.prototype.entity;
 
 import androidx.annotation.NonNull;
 

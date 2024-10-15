@@ -1,4 +1,4 @@
-package com.example.prototype;
+package com.example.prototype.chart;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -9,6 +9,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.prototype.util.BaseActivity;
+import com.example.prototype.R;
+import com.example.prototype.entity.Category;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.*;
@@ -16,10 +19,8 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class CategoryChartActivity extends BaseActivity {
-
     private PieChart pieChart;
     private List<String> categories;
     private List<Integer> counts;

@@ -1,4 +1,4 @@
-package com.example.prototype;
+package com.example.prototype.report;
 
 public interface Observer {
     /**

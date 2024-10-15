@@ -1,8 +1,7 @@
-package com.example.prototype;
+package com.example.prototype.util;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class TimeUtil {
     public static boolean isToday(LocalDateTime time) {

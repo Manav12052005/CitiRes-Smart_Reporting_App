@@ -1,26 +1,31 @@
-package com.example.prototype;
+package com.example.prototype.report;
 
-import static com.example.prototype.TimeUtil.isToday;
+import static com.example.prototype.util.TimeUtil.isToday;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.prototype.util.BaseActivity;
+import com.example.prototype.util.JsonDeserialiser;
+import com.example.prototype.R;
+import com.example.prototype.data.DataHolder;
+import com.example.prototype.entity.Priority;
+import com.example.prototype.entity.Report;
+import com.example.prototype.search.Parser;
+import com.example.prototype.search.Tokenizer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -30,13 +35,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 public class MainActivity extends BaseActivity implements Observer {
     ReportAdapter adapterSort;

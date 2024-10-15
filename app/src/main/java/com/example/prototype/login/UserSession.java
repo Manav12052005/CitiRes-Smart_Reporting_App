@@ -1,4 +1,4 @@
-package com.example.prototype;
+package com.example.prototype.login;
 
 public class UserSession {
     private static String currentUser;

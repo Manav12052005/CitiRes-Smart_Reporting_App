@@ -1,6 +1,8 @@
-package com.example.prototype;
+package com.example.prototype.search;
 
 import android.util.Log;
+
+import com.example.prototype.entity.Report;
 
 import java.util.ArrayList;
 import java.util.List;

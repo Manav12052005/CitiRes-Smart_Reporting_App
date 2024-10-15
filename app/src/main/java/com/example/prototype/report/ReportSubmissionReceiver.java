@@ -1,4 +1,4 @@
-package com.example.prototype;
+package com.example.prototype.report;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -8,11 +8,16 @@ import android.Manifest;
 import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
+
+import com.example.prototype.entity.Category;
+import com.example.prototype.entity.Priority;
+import com.example.prototype.entity.Report;
+import com.example.prototype.entity.User;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import android.location.Location;
-import java.util.Date;
+
 import java.time.LocalDateTime;
 
 public class ReportSubmissionReceiver extends BroadcastReceiver {

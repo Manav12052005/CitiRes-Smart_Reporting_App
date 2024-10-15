@@ -2,6 +2,12 @@ package com.example.prototype;
 
 import static org.junit.Assert.*;
 
+import com.example.prototype.data.DataHolder;
+import com.example.prototype.entity.Category;
+import com.example.prototype.entity.Priority;
+import com.example.prototype.entity.Report;
+import com.example.prototype.entity.User;
+
 import org.junit.Before;
 import org.junit.Test;
 

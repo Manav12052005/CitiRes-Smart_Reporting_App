@@ -1,10 +1,9 @@
-package com.example.prototype;
+package com.example.prototype.util;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -15,9 +14,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.example.prototype.R;
+import com.example.prototype.chart.ChartActivity;
+import com.example.prototype.report.MainActivity;
 
 public class BaseActivity extends AppCompatActivity {
 

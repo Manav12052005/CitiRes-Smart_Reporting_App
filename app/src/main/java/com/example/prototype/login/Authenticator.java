@@ -1,4 +1,4 @@
-package com.example.prototype;
+package com.example.prototype.login;
 
 import android.content.Context;
 import android.content.res.AssetManager;

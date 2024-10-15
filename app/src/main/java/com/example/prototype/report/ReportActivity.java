@@ -1,4 +1,4 @@
-    package com.example.prototype;
+    package com.example.prototype.report;
 
     import android.app.Activity;
     import android.content.Intent;
@@ -15,12 +15,17 @@
     import android.location.Location;
 
     import androidx.annotation.NonNull;
-    import androidx.appcompat.app.AppCompatActivity;
     import androidx.core.app.ActivityCompat;
     import androidx.core.content.ContextCompat;
 
     import java.io.IOException;
 
+    import com.example.prototype.R;
+    import com.example.prototype.entity.Category;
+    import com.example.prototype.entity.Priority;
+    import com.example.prototype.entity.Report;
+    import com.example.prototype.entity.User;
+    import com.example.prototype.util.BaseActivity;
     import com.google.android.gms.location.FusedLocationProviderClient;
     import com.google.android.gms.location.LocationServices;
     import com.google.android.gms.tasks.OnSuccessListener;
@@ -37,11 +42,9 @@
     import android.widget.TimePicker;
     import android.app.TimePickerDialog;
     import java.util.Calendar;
-    import android.content.Intent;
+
     import android.app.AlarmManager;
     import android.app.PendingIntent;
-    import android.os.Handler;
-    import android.os.Looper;
 
     public class ReportActivity extends BaseActivity {
         private Spinner spinnerCategory, spinnerPriority;

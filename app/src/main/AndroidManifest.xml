@@ -20,25 +20,25 @@
         android:theme="@style/Theme.Prototype"
         tools:targetApi="31">
         <activity
-            android:name=".ChartActivity"
+            android:name=".chart.ChartActivity"
             android:exported="false" />
         <activity
-            android:name=".LocationChartActivity"
+            android:name=".chart.LocationChartActivity"
             android:exported="false" />
         <activity
-            android:name=".CategoryChartActivity"
+            android:name=".chart.CategoryChartActivity"
             android:exported="false" />
         <activity
-            android:name=".BaseActivity"
+            android:name=".util.BaseActivity"
             android:exported="false" />
         <activity
-            android:name=".PriorityChartActivity"
+            android:name=".chart.PriorityChartActivity"
             android:exported="false" /> <!-- Report Activity -->
         <activity
-            android:name=".ReportActivity"
+            android:name=".report.ReportActivity"
             android:exported="false" /> <!-- Login Activity -->
         <activity
-            android:name=".LoginActivity"
+            android:name=".login.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -47,18 +47,18 @@
             </intent-filter>
         </activity> <!-- Main Activity -->
         <activity
-            android:name=".MainActivity"
+            android:name=".report.MainActivity"
             android:exported="true" /> <!-- Notification Activity -->
         <activity
             android:name=".NotificationActivity"
             android:exported="false" />
 
         <receiver
-            android:name=".DeleteReportReceiver"
+            android:name=".report.DeleteReportReceiver"
             android:exported="false" />
 
         <receiver
-            android:name=".ReportSubmissionReceiver"
+            android:name=".report.ReportSubmissionReceiver"
             android:exported="true" />
 
 

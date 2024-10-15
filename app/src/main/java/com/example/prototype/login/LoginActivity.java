@@ -1,4 +1,4 @@
-package com.example.prototype;
+package com.example.prototype.login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.prototype.report.MainActivity;
+import com.example.prototype.R;
 
 public class LoginActivity extends AppCompatActivity {
 

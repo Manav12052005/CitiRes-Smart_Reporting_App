@@ -1,4 +1,4 @@
-package com.example.prototype;
+package com.example.prototype.report;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -25,11 +25,12 @@ import android.app.TimePickerDialog;
 
 import java.util.Calendar;
 
-import android.content.Intent;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.os.Handler;
 import android.os.Looper;
+
+import com.example.prototype.R;
+import com.example.prototype.entity.Priority;
+import com.example.prototype.entity.Report;
 
 public class ReportAdapter extends ArrayAdapter<Report> {
     private Context context;

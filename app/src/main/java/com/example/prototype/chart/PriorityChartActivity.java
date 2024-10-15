@@ -1,4 +1,4 @@
-package com.example.prototype;
+package com.example.prototype.chart;
 
 import android.os.Bundle;
 
@@ -6,6 +6,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.prototype.util.BaseActivity;
+import com.example.prototype.R;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;

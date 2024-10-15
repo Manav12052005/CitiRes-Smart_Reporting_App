@@ -1,4 +1,6 @@
-package com.example.prototype;
+package com.example.prototype.data;
+
+import com.example.prototype.entity.Report;
 
 public class DataHolder {
     public static AVLTree<Report> avlTree = new AVLTree<>();

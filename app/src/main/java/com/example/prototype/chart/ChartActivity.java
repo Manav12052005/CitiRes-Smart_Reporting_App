@@ -1,4 +1,4 @@
-package com.example.prototype;
+package com.example.prototype.chart;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,14 +23,15 @@ import android.app.TimePickerDialog;
 
 import java.util.Calendar;
 
-import android.content.Intent;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.os.Handler;
 import android.os.Looper;
-import android.app.TimePickerDialog;
-import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.example.prototype.util.BaseActivity;
+import com.example.prototype.R;
+import com.example.prototype.data.DataHolder;
+import com.example.prototype.entity.Category;
+import com.example.prototype.entity.Report;
 
 public class ChartActivity extends BaseActivity {
 

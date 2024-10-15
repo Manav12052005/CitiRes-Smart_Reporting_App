@@ -1,5 +1,9 @@
-package com.example.prototype;
+package com.example.prototype.util;
 
+import com.example.prototype.entity.Category;
+import com.example.prototype.entity.Priority;
+import com.example.prototype.entity.Report;
+import com.example.prototype.entity.User;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;

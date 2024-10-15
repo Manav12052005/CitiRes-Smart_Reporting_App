@@ -9,7 +9,7 @@
 
     android:orientation="vertical"
     android:gravity="bottom"
-    tools:context=".LoginActivity">
+    tools:context=".login.LoginActivity">
 
     <!-- Image at the top -->
     <ImageView

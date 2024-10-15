@@ -5,6 +5,8 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
+import com.example.prototype.data.AVLTree;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
