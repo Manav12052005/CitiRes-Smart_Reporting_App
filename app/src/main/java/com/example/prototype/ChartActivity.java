@@ -24,12 +24,8 @@ import android.app.TimePickerDialog;
 import java.util.Calendar;
 
 import android.content.Intent;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.os.Handler;
 import android.os.Looper;
-import android.app.TimePickerDialog;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 public class ChartActivity extends BaseActivity {
@@ -56,84 +52,30 @@ public class ChartActivity extends BaseActivity {
         buttonCategoryChart = findViewById(R.id.button_category_chart);
         buttonLocationChart = findViewById(R.id.button_location_chart);
 
-        buttonPriorityChart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Create an AlertDialog to ask if the user wants to display the chart now or schedule it
-                AlertDialog.Builder builder = new AlertDialog.Builder(ChartActivity.this);
-                builder.setTitle("Display Priority Chart")
-                        .setMessage("Do you want to display the priority chart now or schedule it for later?")
-                        .setCancelable(true)
-                        .setPositiveButton("Display Now", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // Immediate display action
-                                displayPriorityChartNow();
-                                dialog.dismiss();
-                            }
-                        })
-                        .setNegativeButton("Schedule Later", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // Show time picker dialog to schedule the display
-                                showTimePickerDialogForChart();
-                            }
-                        });
+        // Set OnClickListeners for all buttons with scheduling functionality
+        buttonPriorityChart.setOnClickListener(view -> handleChartButton("Priority", this::displayPriorityChartNow));
+        buttonCategoryChart.setOnClickListener(view -> handleChartButton("Category", this::displayCategoryChartNow));
+        buttonLocationChart.setOnClickListener(view -> handleChartButton("Location", this::displayLocationChartNow));
+    }
 
-                // Show the dialog
-                builder.create().show();
-            }
-        });
+    private void handleChartButton(String chartType, Runnable displayChartAction) {
+        // Create an AlertDialog to ask if the user wants to display the chart now or schedule it
+        AlertDialog.Builder builder = new AlertDialog.Builder(ChartActivity.this);
+        builder.setTitle("Display " + chartType + " Chart")
+                .setMessage("Do you want to display the " + chartType + " chart now or schedule it for later?")
+                .setCancelable(true)
+                .setPositiveButton("Display Now", (dialog, which) -> {
+                    // Immediate display action
+                    displayChartAction.run();
+                    dialog.dismiss();
+                })
+                .setNegativeButton("Schedule Later", (dialog, which) -> {
+                    // Show time picker dialog to schedule the display
+                    showTimePickerDialogForChart(displayChartAction);
+                });
 
-//        // Set OnClickListeners
-//        buttonPriorityChart.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // Get priority counts
-//                Map<String, Integer> priorityCounts = getPriorityCounts();
-//                Intent intent = new Intent(ChartActivity.this, PriorityChartActivity.class);
-//                // Pass the counts via Intent extras
-//                intent.putExtra("LOW_COUNT", priorityCounts.get("LOW"));
-//                intent.putExtra("MIDDLE_COUNT", priorityCounts.get("MIDDLE"));
-//                intent.putExtra("HIGH_COUNT", priorityCounts.get("HIGH"));
-//                startActivity(intent);
-//            }
-//        });
-
-
-
-        buttonCategoryChart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Get category counts
-                Map<String, Integer> categoryCounts = getCategoryCounts();
-                Intent intent = new Intent(ChartActivity.this, CategoryChartActivity.class);
-                // Optionally, pass any required data via intent
-                for (Map.Entry<String, Integer> entry : categoryCounts.entrySet()) {
-                    String key = entry.getKey() + "_COUNT";
-                    intent.putExtra(key, entry.getValue());
-                }
-                startActivity(intent);
-            }
-        });
-
-        buttonLocationChart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Get location counts
-                Map<String, Integer> locationCounts = getLocationCounts();
-
-                // Create an Intent to start LocationChartActivity
-                Intent intent = new Intent(ChartActivity.this, LocationChartActivity.class);
-
-                // Pass the location counts map as a Serializable extra
-                intent.putExtra("LOCATION_COUNTS", (Serializable) locationCounts);
-
-                // Start the LocationChartActivity
-                startActivity(intent);
-            }
-        });
-
+        // Show the dialog
+        builder.create().show();
     }
 
     private void displayPriorityChartNow() {
@@ -147,20 +89,36 @@ public class ChartActivity extends BaseActivity {
         startActivity(intent);
     }
 
-    private void scheduleChartDisplay(long delayInMillis) {
-        // Use the Handler to schedule the display after the specified delay
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                displayPriorityChartNow(); // Display the chart after the delay
-            }
-        }, delayInMillis);
-
-        Toast.makeText(this, "Priority Chart scheduled for later.", Toast.LENGTH_SHORT).show();
+    private void displayCategoryChartNow() {
+        // Get category counts
+        Map<String, Integer> categoryCounts = getCategoryCounts();
+        Intent intent = new Intent(ChartActivity.this, CategoryChartActivity.class);
+        // Pass the category counts via Intent extras
+        for (Map.Entry<String, Integer> entry : categoryCounts.entrySet()) {
+            String key = entry.getKey() + "_COUNT";
+            intent.putExtra(key, entry.getValue());
+        }
+        startActivity(intent);
     }
 
-    private void showTimePickerDialogForChart() {
+    private void displayLocationChartNow() {
+        // Get location counts
+        Map<String, Integer> locationCounts = getLocationCounts();
+        Intent intent = new Intent(ChartActivity.this, LocationChartActivity.class);
+        // Pass the location counts via Intent extras
+        intent.putExtra("LOCATION_COUNTS", (Serializable) locationCounts);
+        startActivity(intent);
+    }
+
+    private void scheduleChartDisplay(long delayInMillis, Runnable displayChartAction) {
+        // Use the Handler to schedule the display after the specified delay
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(displayChartAction, delayInMillis);
+
+        Toast.makeText(this, "Chart scheduled for later.", Toast.LENGTH_SHORT).show();
+    }
+
+    private void showTimePickerDialogForChart(Runnable displayChartAction) {
         // Get the current time
         Calendar currentTime = Calendar.getInstance();
         int hour = currentTime.get(Calendar.HOUR_OF_DAY);
@@ -168,33 +126,28 @@ public class ChartActivity extends BaseActivity {
 
         // Create a TimePickerDialog to pick a time
         TimePickerDialog timePickerDialog = new TimePickerDialog(ChartActivity.this,
-                new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int selectedHour, int selectedMinute) {
-                        // Get the current time
-                        Calendar now = Calendar.getInstance();
-                        Calendar displayTime = Calendar.getInstance();
-                        displayTime.set(Calendar.HOUR_OF_DAY, selectedHour);
-                        displayTime.set(Calendar.MINUTE, selectedMinute);
-                        displayTime.set(Calendar.SECOND, 0);
+                (view, selectedHour, selectedMinute) -> {
+                    // Get the current time
+                    Calendar now = Calendar.getInstance();
+                    Calendar displayTime = Calendar.getInstance();
+                    displayTime.set(Calendar.HOUR_OF_DAY, selectedHour);
+                    displayTime.set(Calendar.MINUTE, selectedMinute);
+                    displayTime.set(Calendar.SECOND, 0);
 
-                        // Calculate the delay in milliseconds
-                        long delayInMillis = displayTime.getTimeInMillis() - now.getTimeInMillis();
-                        if (delayInMillis > 0) {
-                            // Schedule the chart display with the calculated delay
-                            scheduleChartDisplay(delayInMillis);
-                        } else {
-                            // If the selected time is in the past or immediate, display it now
-                            displayPriorityChartNow();
-                        }
+                    // Calculate the delay in milliseconds
+                    long delayInMillis = displayTime.getTimeInMillis() - now.getTimeInMillis();
+                    if (delayInMillis > 0) {
+                        // Schedule the chart display with the calculated delay
+                        scheduleChartDisplay(delayInMillis, displayChartAction);
+                    } else {
+                        // If the selected time is in the past or immediate, display it now
+                        displayChartAction.run();
                     }
                 }, hour, minute, true); // Use 24-hour time format
 
         timePickerDialog.setTitle("Select Time to Display Chart");
         timePickerDialog.show();
     }
-
-
 
     private Map<String, Integer> getPriorityCounts() {
         Map<String, Integer> priorityCounts = new HashMap<>();
@@ -264,5 +217,4 @@ public class ChartActivity extends BaseActivity {
 
         return locationCounts;
     }
-
 }
