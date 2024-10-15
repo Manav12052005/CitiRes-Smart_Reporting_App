@@ -138,16 +138,14 @@
                                 }
                             })
                             // Set 'Schedule Later' button
-                            .setNegativeButton("Schedule Later", new DialogInterface.OnClickListener() {
+                            .setNegativeButton("Let me think..", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     // Show time picker dialog to schedule the submission
-                                    showTimePickerDialogForSubmission();
                                     dialog.dismiss();
 
                                 }
                             });
-
                     // Create and show the dialog
                     AlertDialog alertDialog = builder.create();
                     alertDialog.show();
@@ -193,107 +191,6 @@
             }
         }
 
-        private void scheduleSubmission(long delayInMillis, String description, Category category, Priority priority, String locationName) {
-            // Get AlarmManager service
-            AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-
-            // Check if the app can schedule exact alarms
-            if (alarmManager.canScheduleExactAlarms()) {
-                // Proceed with scheduling the exact alarm
-                Intent intent = new Intent(ReportActivity.this, ReportSubmissionReceiver.class);
-                intent.putExtra("description", description);
-                intent.putExtra("category", category.toString());
-                intent.putExtra("priority", priority.toString());
-                intent.putExtra("location", locationName);
-                intent.putExtra("username", username);
-
-                // Create the PendingIntent
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
-
-                // Schedule the alarm
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + delayInMillis, pendingIntent);
-
-                // Navigate back to MainActivity
-                Intent mainIntent = new Intent(ReportActivity.this, MainActivity.class);
-                mainIntent.putExtra("report_scheduled", true);  // Flag to indicate that a report was scheduled
-                mainIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);  // Ensure MainActivity is not duplicated
-                startActivity(mainIntent);
-                finish();  // End ReportActivity
-            } else {
-                // If permission is not granted, show a dialog to the user
-                showExactAlarmPermissionDialog();
-            }
-        }
-
-        private void showExactAlarmPermissionDialog() {
-            new AlertDialog.Builder(this)
-                    .setTitle("Exact Alarm Permission Required")
-                    .setMessage("To schedule report submissions, this app needs permission to schedule exact alarms. Please grant the permission in system settings.")
-                    .setPositiveButton("Open Settings", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            // Open the system settings where the user can enable exact alarms for the app
-                            Intent intent = new Intent(android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
-                            startActivity(intent);
-                        }
-                    })
-                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();  // Dismiss the dialog if user doesn't want to grant permission
-                        }
-                    })
-                    .create()
-                    .show();
-        }
-
-
-
-        private void showTimePickerDialogForSubmission() {
-            Calendar currentTime = Calendar.getInstance();
-            int hour = currentTime.get(Calendar.HOUR_OF_DAY);
-            int minute = currentTime.get(Calendar.MINUTE);
-
-
-            TimePickerDialog timePicker = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
-                @Override
-                public void onTimeSet(TimePicker view, int selectedHour, int selectedMinute) {
-                    Calendar submitTime = Calendar.getInstance();
-                    submitTime.set(Calendar.HOUR_OF_DAY, selectedHour);
-                    submitTime.set(Calendar.MINUTE, selectedMinute);
-                    submitTime.set(Calendar.SECOND, 0);
-
-                    long delayInMillis = submitTime.getTimeInMillis() - currentTime.getTimeInMillis();
-                    if (delayInMillis > 0) {
-                        // Gather the report data and schedule submission
-                        String description = editTextDescription.getText().toString();
-                        Category selectedCategory = (Category) spinnerCategory.getSelectedItem();
-                        Priority selectedPriority = (Priority) spinnerPriority.getSelectedItem();
-                        Geocoder geocoder = new Geocoder(ReportActivity.this, Locale.getDefault());
-                        List<Address> addresses;
-                        String locationName = "";
-
-                        try {
-                            addresses = geocoder.getFromLocation(latitude, longitude, 1);
-                            locationName = addresses.get(0).getAddressLine(0);
-                            checkLocationPermissionAndSubmit();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-                        scheduleSubmission(delayInMillis, description, selectedCategory, selectedPriority, locationName);
-                    } else {
-                        // If time is immediate, submit now
-                        checkLocationPermissionAndSubmit();
-                    }
-                }
-            }, hour, minute, true); // 24-hour time format
-            timePicker.setTitle("Select Time to Submit");
-            timePicker.show();
-        }
-
-
-
         private void submitReport() {
             String description = editTextDescription.getText().toString();
             Category selectedCategory = (Category) spinnerCategory.getSelectedItem();
@@ -313,15 +210,8 @@
             if (description.isEmpty()) {
                 Toast.makeText(getApplicationContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
             } else {
-                Report newReport = new Report();
-                newReport.setDescription(description);
-                newReport.setUser(new User(username));
-                newReport.setLocation(locationName);
-                newReport.setCategory(selectedCategory);
-                newReport.setPriority(selectedPriority);
-                newReport.setReportId(ReportCounter.getReportId());
-                newReport.setLocalDateTime(LocalDateTime.now());
-                ReportCounter.inc();
+                Report newReport = constructReport
+                        (description, locationName, selectedCategory, selectedPriority);
 
                 Intent intent = new Intent();
                 Bundle bundle = new Bundle();
@@ -333,5 +223,18 @@
                 Toast.makeText(getApplicationContext(), "Task saved!", Toast.LENGTH_SHORT).show();
                 finish();
             }
+        }
+
+        private Report constructReport(String description, String locationName, Category selectedCategory, Priority selectedPriority) {
+            Report newReport = new Report();
+            newReport.setDescription(description);
+            newReport.setUser(new User(username));
+            newReport.setLocation(locationName);
+            newReport.setCategory(selectedCategory);
+            newReport.setPriority(selectedPriority);
+            newReport.setReportId(ReportCounter.getReportId());
+            newReport.setLocalDateTime(LocalDateTime.now());
+            ReportCounter.inc();
+            return newReport;
         }
     }

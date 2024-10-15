@@ -2,6 +2,7 @@ package com.example.prototype.report;
 
 import static com.example.prototype.util.TimeUtil.isToday;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -26,6 +27,7 @@ import com.example.prototype.entity.Priority;
 import com.example.prototype.entity.Report;
 import com.example.prototype.search.Parser;
 import com.example.prototype.search.Tokenizer;
+import com.example.prototype.util.TimeUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -52,6 +54,7 @@ public class MainActivity extends BaseActivity implements Observer {
     Thread streamThread;
     TextView reportCount;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,20 +66,20 @@ public class MainActivity extends BaseActivity implements Observer {
 
         loadedReports = loadData("reports_dataset.json");
 
-        if (DataHolder.getInstance().avlTree.isEmpty()) {
+        if (DataHolder.avlTree.isEmpty()) {
             List<Report> loadedReports = loadData("reports_dataset.json");
             for (Report report : loadedReports) {
-                DataHolder.getInstance().avlTree.put(report.getReportId(), report);
+                DataHolder.avlTree.put(report.getReportId(), report);
             }
         }
 
-        reportList.addAll(DataHolder.getInstance().avlTree.fromLargeToSmall());
+        reportList.addAll(DataHolder.avlTree.fromLargeToSmall());
 
         adapterSort = new ReportAdapter(this, reportList, this);
         listView.setAdapter(adapterSort);
 
         reportCount = findViewById(R.id.report_count);
-        reportCount.setText("There are " + DataHolder.avlTree.size() + " posts in total, " + getPostsToday() + " new posts today");
+        reportCount.setText("There are " + DataHolder.avlTree.size() + " posts in total, " + TimeUtil.getPostsToday() + " new posts today");
 
         // Setup Spinner for sorting
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,
@@ -141,7 +144,7 @@ public class MainActivity extends BaseActivity implements Observer {
             public boolean onQueryTextChange(String newText) {
 
                 if (newText.isEmpty()) {
-                    startStreamThread();
+                    startStreamThread(10);
                     // If search query is empty, reset the adapter to the original list
                     adapterSort = new ReportAdapter(MainActivity.this, new ArrayList<>(loadedReports), MainActivity.this);
                     listView.setAdapter(adapterSort);
@@ -162,8 +165,7 @@ public class MainActivity extends BaseActivity implements Observer {
     @Override
     protected void onStart() {
         super.onStart();
-        startStreamThread();
-
+        startStreamThread(10);
     }
 
     @Override
@@ -176,7 +178,8 @@ public class MainActivity extends BaseActivity implements Observer {
     public List<Report> streamReports = new ArrayList<>();
     int currentIndex = 0;
 
-    private void startStreamThread() {
+    @SuppressLint("SetTextI18n")
+    private void startStreamThread(int intervalSeconds) {
         isRunning = true;
 
         streamThread = new Thread(() -> {
@@ -190,7 +193,7 @@ public class MainActivity extends BaseActivity implements Observer {
                     break;
                 }
                 try {
-                    Thread.sleep(2 * 1000);
+                    Thread.sleep(intervalSeconds * 1000);
                 } catch (InterruptedException e) {
                     streamThread.interrupt();
                     currentIndex = i;
@@ -205,7 +208,7 @@ public class MainActivity extends BaseActivity implements Observer {
                     adapterSort = new ReportAdapter(MainActivity.this, new ArrayList<>(reportList), MainActivity.this);
                     DataHolder.avlTree.put(report.getReportId(), report);
                     runOnUiThread(() -> {
-                        reportCount.setText("There are " + DataHolder.avlTree.size() + " posts in total, " + getPostsToday() + " new posts today");
+                        reportCount.setText("There are " + DataHolder.avlTree.size() + " posts in total, " + TimeUtil.getPostsToday() + " new posts today");
                         adapterSort.notifyDataSetChanged();
                         listView.setAdapter(adapterSort);
                     });
@@ -343,16 +346,7 @@ public class MainActivity extends BaseActivity implements Observer {
         adapterSort.notifyDataSetChanged();
     }
 
-    public int getPostsToday() {
-        int count = 0;
-        List<Report> reports = DataHolder.avlTree.fromLargeToSmall();
-        for (Report report : reports) {
-            if (isToday(report.getLocalDateTime())) {
-                count++;
-            }
-        }
-        return count;
-    }
+
 }
 
 
