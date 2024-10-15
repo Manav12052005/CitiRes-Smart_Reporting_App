@@ -47,6 +47,4 @@ public class TestReportStorage {
         assertNull(reportsTree.get(2));
         assertTrue(reportsTree.isEmpty());
     }
-
-
 }

@@ -1,9 +1,12 @@
 package com.example.prototype;
 
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class AVLTree<R> {
+
     class AVLNode {
         int key;
         R value;
@@ -12,6 +15,9 @@ public class AVLTree<R> {
         int height = 1;
 
         public AVLNode(int key, R value) {
+            if (value == null) {
+                throw new IllegalArgumentException("Value cannot be null.");
+            }
             this.key = key;
             this.value = value;
         }
@@ -99,6 +105,9 @@ public class AVLTree<R> {
     AVLNode root;
 
     public void put(int key, R value) {
+        if (value == null) {
+            throw new IllegalArgumentException("Value cannot be null.");
+        }
         root = doPut(root, key, value);
     }
 
@@ -120,7 +129,11 @@ public class AVLTree<R> {
     }
 
     public R get(int key) {
-        return doGet(root, key);
+        R value = doGet(root, key);
+//        if (value == null) {
+//            throw new NoSuchElementException("Key not found: " + key);
+//        }
+        return value;
     }
 
     private R doGet(AVLNode node, int key) {
@@ -169,7 +182,14 @@ public class AVLTree<R> {
     }
 
     public void remove(int key) {
+        if (!contains(key)) {
+            throw new NoSuchElementException("Key not found: " + key);
+        }
         root = doRemove(root, key);
+    }
+
+    public boolean contains(int key) {
+        return doGet(root, key) != null;
     }
 
     private AVLNode doRemove(AVLNode node, int key) {
@@ -212,4 +232,7 @@ public class AVLTree<R> {
         return this.size() == 0;
     }
 
+    public void empty() {
+        root = null;
+    }
 }
