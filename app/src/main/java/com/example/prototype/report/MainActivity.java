@@ -41,6 +41,7 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class MainActivity extends BaseActivity implements Observer {
@@ -48,17 +49,25 @@ public class MainActivity extends BaseActivity implements Observer {
     ListView listView;
     Spinner sortSpinner;
     SearchView searchView;
-    List<Report> reportList = new ArrayList<>();  // To store original reports
+    List<Report> reportList = new ArrayList<>();
     ImageButton addReportButton;
     List<Report> loadedReports;
     String username;
     ActivityResultLauncher<Intent> register;
     Thread streamThread;
     TextView reportCount;
+    private List<Report> currentDisplayedList;
+    private String currentSearchQuery = "";
+    private int currentSortOption = 0; // 0 = Default
+
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        currentDisplayedList = new ArrayList<>(reportList);
+
+
         super.onCreate(savedInstanceState);
         setChildContentView(R.layout.activity_main);
 
@@ -82,24 +91,6 @@ public class MainActivity extends BaseActivity implements Observer {
 
         reportCount = findViewById(R.id.report_count);
         reportCount.setText("There are " + DataHolder.avlTree.size() + " posts in total, " + TimeUtil.getPostsToday() + " new posts today");
-
-        // Setup Spinner for sorting
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,
-                new String[]{"Default", "Sort by Date (Newest First)", "Sort by Date (Oldest First)", "Sort by Priority (High to Low)",
-                        "Sort by Priority (Low to High)", "Sort by Likes (Most Liked First)"});
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        sortSpinner.setAdapter(spinnerAdapter);
-
-        sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                sortReports(position);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-        });
 
         username = getIntent().getStringExtra("USER");
 
@@ -133,32 +124,102 @@ public class MainActivity extends BaseActivity implements Observer {
             }
         });
 
+        // Setup Spinner for sorting
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,
+                new String[]{"Default", "Sort by Date (Newest First)", "Sort by Date (Oldest First)", "Sort by Priority (High to Low)",
+                        "Sort by Priority (Low to High)", "Sort by Likes (Most Liked First)"});
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sortSpinner.setAdapter(spinnerAdapter);
+
+        sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                currentSortOption = position;
+
+                // Update the stream state based on current search and sort options
+                updateStreamState();
+
+                refreshDisplayedList();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+
         // Handle SearchView functionality
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                stopStreamThread();
-                searchReports(query);
+                currentSearchQuery = query;
+                updateStreamState();
+                refreshDisplayedList();
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-
-                if (newText.isEmpty()) {
-                    startStreamThread(10);
-                    // If search query is empty, reset the adapter to the original list
-                    adapterSort = new ReportAdapter(MainActivity.this, new ArrayList<>(loadedReports), MainActivity.this);
-                    listView.setAdapter(adapterSort);
-                    adapterSort.notifyDataSetChanged();
-                } else {
-                    stopStreamThread();
-                    // Perform search and set the filtered adapter
-                    searchReports(newText);
-                }
+                currentSearchQuery = newText;
+                updateStreamState();
+                refreshDisplayedList();
                 return true;
             }
         });
+    }
+
+    private void updateStreamState() {
+        if (currentSearchQuery.isEmpty() && currentSortOption == 0) {
+            startStreamThread(10);
+        } else {
+            stopStreamThread();
+        }
+    }
+
+    private void refreshDisplayedList() {
+        // Filter based on search query
+        List<Report> filteredList;
+        if (currentSearchQuery.isEmpty()) {
+            filteredList = new ArrayList<>(reportList);
+        } else {
+            List<String> tokens = Tokenizer.tokenize(currentSearchQuery);
+            filteredList = Parser.parseWithGrammar(tokens, reportList);
+        }
+
+        // Sort the filtered list
+        currentDisplayedList = sortReports(filteredList, currentSortOption);
+
+        // Update the adapter
+        adapterSort = new ReportAdapter(this, currentDisplayedList, this);
+        listView.setAdapter(adapterSort);
+        adapterSort.notifyDataSetChanged();
+    }
+
+
+    private List<Report> sortReports(List<Report> listToSort, int position) {
+        switch (position) {
+            case 0: // Default (no sorting)
+                // Optionally, you can reset to the original order if needed
+                break;
+            case 1: // Sort by Date (Newest First)
+                listToSort.sort((report1, report2) -> report2.getLocalDateTime().compareTo(report1.getLocalDateTime()));
+                break;
+            case 2: // Sort by Date (Oldest First)
+                listToSort.sort(Comparator.comparing(Report::getLocalDateTime));
+                break;
+            case 3: // Sort by Priority (High to Low)
+                listToSort.sort((report1, report2) -> PriorityUtil.comparePriority(report2.getPriority(), report1.getPriority()));
+                break;
+            case 4: // Sort by Priority (Low to High)
+                listToSort.sort((report1, report2) -> PriorityUtil.comparePriority(report1.getPriority(), report2.getPriority()));
+                break;
+            case 5: // Sort by Likes (Most Liked First)
+                listToSort.sort((report1, report2) -> Integer.compare(report2.getLikes(), report1.getLikes()));
+                break;
+            default:
+                // Handle default case if needed
+                break;
+        }
+        return listToSort;
     }
 
     //flag for whether the thread is running
@@ -227,71 +288,7 @@ public class MainActivity extends BaseActivity implements Observer {
         }
     }
 
-    // Function to filter the reports based on the search query
-    private void searchReports(String query) {
 
-        List<Report> filteredList = new ArrayList<>();
-
-        if (!query.isEmpty()) {
-
-            List<String> tokens = Tokenizer.tokenize(query);
-            filteredList = Parser.parseWithGrammar(tokens, reportList);
-        }
-
-
-        adapterSort = new ReportAdapter(this, filteredList, this);
-        listView.setAdapter(adapterSort);
-
-        adapterSort.notifyDataSetChanged();
-    }
-
-    private void sortReports(int position) {
-        switch (position) {
-            case 0: // Default
-                // Reset the adapter to use the original list
-                adapterSort = new ReportAdapter(MainActivity.this, new ArrayList<>(reportList), MainActivity.this);
-                listView.setAdapter(adapterSort);
-                adapterSort.notifyDataSetChanged();
-                break;
-            case 1: // Sort by Date (newest First)
-                List<Report> sortedListNewest = new ArrayList<>(reportList);
-                sortedListNewest.sort((report1, report2) -> report2.getLocalDateTime().compareTo(report1.getLocalDateTime()));
-                adapterSort = new ReportAdapter(this, sortedListNewest, this);
-                listView.setAdapter(adapterSort);
-                adapterSort.notifyDataSetChanged();
-                break;
-            case 2: // Sort by Date (oldest First)
-                List<Report> sortedListOldest = new ArrayList<>(reportList);
-                sortedListOldest.sort((report1, report2) -> report1.getLocalDateTime().compareTo(report2.getLocalDateTime()));
-                adapterSort = new ReportAdapter(this, sortedListOldest, this);
-                listView.setAdapter(adapterSort);
-                adapterSort.notifyDataSetChanged();
-                break;
-            case 3: // Sort by Priority (High to Low)
-                List<Report> sortedListHighToLow = new ArrayList<>(reportList);
-                sortedListHighToLow.sort((report1, report2) -> comparePriority(report2.getPriority(), report1.getPriority()));
-                adapterSort = new ReportAdapter(this, sortedListHighToLow, this);
-                listView.setAdapter(adapterSort);
-                adapterSort.notifyDataSetChanged();
-                break;
-            case 4: // Sort by Priority (Low to High)
-                List<Report> sortedListLowToHigh = new ArrayList<>(reportList);
-                sortedListLowToHigh.sort((report1, report2) -> comparePriority(report1.getPriority(), report2.getPriority()));
-                adapterSort = new ReportAdapter(this, sortedListLowToHigh, this);
-                listView.setAdapter(adapterSort);
-                adapterSort.notifyDataSetChanged();
-                break;
-            case 5: // Sort by Likes (most liked first)
-                List<Report> sortedListMostLiked = new ArrayList<>(reportList);
-                sortedListMostLiked.sort((report1, report2) -> Integer.compare(report2.getLikes(), report1.getLikes()));
-                adapterSort = new ReportAdapter(this, sortedListMostLiked, this);
-                listView.setAdapter(adapterSort);
-                adapterSort.notifyDataSetChanged();
-                break;
-            default:
-                return;
-        }
-    }
 
     public List<Report> loadData(String fileName) {
         GsonBuilder gsonBuilder = new GsonBuilder().registerTypeAdapter(Report.class, new JsonDeserialiser());
@@ -324,6 +321,9 @@ public class MainActivity extends BaseActivity implements Observer {
 
         // Notify adapter to update view
         adapterSort.notifyDataSetChanged();
+
+        // Refresh the displayed list
+        refreshDisplayedList();
     }
 }
 
