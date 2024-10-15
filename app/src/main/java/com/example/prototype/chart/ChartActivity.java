@@ -134,7 +134,6 @@ public class ChartActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
-
     }
 
     private void displayPriorityChartNow() {

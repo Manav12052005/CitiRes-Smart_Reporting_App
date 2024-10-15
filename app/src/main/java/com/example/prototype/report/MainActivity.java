@@ -1,5 +1,6 @@
 package com.example.prototype.report;
 
+import static com.example.prototype.util.PriorityUtil.comparePriority;
 import static com.example.prototype.util.TimeUtil.isToday;
 
 import android.annotation.SuppressLint;
@@ -27,6 +28,7 @@ import com.example.prototype.entity.Priority;
 import com.example.prototype.entity.Report;
 import com.example.prototype.search.Parser;
 import com.example.prototype.search.Tokenizer;
+import com.example.prototype.util.PriorityUtil;
 import com.example.prototype.util.TimeUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -291,28 +293,6 @@ public class MainActivity extends BaseActivity implements Observer {
         }
     }
 
-    // Custom priority comparator function
-    private int comparePriority(Priority p1, Priority p2) {
-        // Define the custom order: LOW < MIDDLE < HIGH
-        int priorityValue1 = getPriorityValue(p1);
-        int priorityValue2 = getPriorityValue(p2);
-        return Integer.compare(priorityValue1, priorityValue2);
-    }
-
-    // Helper function to assign custom values to priorities
-    private int getPriorityValue(Priority priority) {
-        switch (priority) {
-            case LOW:
-                return 1;
-            case MIDDLE:
-                return 2;
-            case HIGH:
-                return 3;
-            default:
-                return Integer.MAX_VALUE; // Default case for safety
-        }
-    }
-
     public List<Report> loadData(String fileName) {
         GsonBuilder gsonBuilder = new GsonBuilder().registerTypeAdapter(Report.class, new JsonDeserialiser());
         Gson gson = gsonBuilder.create();
@@ -345,8 +325,6 @@ public class MainActivity extends BaseActivity implements Observer {
         // Notify adapter to update view
         adapterSort.notifyDataSetChanged();
     }
-
-
 }
 
 
