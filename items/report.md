@@ -227,19 +227,36 @@ Here is a partial (short) example for the subsection `Data Structures`:*
 ### Parser
 
 ### <u>Grammar(s)</u>
-*[How do you design the grammar? What are the advantages of your designs?]*
-*If there are several grammars, list them all under this section and what they relate to.*
-
-Production Rules:
-```
-    <Non-Terminal> ::= <some output>
-    <Non-Terminal> ::= <some output>
-```
+*Grammar design defines how the input queries are structured and interpreted by the parser. 
+The key advantage of this design is that it separates key-value pairs from general tokens, 
+llowing efficient filtering based on user queries. The grammar allows for flexible and 
+human-readable search queries by supporting a wide range of input structures.*
+*In this case, there are two main types of grammars:*
+**Key-Value Grammar: This grammar identifies tokens in the form of key-value pairs, where the key represents an attribute (e.g., description, location) and the value is the filter criterion.**
+***<KeyValueToken> ::= <key> ":" <value>***
+**General Token Grammar: These tokens represent general search terms that apply to any attribute of the reports (e.g., description, category). Example production rule:**
+***<GeneralToken> ::= <word>***
 
 ### <u>Tokenizers and Parsers</u>
 
 *[Where do you use tokenisers and parsers? How are they built? What are the advantages of the designs?]*
+*Tokenizers:*
+**The tokenizer is used to break the user input into discrete tokens. It identifies both key-value pairs
+(such as location: 5th Avenue) and general tokens (e.g., middle, maintenance). The tokenizer ensures input
+is standardized by removing special characters and splitting the input based on spaces.**
 
+**Design:
+The tokenizer cleans the input by removing non-word characters and splitting the cleaned string by 
+spaces. Key-value pairs are easily identified because they contain a colon (:).**
+
+*Parsers:*
+**The parser is responsible for interpreting the tokens and applying them to the search. The parser either
+processes key-value pairs, filtering reports based on attributes like location, description, priority, 
+and so on or it processes general tokens, which apply to any field in the reports.**
+**Design:
+The parser breaks the tokens into two categories: key-value pairs and general tokens. It uses production 
+rules to filter the reports based on the token type. For key-value pairs, it applies filters to specific
+fields (e.g., location or priority). For general tokens, it checks all fields to find matches.**
 <hr>
 
 ### Others

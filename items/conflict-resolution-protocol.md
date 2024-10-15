@@ -1,12 +1,9 @@
 Conflict Resolution Protocol
+--
+1. Prevention
+Each team member is responsible for maintaining clear and respectful communication to avoid misunderstandings.
+All disagreements should be raised early in meetings, rather than letting them fester.
 
-
-Firstly, PREVENTION
-
-By clearly assigning work to each  team-member of the group and outlining their expectations, we attempt to prevent any disagreements from occurring in the first place. It is the duty of every team member to communicate freely to prevent misunderstandings.
-If conflicts do occur, they ought to be brought up right away during meetings.
-
------
 
 2. Step-by-Step Resolution Process
 
