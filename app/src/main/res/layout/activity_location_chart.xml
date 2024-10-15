@@ -6,7 +6,7 @@
     android:id="@+id/location_chart_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LocationChartActivity">
+    tools:context=".chart.LocationChartActivity">
 
     <!-- RadarChart -->
 <com.github.mikephil.charting.charts.RadarChart

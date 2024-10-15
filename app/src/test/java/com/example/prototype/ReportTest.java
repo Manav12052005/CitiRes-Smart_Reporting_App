@@ -2,6 +2,8 @@ package com.example.prototype;
 
 import static org.junit.Assert.assertEquals;
 
+import com.example.prototype.report.ReportCounter;
+
 import org.junit.Test;
 
 public class ReportTest {

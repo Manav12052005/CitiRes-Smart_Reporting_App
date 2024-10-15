@@ -2,13 +2,17 @@ package com.example.prototype;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
+
+import com.example.prototype.data.AVLTree;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class AVLTreeTest {
     AVLTree<String> avlTree;
@@ -59,14 +63,14 @@ public class AVLTreeTest {
 
     @Test
     public void testRemoveNonExistingKey() {
-        avlTree.remove(25);
+        assertThrows(NoSuchElementException.class, () -> { avlTree.remove(25); });
         assertEquals(20, avlTree.size());
     }
 
     @Test
     public void testRemoveOnEmptyTree() {
         AVLTree<String> emptyTree = new AVLTree<>();
-        emptyTree.remove(1);
+        assertThrows(NoSuchElementException.class, () -> { emptyTree.remove(1); });
         assertEquals(0, emptyTree.size());
     }
 
