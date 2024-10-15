@@ -45,89 +45,109 @@ import java.util.Comparator;
 import java.util.List;
 
 public class MainActivity extends BaseActivity implements Observer {
-    ReportAdapter adapterSort;
-    ListView listView;
-    Spinner sortSpinner;
-    SearchView searchView;
-    List<Report> reportList = new ArrayList<>();
-    ImageButton addReportButton;
-    List<Report> loadedReports;
-    String username;
-    ActivityResultLauncher<Intent> register;
-    Thread streamThread;
-    TextView reportCount;
-    private List<Report> currentDisplayedList;
-    private String currentSearchQuery = "";
-    private int currentSortOption = 0; // 0 = Default
+    private ReportAdapter adapterSort;
+    private ListView listView;
+    private Spinner sortSpinner;
+    private SearchView searchView;
+    private List<Report> reportList = new ArrayList<>();  // Main data source
+    private ImageButton addReportButton;
+    private String username;
+    private ActivityResultLauncher<Intent> register;
+    private Thread streamThread;
+    private TextView reportCount;
 
+    private List<Report> currentDisplayedList;    // Displayed after search and sort
+    private String currentSearchQuery = "";
+    private int currentSortOption = 0; // 0 = Default sort option
+
+    private boolean isRunning = false;
+    private List<Report> streamReports = new ArrayList<>();
+    private int currentIndex = 0;
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        currentDisplayedList = new ArrayList<>(reportList);
-
-
         super.onCreate(savedInstanceState);
         setChildContentView(R.layout.activity_main);
 
+        // Initialize views
         listView = findViewById(R.id.reports_list);
         searchView = findViewById(R.id.search_view);
         sortSpinner = findViewById(R.id.sortSpinner);
+        reportCount = findViewById(R.id.report_count);
+        addReportButton = findViewById(R.id.add_report_button);
 
-        loadedReports = loadData("reports_dataset.json");
+        // Initialize data
+        initializeData();
 
+        // Set up adapter with the current displayed list
+        currentDisplayedList = new ArrayList<>(reportList);
+        adapterSort = new ReportAdapter(this, currentDisplayedList, this);
+        listView.setAdapter(adapterSort);
+
+        // Update report count
+        updateReportCount();
+
+        // Get username from intent
+        username = getIntent().getStringExtra("USER");
+
+        // Set up add report button
+        addReportButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, ReportActivity.class);
+            intent.putExtra("USER", username);
+            register.launch(intent);
+        });
+
+        // Set up result launcher for adding new reports
+        register = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (result != null) {
+                Intent intent = result.getData();
+                if (intent != null && result.getResultCode() == RESULT_OK) {
+                    Report addedReport = (Report) intent.getSerializableExtra("added_report", Report.class);
+                    if (addedReport != null) {
+                        // Add new report to data sources
+                        reportList.add(0, addedReport);
+                        DataHolder.avlTree.put(addedReport.getReportId(), addedReport);
+
+                        // Refresh displayed list
+                        refreshDisplayedList();
+
+                        // Update report count
+                        updateReportCount();
+                    }
+                }
+            }
+        });
+
+        // Set up spinner for sorting
+        setupSortSpinner();
+
+        // Set up search view
+        setupSearchView();
+    }
+
+    private void initializeData() {
         if (DataHolder.avlTree.isEmpty()) {
+            // Load reports from JSON and populate AVL tree
             List<Report> loadedReports = loadData("reports_dataset.json");
             for (Report report : loadedReports) {
                 DataHolder.avlTree.put(report.getReportId(), report);
             }
         }
 
+        // Populate reportList from AVL tree
         reportList.addAll(DataHolder.avlTree.fromLargeToSmall());
+    }
 
-        adapterSort = new ReportAdapter(this, reportList, this);
-        listView.setAdapter(adapterSort);
+    private void updateReportCount() {
+        reportCount.setText("There are " + DataHolder.avlTree.size() + " posts in total, " +
+                TimeUtil.getPostsToday() + " new posts today");
+    }
 
-        reportCount = findViewById(R.id.report_count);
-        reportCount.setText("There are " + DataHolder.avlTree.size() + " posts in total, " + TimeUtil.getPostsToday() + " new posts today");
-
-        username = getIntent().getStringExtra("USER");
-
-        register = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-            @Override
-            public void onActivityResult(ActivityResult result) {
-                if (result != null) {
-                    Intent intent = result.getData();
-                    if (intent != null && result.getResultCode() == RESULT_OK) {
-                        Report addedReport = (Report) intent.getSerializableExtra("added_report", Report.class);
-                        reportList.add(0, addedReport);
-                        loadedReports.add(0, addedReport);
-                        adapterSort = new ReportAdapter(MainActivity.this, new ArrayList<>(loadedReports), MainActivity.this);
-                        DataHolder.avlTree.put(addedReport.getReportId(), addedReport);
-                        adapterSort.notifyDataSetChanged();
-                        listView.setAdapter(adapterSort);
-                    }
-                }
-            }
-        });
-
-        reportCount = findViewById(R.id.report_count);
-
-        addReportButton = findViewById(R.id.add_report_button);
-        addReportButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ReportActivity.class);
-                intent.putExtra("USER", username);
-                register.launch(intent);
-            }
-        });
-
-        // Setup Spinner for sorting
+    private void setupSortSpinner() {
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,
-                new String[]{"Default", "Sort by Date (Newest First)", "Sort by Date (Oldest First)", "Sort by Priority (High to Low)",
-                        "Sort by Priority (Low to High)", "Sort by Likes (Most Liked First)"});
+                new String[]{"Default", "Sort by Date (Newest First)", "Sort by Date (Oldest First)",
+                        "Sort by Priority (High to Low)", "Sort by Priority (Low to High)", "Sort by Likes (Most Liked First)"});
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sortSpinner.setAdapter(spinnerAdapter);
 
@@ -139,15 +159,18 @@ public class MainActivity extends BaseActivity implements Observer {
                 // Update the stream state based on current search and sort options
                 updateStreamState();
 
+                // Refresh displayed list
                 refreshDisplayedList();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
+                // No action needed
             }
         });
+    }
 
-        // Handle SearchView functionality
+    private void setupSearchView() {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -194,11 +217,10 @@ public class MainActivity extends BaseActivity implements Observer {
         adapterSort.notifyDataSetChanged();
     }
 
-
     private List<Report> sortReports(List<Report> listToSort, int position) {
         switch (position) {
             case 0: // Default (no sorting)
-                // Optionally, you can reset to the original order if needed
+                // Optionally, reset to original order if needed
                 break;
             case 1: // Sort by Date (Newest First)
                 listToSort.sort((report1, report2) -> report2.getLocalDateTime().compareTo(report1.getLocalDateTime()));
@@ -222,13 +244,11 @@ public class MainActivity extends BaseActivity implements Observer {
         return listToSort;
     }
 
-    //flag for whether the thread is running
-    private boolean isRunning = false;
-
     @Override
     protected void onStart() {
         super.onStart();
-        startStreamThread(10);
+        // Update stream state based on current search and sort options
+        updateStreamState();
     }
 
     @Override
@@ -236,10 +256,6 @@ public class MainActivity extends BaseActivity implements Observer {
         super.onStop();
         stopStreamThread();
     }
-
-    //the list for data used for streaming
-    public List<Report> streamReports = new ArrayList<>();
-    int currentIndex = 0;
 
     @SuppressLint("SetTextI18n")
     private void startStreamThread(int intervalSeconds) {
@@ -258,7 +274,7 @@ public class MainActivity extends BaseActivity implements Observer {
                 try {
                     Thread.sleep(intervalSeconds * 1000);
                 } catch (InterruptedException e) {
-                    streamThread.interrupt();
+                    Thread.currentThread().interrupt();
                     currentIndex = i;
                     break;
                 }
@@ -266,14 +282,14 @@ public class MainActivity extends BaseActivity implements Observer {
                 int reportId = report.getReportId();
                 if (DataHolder.avlTree.get(reportId) == null) {
                     report.setLocalDateTime(LocalDateTime.now());
+                    // Add new report to data sources
                     reportList.add(0, report);
-                    loadedReports.add(0, report);
-                    adapterSort = new ReportAdapter(MainActivity.this, new ArrayList<>(reportList), MainActivity.this);
                     DataHolder.avlTree.put(report.getReportId(), report);
+
                     runOnUiThread(() -> {
-                        reportCount.setText("There are " + DataHolder.avlTree.size() + " posts in total, " + TimeUtil.getPostsToday() + " new posts today");
-                        adapterSort.notifyDataSetChanged();
-                        listView.setAdapter(adapterSort);
+                        // Update report count and refresh displayed list
+                        updateReportCount();
+                        refreshDisplayedList();
                     });
                 }
             }
@@ -282,13 +298,11 @@ public class MainActivity extends BaseActivity implements Observer {
     }
 
     private void stopStreamThread() {
-        isRunning = false;  //the thread should stop running
+        isRunning = false;  // The thread should stop running
         if (streamThread != null && streamThread.isAlive()) {
             streamThread.interrupt();  // Interrupt the thread
         }
     }
-
-
 
     public List<Report> loadData(String fileName) {
         GsonBuilder gsonBuilder = new GsonBuilder().registerTypeAdapter(Report.class, new JsonDeserialiser());
@@ -316,14 +330,11 @@ public class MainActivity extends BaseActivity implements Observer {
         // Remove from reportList
         reportList.removeIf(report -> report.getReportId() == reportId);
 
-        // Remove from loadedReports
-        loadedReports.removeIf(report -> report.getReportId() == reportId);
-
-        // Notify adapter to update view
-        adapterSort.notifyDataSetChanged();
-
         // Refresh the displayed list
         refreshDisplayedList();
+
+        // Update report count
+        updateReportCount();
     }
 }
 
