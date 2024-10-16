@@ -33,41 +33,64 @@ collaboration:
 # add as many "url+licence+comment" entries as necessary
 # (or remove it altogether if you haven't used any external code)
 code:
-  - comment:
-    url:
-    licence:
+  - comment: Chart Library used to implement [Data-Graphical] Feature. Standard code snippets in Chart Activities and their XML's are used as it is.
+    url: https://github.com/PhilJay/MPAndroidChart
+    licence:  http://www.apache.org/licenses/LICENSE-2.0
 
 
 # add as many "url+licence+comment" entries as necessary
 # (or remove it altogether if you haven't used any external assets)
 assets:
-  # NOTE: "Bliss" is just here as an example, you SHOULD REMOVE IT
-  - comment: "_Bliss_ by Charles O'Rear"
-    url: https://en.wikipedia.org/wiki/Bliss_(image)
-    licence: fair use
+  - comment: "Icon for date - Calendar.png"
+    url: https://icons8.com/icon/10053/calendar
+    licence: Custom Commercial license (https://intercom.help/icons8-7fb7577e8170/en/articles/5534926-universal-multimedia-license-agreement-for-icons8)
+  - comment: "Icon for Home - home.png"
+    url: https://icons8.com/icon/i6fZC6wuprSu/home
+    licence: Custom Commercial license (https://intercom.help/icons8-7fb7577e8170/en/articles/5534926-universal-multimedia-license-agreement-for-icons8)
+  - comment: "Icon for Like - liked_heart.png"
+    url: https://icons8.com/icon/JD2A4WXqotI8/love-circled
+    licence: Custom Commercial license (https://intercom.help/icons8-7fb7577e8170/en/articles/5534926-universal-multimedia-license-agreement-for-icons8)
+  - comment: "Icon for Person - person.png"
+    url: https://icons8.com/icon/11781/account
+    licence: Custom Commercial license (https://intercom.help/icons8-7fb7577e8170/en/articles/5534926-universal-multimedia-license-agreement-for-icons8)
+  - comment: "Icon for Plus - plus.png"
+    url: https://icons8.com/icon/11255/plus
+    licence: Custom Commercial license (https://intercom.help/icons8-7fb7577e8170/en/articles/5534926-universal-multimedia-license-agreement-for-icons8)
+  - comment: "Icon for Search - search.png"
+    url: https://icons8.com/icon/7695/search
+    licence: Custom Commercial license (https://intercom.help/icons8-7fb7577e8170/en/articles/5534926-universal-multimedia-license-agreement-for-icons8)
+  - comment: "Icon for unlike - unlike.png"
+    url: https://icons8.com/icons/set/like
+    licence: Custom Commercial license (https://intercom.help/icons8-7fb7577e8170/en/articles/5534926-universal-multimedia-license-agreement-for-icons8)
 
 
-### Questions (answer before final submission):
+
+  ### Questions (answer before final submission)
 1. You (as a group) completed this work (tick the most appropriate option):
   - [ ] by yourself (as a group) without the help of others;
-      [ ] with Gen AI tools (e.g., ChatGPT, Co-Pilot).
-      [ ] using online resources (e.g., Stackoverflow, blogs)
+      [ x ] with Gen AI tools (e.g., ChatGPT, Co-Pilot).
+      [ x ] using online resources (e.g., Stackoverflow, blogs)
 
 2. If not completed by yourself only, how did the use of Gen AI tools (and which ones), contribute to completing this assignment?
-  - Tool(s): <tools used here>
+  - Tool(s): <ChatGPT>
   
 3. How did they contribute to the completion of this assignment?
-  - <your answer here>
+  - <Generate_Reports - The python automation concept was understood and implemented with the help of ChatGPT - Manav>
+  - <Chart_Activity, LocationChartActivity, CategoryChartActivity, PriorityChartActivity, ReportAnalyzer - [The
+  implementation of MPAndroid Chart Library was done with the help of ChatGPT. This includes analyzing reports 
+  and passing data as intent to display graphs. (Methods in ReportAnalyzer)] - Manav>
+  - <Base Activity, the design choice to have a foundational activity always visible was taken and implemented with
+    the help of ChatGPT - Manav>
 
 4. How long did it take to complete this assignment (approximately, in hours)?
-  - <your answer here> hours
+  - <100> hours
 
 
 
 # for each member, sign by inputting your name and uid here (remove any empty "name+uid" entries)
 members:
-  - name:
-    uid:
+  - name: Manav Singh
+    uid: u7782612
   - name:
     uid:
   - name:
