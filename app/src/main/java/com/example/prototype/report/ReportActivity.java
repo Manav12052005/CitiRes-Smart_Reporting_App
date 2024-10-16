@@ -143,7 +143,6 @@
                                 public void onClick(DialogInterface dialog, int which) {
                                     // Show time picker dialog to schedule the submission
                                     dialog.dismiss();
-
                                 }
                             });
                     // Create and show the dialog

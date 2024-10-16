@@ -213,13 +213,15 @@ Here is a partial (short) example for the subsection `Data Structures`:*
 
 1. Singleton Pattern
    * *Objective: Assures that a class is produced just once and offers a global point of access to that one instance.*
-   * *Code Locations: Class Authenticator: Throughout the app's lifetime, just one instance of Authenticator is produced thanks to the getInstance() method.
-      Class DataHolder: Here, the same method is used to keep the AVL tree single-handed throughout the program.*
-   * *Reasons:When we desire a single source of truth for the authentication logic used throughout the application, such as with Authenticator, we use singletons to govern the creation of objects. It is employed in DataHolder to guarantee data consistency (the AVL tree) between various components.*
+   * Code Locations: Class Authenticator: Throughout the app's lifetime, just one instance of Authenticator is produced thanks to the getInstance() method.
+   * *Reasons:When we desire a single source of truth for the authentication logic used throughout the application, such as with Authenticator, we use singletons to govern the creation of objects.*
+
+   * Code Locations: Class DataHolder: Here, the singleton design p is used to keep the AVL tree single-handed throughout the program.*
+   * Reasons: Here, Singleton design pattern ensures that the reports instances are loaded to the AVLTree to store only once. And throughtout, the 
 
 2. Observer Pattern
     * *Objective: Enables an object (subject) to communicate any changes in state to its dependents (observers), usually in a decoupled fashion.*
-    * *Code Locations: MainActivity implements Observer: This pattern allows MainActivity to observe and respond to data changes or events, such as when a report is added or removed, or when sorting is updated.*
+    * *Code Locations: MainActivity implements Observer interface: This pattern allows MainActivity to observe and respond to data changes or events, such as when a report is added or removed, or when sorting is updated, from other activities.*
     * *Reasons:The observer design helps to maintain the user interface current with modifications to the data (e.g., when report data changes in MainActivity).*
 
 <hr>
@@ -282,6 +284,12 @@ fields (e.g., location or priority). For general tokens, it checks all fields to
 
 3. ...
    <br>
+
+
+4. [DataStream]. Description of the feature ... (medium)
+   * Code: [Class X, methods Z, Y](https://gitlab.cecs.anu.edu.au/comp2100/group-project/ga-23s2/-/blob/main/items/media/_examples/Dummy.java#L22-43) and Class Y, ...
+   * Description of feature: The feture enables the app to have new report instance to be added onto the dashboard automatically and stored on the avlTree, by a given time interval, which simulates the brhaviour of other users keeping adding new reports on the app whenever encountering issues. Whenever the user jumps to another activity or search something in the search bar,k the stream process stops.<br>
+   * Description of your implementation: I use a single thread to control the data stream process without using any advanced android thread techniques. The thread reads data from a json file and converting them to a report instances list by json-deserializer. The thread loops through the list and add reports to the avltree to store and use runOnUiThread method to reflect changes on the dashboard. The thread then stops for a customized time interval using Thread.sleep() after a new report being added. Whenever the user jumps to another activity or search something in the search bar, the stream process stops, after returing to the main dashboard, the streaming process proceeds, resumes on left reports. The lifecycles of android development is preoperly handled here as when to it starts or resumes streaming process whenever, and stops if it leaves MainActivity or search in bar. <br>
 
 ### Custom Features
 Feature Category: Privacy <br>

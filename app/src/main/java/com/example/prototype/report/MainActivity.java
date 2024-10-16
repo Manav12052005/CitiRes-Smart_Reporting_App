@@ -1,8 +1,5 @@
 package com.example.prototype.report;
 
-import static com.example.prototype.util.PriorityUtil.comparePriority;
-import static com.example.prototype.util.TimeUtil.isToday;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,20 +12,18 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.SearchView;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 
+import com.example.prototype.sort.ReportSorter;
+import com.example.prototype.sort.ReportSorterFactory;
 import com.example.prototype.util.BaseActivity;
 import com.example.prototype.util.JsonDeserialiser;
 import com.example.prototype.R;
 import com.example.prototype.data.DataHolder;
-import com.example.prototype.entity.Priority;
 import com.example.prototype.entity.Report;
 import com.example.prototype.search.Parser;
 import com.example.prototype.search.Tokenizer;
-import com.example.prototype.util.PriorityUtil;
 import com.example.prototype.util.TimeUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -41,7 +36,6 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 public class MainActivity extends BaseActivity implements Observer {
@@ -108,17 +102,14 @@ public class MainActivity extends BaseActivity implements Observer {
                         // Add new report to data sources
                         reportList.add(0, addedReport);
                         DataHolder.avlTree.put(addedReport.getReportId(), addedReport);
-
                         // Refresh displayed list
                         refreshDisplayedList();
-
                         // Update report count
                         updateReportCount();
                     }
                 }
             }
         });
-
         // Set up spinner for sorting
         setupSortSpinner();
 
@@ -134,7 +125,6 @@ public class MainActivity extends BaseActivity implements Observer {
                 DataHolder.avlTree.put(report.getReportId(), report);
             }
         }
-
         // Populate reportList from AVL tree
         reportList.addAll(DataHolder.avlTree.fromLargeToSmall());
     }
@@ -217,31 +207,36 @@ public class MainActivity extends BaseActivity implements Observer {
         adapterSort.notifyDataSetChanged();
     }
 
+//    private List<Report> sortReports(List<Report> listToSort, int position) {
+//        switch (position) {
+//            case 0: // Default (no sorting)
+//                // Optionally, reset to original order if needed
+//                break;
+//            case 1: // Sort by Date (Newest First)
+//                listToSort.sort((report1, report2) -> report2.getLocalDateTime().compareTo(report1.getLocalDateTime()));
+//                break;
+//            case 2: // Sort by Date (Oldest First)
+//                listToSort.sort(Comparator.comparing(Report::getLocalDateTime));
+//                break;
+//            case 3: // Sort by Priority (High to Low)
+//                listToSort.sort((report1, report2) -> PriorityUtil.comparePriority(report2.getPriority(), report1.getPriority()));
+//                break;
+//            case 4: // Sort by Priority (Low to High)
+//                listToSort.sort((report1, report2) -> PriorityUtil.comparePriority(report1.getPriority(), report2.getPriority()));
+//                break;
+//            case 5: // Sort by Likes (Most Liked First)
+//                listToSort.sort((report1, report2) -> Integer.compare(report2.getLikes(), report1.getLikes()));
+//                break;
+//            default:
+//                // Handle default case if needed
+//                break;
+//        }
+//        return listToSort;
+//    }
+
     private List<Report> sortReports(List<Report> listToSort, int position) {
-        switch (position) {
-            case 0: // Default (no sorting)
-                // Optionally, reset to original order if needed
-                break;
-            case 1: // Sort by Date (Newest First)
-                listToSort.sort((report1, report2) -> report2.getLocalDateTime().compareTo(report1.getLocalDateTime()));
-                break;
-            case 2: // Sort by Date (Oldest First)
-                listToSort.sort(Comparator.comparing(Report::getLocalDateTime));
-                break;
-            case 3: // Sort by Priority (High to Low)
-                listToSort.sort((report1, report2) -> PriorityUtil.comparePriority(report2.getPriority(), report1.getPriority()));
-                break;
-            case 4: // Sort by Priority (Low to High)
-                listToSort.sort((report1, report2) -> PriorityUtil.comparePriority(report1.getPriority(), report2.getPriority()));
-                break;
-            case 5: // Sort by Likes (Most Liked First)
-                listToSort.sort((report1, report2) -> Integer.compare(report2.getLikes(), report1.getLikes()));
-                break;
-            default:
-                // Handle default case if needed
-                break;
-        }
-        return listToSort;
+        ReportSorter sorter = ReportSorterFactory.createSorter(position);
+        return sorter.sort(listToSort);
     }
 
     @Override
