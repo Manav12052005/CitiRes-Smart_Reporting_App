@@ -14,7 +14,9 @@ import java.util.HashSet;
  * It makes 3 maps, one for each chart.
  * Part of Feature - Data_Graphical
  * These are tested in ReportAnalyzerTest.java
- * @author Manav Singh*/
+ * @author Manav Singh
+ * @author Amogh Agarwal*/
+
 
 public class ReportAnalyzer {
 
@@ -25,9 +27,11 @@ public class ReportAnalyzer {
         priorityCounts.put("HIGH", 0);
 
         for (Report report : reports) {
-            String priority = report.getPriority().toString();
-            int count = priorityCounts.getOrDefault(priority, 0);
-            priorityCounts.put(priority, count + 1);
+            if (report.getPriority() != null) {
+                String priority = report.getPriority().toString();
+                int count = priorityCounts.getOrDefault(priority, 0);
+                priorityCounts.put(priority, count + 1);
+            }
         }
 
         return priorityCounts;
@@ -40,8 +44,10 @@ public class ReportAnalyzer {
         }
 
         for (Report report : reports) {
-            String category = report.getCategory().toString();
-            categoryCounts.put(category, categoryCounts.get(category) + 1);
+            if (report.getCategory() != null) {
+                String category = report.getCategory().toString();
+                categoryCounts.put(category, categoryCounts.get(category) + 1);
+            }
         }
         return categoryCounts;
     }

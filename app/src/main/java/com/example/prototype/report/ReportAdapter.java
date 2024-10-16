@@ -27,6 +27,7 @@ import java.util.Calendar;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.widget.Toast;
 
 import com.example.prototype.R;
 import com.example.prototype.entity.Priority;
@@ -39,6 +40,8 @@ import com.example.prototype.entity.Report;
  * The build of customized array adapter using the following external resource:
  * https://medium.com/mindorks/custom-array-adapters-made-easy-b6c4930560dd
  * Contributed on this class by completing scheduled deletion feature.
+ *
+ * @author Amogh Agarwal u7782814(implemented the UI feedback for delete report)
  */
 public class ReportAdapter extends ArrayAdapter<Report> {
     private Context context;
@@ -173,6 +176,7 @@ public class ReportAdapter extends ArrayAdapter<Report> {
                 reports.remove(r);
                 notifyDataSetChanged();
                 listener.onClickPassData(reportId);
+                Toast.makeText(context, "Report deleted successfully!", Toast.LENGTH_SHORT).show();
                 break;
             }
         }

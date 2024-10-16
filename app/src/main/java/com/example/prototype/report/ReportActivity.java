@@ -47,8 +47,8 @@
     import android.app.AlarmManager;
     import android.app.PendingIntent;
 
-    /*
-     * Author : Amogh Agarwal ( Other members have modified certain aspects of code to implement certain features )
+    /**
+     * @author : Amogh Agarwal ( Other members have modified certain aspects of code to implement certain features )
      * University ID: U7782814
      * Class Purpose: This class is designed for conducting the report activity. The Report Activity
      * is accessed from the main activity and is used to add reports to the database. It used various
