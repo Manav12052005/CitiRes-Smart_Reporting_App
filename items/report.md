@@ -265,7 +265,18 @@ fields (e.g., location or priority). For general tokens, it checks all fields to
 
 ### Others
 
-*[What other design decisions have you made which you feel are relevant? Feel free to separate these into their own subheadings.]*
+A feature we would like to highlight that we implemented was forming a 
+foundational activity - BaseActivity which acts as an Interface for all
+the other activities for the application. It lays out the inheriting
+activity as a child view and displays the foundation as the primary
+content. 
+This also integrates a central navigation system which allows for 
+accesibility to other activities. 
+
+The purpose of this feature was to have a standard design for every
+page of the application and increase code reusability. It prevented
+us from having to add buttons in every activity for navigation and
+also made the UI interface uniform in terms of Layout.
 
 <br>
 <hr>
@@ -280,9 +291,8 @@ fields (e.g., location or priority). For general tokens, it checks all fields to
    * Description of feature: ... <br>
    * Description of your implementation: ... <br>
 
-2. [DataFiles]. Description  ... ... (...)
-   * Code to the Data File [users_interaction.json](link-to-file), [search-queries.xml](link-to-file), ...
-   * Link to the Firebase repo: ...
+2. [DataFiles]. I used a python script to create 2500 instances of report which are our main data files. It uses the random function to generate reports from pre-defined data pools for fields - location, category, priority, users, date, time and likes to ensure diversity. For each report, a unique integer id is attached. Each report is saved as a dictionary and added to a list, which is ultimately serialised into a formatted JSON file reports_dataset.json.
+   * Code to the Data File [reports_dataset.json](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/4211a2b73d3609ae153915b5ea24e70b69bb785c/report_dataset_generator/generate_reports.py).
 
 3. []
    <br>
