@@ -101,6 +101,7 @@ public class ReportAdapter extends ArrayAdapter<Report> {
                                 // Immediate delete action
                                 int reportId = report.getReportId();
                                 deleteReport(reportId);
+                                Toast.makeText(context, "Report deleted (ID: " + reportId + ")", Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
                             }
                         })
@@ -160,7 +161,6 @@ public class ReportAdapter extends ArrayAdapter<Report> {
                 isLiked = !isLiked; // Toggle the like state
             }
         });
-
         return listItem;
     }
 
@@ -181,7 +181,6 @@ public class ReportAdapter extends ArrayAdapter<Report> {
             }
         }
     }
-
 
     /**
      * Schedule the deletion using AlarmManager

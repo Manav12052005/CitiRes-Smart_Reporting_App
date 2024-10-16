@@ -7,6 +7,7 @@ import java.util.NoSuchElementException;
 
 /**
  * The implementation of AVLTree to store data.
+ *
  * @param <R>
  * @author Yuan Shi u7787385
  */
@@ -50,7 +51,7 @@ public class AVLTree<R> {
      * @param node the node to be calculated
      * @return the balance-factor
      */
-    private int bf(AVLNode node) {
+    private int balance_factor(AVLNode node) {
         return height(node.left) - height(node.right);
     }
 
@@ -72,6 +73,7 @@ public class AVLTree<R> {
 
     /**
      * left rotate
+     *
      * @param red
      * @return
      */
@@ -97,6 +99,7 @@ public class AVLTree<R> {
 
     /**
      * balance the tree after operations
+     *
      * @param node the node to start balancing
      * @return the balanced node
      */
@@ -104,14 +107,14 @@ public class AVLTree<R> {
         if (node == null) {
             return null;
         }
-        int bf = bf(node);
-        if (bf > 1 && bf(node.left) >= 0) {
+        int comp = balance_factor(node);
+        if (comp > 1 && balance_factor(node.left) >= 0) {
             return rightRotate(node);
-        } else if (bf > 1 && bf(node.left) < 0) {
+        } else if (comp > 1 && balance_factor(node.left) < 0) {
             return leftRightRotate(node);
-        } else if (bf < -1 && bf(node.right) > 0) {
+        } else if (comp < -1 && balance_factor(node.right) > 0) {
             return rightLeftRotate(node);
-        } else if (bf < -1 && bf(node.right) <= 0) {
+        } else if (comp < -1 && balance_factor(node.right) <= 0) {
             return leftRotate(node);
         }
         return node;
