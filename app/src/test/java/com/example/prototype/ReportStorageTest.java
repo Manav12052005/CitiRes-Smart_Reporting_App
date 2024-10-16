@@ -12,6 +12,7 @@ import com.example.prototype.entity.Priority;
 import com.example.prototype.entity.Report;
 import com.example.prototype.entity.User;
 import com.example.prototype.report.ReportCounter;
+import com.example.prototype.util.TimeUtil;
 
 import org.junit.Test;
 
@@ -19,7 +20,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class TestReportStorage {
+/**
+ * Integration test on AVLTree's behaviours on Reports
+ * @author Yuan Shi u7787385
+ */
+public class ReportStorageTest {
 
     AVLTree<Report> reportsTree = new AVLTree<>();
 

@@ -27,6 +27,7 @@ import java.util.Calendar;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.widget.Toast;
 
 import com.example.prototype.R;
 import com.example.prototype.entity.Priority;
@@ -38,7 +39,9 @@ import com.example.prototype.entity.Report;
  * @author Yuan Shi u7787385
  * The build of customized array adapter using the following external resource:
  * https://medium.com/mindorks/custom-array-adapters-made-easy-b6c4930560dd
- * Contributed on this class by completing scheduled deletion feature.
+ *
+ * @author Yuvraj u7781798 Contributed on this class by completing scheduled deletion feature.
+ * @author Amogh Agarwal u7782814(implemented the UI feedback for delete report)
  */
 public class ReportAdapter extends ArrayAdapter<Report> {
     private Context context;
@@ -98,6 +101,7 @@ public class ReportAdapter extends ArrayAdapter<Report> {
                                 // Immediate delete action
                                 int reportId = report.getReportId();
                                 deleteReport(reportId);
+                                Toast.makeText(context, "Report deleted (ID: " + reportId + ")", Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
                             }
                         })
@@ -157,7 +161,6 @@ public class ReportAdapter extends ArrayAdapter<Report> {
                 isLiked = !isLiked; // Toggle the like state
             }
         });
-
         return listItem;
     }
 
@@ -173,11 +176,11 @@ public class ReportAdapter extends ArrayAdapter<Report> {
                 reports.remove(r);
                 notifyDataSetChanged();
                 listener.onClickPassData(reportId);
+                Toast.makeText(context, "Report deleted successfully!", Toast.LENGTH_SHORT).show();
                 break;
             }
         }
     }
-
 
     /**
      * Schedule the deletion using AlarmManager

@@ -14,6 +14,10 @@ import org.junit.Test;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+/**
+ * Unit tests for AVLTree using String to replace R.
+ * @author Yuan Shi u7787385
+ */
 public class AVLTreeTest {
     AVLTree<String> avlTree;
 
@@ -118,6 +122,17 @@ public class AVLTreeTest {
         avlTree.remove(21);
         assertNull(avlTree.get(21));
         assertEquals(20, avlTree.size());
+    }
+
+    @Test
+    public void testLargeNumber() {
+        for (int i = 0; i < 5000000; i++) {
+            avlTree.put(i, i + "");
+        }
+        assertEquals(5000000, avlTree.size());
+        for (int i = 0; i < 5000000; i++) {
+            assertEquals(i+"", avlTree.get(i));
+        }
     }
 
     @After
