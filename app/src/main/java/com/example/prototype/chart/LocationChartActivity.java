@@ -23,6 +23,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This class is intended to display a radar chart depicting the current reports based on Location.
+ * It uses the MPAndroid Chart library to create the chart.
+ * It utilises data from the DataHolder class which holds the updated tree.
+ * It shows number of reports in every location.
+ * If a new report with a different location is added, the chart is updated automatically.
+ * It extends BaseActivity to show the dashboard and is set as ChildContent.
+ * Part of Feature - Data_Graphical
+ * @author Manav Singh*/
+
 public class LocationChartActivity extends BaseActivity {
 
     private RadarChart radarChart;
@@ -32,12 +42,10 @@ public class LocationChartActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this); // Ensure EdgeToEdge is correctly implemented
+        EdgeToEdge.enable(this);
 
-        // Inject the child layout into the content_frame of BaseActivity
         setChildContentView(R.layout.activity_location_chart);
 
-        // Handle window insets for the RadarChart if necessary
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.location_chart_layout), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -46,26 +54,23 @@ public class LocationChartActivity extends BaseActivity {
 
         radarChart = findViewById(R.id.radarChart);
 
-        // Check if radarChart is null
         if (radarChart == null) {
             throw new RuntimeException("RadarChart not found. Ensure your layout has a RadarChart with id 'radarChart'");
         }
 
-        // Retrieve location counts from Intent
         retrieveLocationCountsFromIntent();
 
-        // Log the retrieved counts for debugging
+        // Logging
         for (int i = 0; i < locations.size(); i++) {
             Log.d("LocationChartActivity", locations.get(i) + ": " + counts.get(i));
         }
 
-        // Set up and load the RadarChart
         setupRadarChart();
         loadRadarChartData();
     }
 
     private void retrieveLocationCountsFromIntent() {
-        // Retrieve the Serializable extra containing the location counts map
+        // getIntent
         Serializable extra = getIntent().getSerializableExtra("LOCATION_COUNTS");
         if (extra instanceof Map) {
             Map<String, Integer> locationCounts = (Map<String, Integer>) extra;
@@ -77,7 +82,7 @@ public class LocationChartActivity extends BaseActivity {
                 counts.add(entry.getValue().floatValue());
             }
         } else {
-            // Handle the case where the extra is not present or not a Map
+            // No reports or intent not found -Log
             Log.e("LocationChartActivity", "No location counts data found in Intent extras.");
             locations = new ArrayList<>();
             counts = new ArrayList<>();
@@ -108,20 +113,19 @@ public class LocationChartActivity extends BaseActivity {
         yAxis.setLabelCount(5, false);
         yAxis.setTextSize(12f);
         yAxis.setAxisMinimum(0f);
-        yAxis.setAxisMaximum(getMaxCount() + 5); // Add buffer
+        yAxis.setAxisMaximum(getMaxCount() + 5);
         yAxis.setDrawLabels(false); // Hide Y labels
         yAxis.setDrawAxisLine(false);
         yAxis.setDrawGridLines(true);
         yAxis.setGridColor(Color.LTGRAY);
         yAxis.setGridLineWidth(1f);
 
-        // Customize Legend
         Legend legend = radarChart.getLegend();
         legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
         legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
         legend.setDrawInside(false);
-        legend.setEnabled(false); // Disable if not needed
+        legend.setEnabled(false);
     }
 
     private float getMaxCount() {

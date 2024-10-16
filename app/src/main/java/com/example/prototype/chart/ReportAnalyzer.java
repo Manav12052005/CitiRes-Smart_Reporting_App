@@ -8,6 +8,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashSet;
 
+/**
+ * This class contains methods that retrieve data from the tree and pass it on as intent to the chart activities.
+ * It utilises data from the DataHolder class which holds the updated tree.
+ * It makes 3 maps, one for each chart.
+ * Part of Feature - Data_Graphical
+ * These are tested in ReportAnalyzerTest.java
+ * @author Manav Singh*/
+
 public class ReportAnalyzer {
 
     public Map<String, Integer> getPriorityCounts(List<Report> reports) {

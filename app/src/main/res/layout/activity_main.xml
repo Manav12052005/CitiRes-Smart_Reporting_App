@@ -32,8 +32,6 @@
         <!-- Remove the Bottom Navigation Menu from this layout -->
 
 
-
-
         <SearchView
             android:id="@+id/search_view"
             android:layout_width="match_parent"

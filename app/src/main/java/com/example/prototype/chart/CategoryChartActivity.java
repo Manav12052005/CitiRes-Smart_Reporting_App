@@ -20,6 +20,16 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class is intended to display a pie chart depicting the current reports based on categories.
+ * It uses the MPAndroid Chart library to create the chart.
+ * It utilises data from the DataHolder class which holds the updated tree.
+ * The pie chart is rotatable by touch and drag.
+ * It shows percentage of reports in every category.
+ * It extends BaseActivity to show the dashboard and is set as ChildContent.
+ * Part of Feature - Data_Graphical
+ * @author Manav Singh*/
+
 public class CategoryChartActivity extends BaseActivity {
     private PieChart pieChart;
     private List<String> categories;
@@ -28,7 +38,7 @@ public class CategoryChartActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this); // Ensure EdgeToEdge is correctly implemented
+        EdgeToEdge.enable(this);
 
         // Inject the child layout into the content_frame of BaseActivity
         setChildContentView(R.layout.activity_category_chart);
@@ -42,20 +52,17 @@ public class CategoryChartActivity extends BaseActivity {
 
         pieChart = findViewById(R.id.pieChart);
 
-        // Check if pieChart is null
         if (pieChart == null) {
             throw new RuntimeException("PieChart not found. Ensure your layout has a PieChart with id 'pieChart'");
         }
 
-        // Retrieve category counts from Intent
         retrieveCategoryCountsFromIntent();
 
-        // Log the retrieved counts for debugging
+        // Logging
         for (int i = 0; i < categories.size(); i++) {
             Log.d("CategoryChartActivity", categories.get(i) + ": " + counts.get(i));
         }
 
-        // Set up and load the PieChart
         setupPieChart();
         loadPieChartData();
     }
@@ -64,11 +71,10 @@ public class CategoryChartActivity extends BaseActivity {
         categories = new ArrayList<>();
         counts = new ArrayList<>();
 
-        // Iterate through all possible categories
         for (Category category : Category.values()) {
-            String categoryName = category.name(); // Use name() for consistency
+            String categoryName = category.name();
             int count = getIntent().getIntExtra(categoryName + "_COUNT", 0);
-            if (count > 0) { // Only add categories with non-zero counts
+            if (count > 0) { //Add categories with non-zero counts
                 categories.add(categoryName);
                 counts.add(count);
             }
@@ -82,16 +88,13 @@ public class CategoryChartActivity extends BaseActivity {
         pieChart.setHoleColor(Color.WHITE);
         pieChart.setTransparentCircleRadius(61f);
 
-        // Enable rotation of the chart by touch
         pieChart.setRotationEnabled(true);
         pieChart.setHighlightPerTapEnabled(true);
 
-        // Set the center text
         pieChart.setCenterText("Reports by Category");
         pieChart.setCenterTextSize(13f);
         pieChart.setCenterTextColor(Color.BLACK);
 
-        // Customize legend
         Legend legend = pieChart.getLegend();
         legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);

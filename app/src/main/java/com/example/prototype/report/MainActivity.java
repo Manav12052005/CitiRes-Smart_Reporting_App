@@ -38,6 +38,26 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class is the main activity of the application. It is the primary interface of the application.
+ * It allows you to access the following functionalities -
+ * 1. Search
+ * 2. Load and Show Data
+ * 3. Button for Adding Report
+ * 4. Displaying individual reports
+ * 5. Sorting reports
+ * 6. Deleting Reports
+ *
+ * It extends BaseActivity to show the dashboard and is set as ChildContent.
+ *
+ * Part of Features - [Search], [Search-Filter], [DataStream], [LoadShowData], [Data-Deletion]
+ * @author Yuan - ListView, ReportAdapter for viewing existing and newly added reports.
+ *              - DataStream Thread. Load_Show_Data.
+ * @author Harry - Search Button and Functionality, Sort and Filter Functionality.
+ * @author Manav - Passing Username intent to ReportActivity.
+ *
+ * */
+
 public class MainActivity extends BaseActivity implements Observer {
     private ReportAdapter adapterSort;
     private ListView listView;
@@ -206,33 +226,6 @@ public class MainActivity extends BaseActivity implements Observer {
         listView.setAdapter(adapterSort);
         adapterSort.notifyDataSetChanged();
     }
-
-//    private List<Report> sortReports(List<Report> listToSort, int position) {
-//        switch (position) {
-//            case 0: // Default (no sorting)
-//                // Optionally, reset to original order if needed
-//                break;
-//            case 1: // Sort by Date (Newest First)
-//                listToSort.sort((report1, report2) -> report2.getLocalDateTime().compareTo(report1.getLocalDateTime()));
-//                break;
-//            case 2: // Sort by Date (Oldest First)
-//                listToSort.sort(Comparator.comparing(Report::getLocalDateTime));
-//                break;
-//            case 3: // Sort by Priority (High to Low)
-//                listToSort.sort((report1, report2) -> PriorityUtil.comparePriority(report2.getPriority(), report1.getPriority()));
-//                break;
-//            case 4: // Sort by Priority (Low to High)
-//                listToSort.sort((report1, report2) -> PriorityUtil.comparePriority(report1.getPriority(), report2.getPriority()));
-//                break;
-//            case 5: // Sort by Likes (Most Liked First)
-//                listToSort.sort((report1, report2) -> Integer.compare(report2.getLikes(), report1.getLikes()));
-//                break;
-//            default:
-//                // Handle default case if needed
-//                break;
-//        }
-//        return listToSort;
-//    }
 
     private List<Report> sortReports(List<Report> listToSort, int position) {
         ReportSorter sorter = ReportSorterFactory.createSorter(position);

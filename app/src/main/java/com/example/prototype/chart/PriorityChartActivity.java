@@ -19,6 +19,15 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class is intended to display a Bar chart depicting the current reports based on Priority.
+ * It uses the MPAndroid Chart library to create the chart.
+ * It utilises data from the DataHolder class which holds the updated tree.
+ * It shows number of reports in every priority.
+ * It extends BaseActivity to show the dashboard and is set as ChildContent.
+ * Part of Feature - Data_Graphical
+ * @author Manav Singh*/
+
 public class PriorityChartActivity extends BaseActivity {
 
     private BarChart barChart;
@@ -30,10 +39,8 @@ public class PriorityChartActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Inject the child layout into the content_frame of ChartActivity
         setChildContentView(R.layout.activity_priority_chart);
 
-        // Handle window insets for the BarChart if necessary
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.barChart), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -42,12 +49,12 @@ public class PriorityChartActivity extends BaseActivity {
 
         barChart = findViewById(R.id.barChart);
 
-        // Retrieve counts from Intent
+        // Retrieve_Intent
         lowCount = getIntent().getIntExtra("LOW_COUNT", 0);
         middleCount = getIntent().getIntExtra("MIDDLE_COUNT", 0);
         highCount = getIntent().getIntExtra("HIGH_COUNT", 0);
 
-        // Check if barChart is null
+        //Error handling
         if (barChart == null) {
             throw new RuntimeException("BarChart not found. Ensure your layout has a BarChart with id 'barChart'");
         }
@@ -73,17 +80,14 @@ public class PriorityChartActivity extends BaseActivity {
         // Animation
         barChart.animateY(1000);
 
-        // Disable legend (optional)
         barChart.getLegend().setEnabled(false);
     }
 
     private void loadBarChartData() {
-        // Prepare data entries
         List<BarEntry> entries = new ArrayList<>();
         List<String> priorityLevels = new ArrayList<>();
         int index = 0;
 
-        // Ensure priorities are ordered as LOW, MIDDLE, HIGH
         String[] priorities = {"LOW", "MIDDLE", "HIGH"};
         int[] counts = {lowCount, middleCount, highCount};
 
@@ -93,6 +97,7 @@ public class PriorityChartActivity extends BaseActivity {
             index++;
         }
 
+        //Error handling
         if (entries.isEmpty()) {
             barChart.setNoDataText("No reports available");
             barChart.invalidate();

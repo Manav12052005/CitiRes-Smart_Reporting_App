@@ -18,43 +18,52 @@ import com.example.prototype.R;
 import com.example.prototype.chart.ChartActivity;
 import com.example.prototype.report.MainActivity;
 
+/**
+ * BaseActivity serves as the foundational activity class that is extended by all other activities
+ * and therefore its functionality is inherited by every activity.
+ * It provides the following features -
+ * 1. Dashboard for Navigation
+ * 2. Standard UI
+ * 3. UI- Feedback - it displays toast messages for micro interactions like clicking on buttons.
+ *
+ * It is done so that we don't have to design UI everytime and it decreases code duplicacy and also reduces
+ * UI bloat.
+ * It is the parent content view for all other activities.
+ * It implements the SetChildContentView which defines how the other activities will display on-screen.
+ * @author Manav
+ * */
+
+
 public class BaseActivity extends AppCompatActivity {
 
     private ImageButton menuDashboard;
     private ImageButton menuReports;
-    String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this); // Ensure EdgeToEdge is correctly implemented
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_base);
 
-        // Handle window insets for edge-to-edge display
+        //View insets for edge to edge functionality
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        // Initialize Bottom Navigation Buttons
+        //Dashboard buttons and functionality
         menuDashboard = findViewById(R.id.menu_dashboard);
         menuReports = findViewById(R.id.menu_reports);
 
-
-        // Set OnClickListeners for Navigation Buttons
         menuDashboard.setOnClickListener(v -> {
-            // Navigate to DashboardActivity or handle dashboard functionality
             Toast.makeText(this, "Dashboard Clicked", Toast.LENGTH_SHORT).show();
-            // Create an Intent to start MainActivity
             Intent intent = new Intent(BaseActivity.this, MainActivity.class);
             startActivity(intent);
         });
 
         menuReports.setOnClickListener(v -> {
-            // Navigate to ReportsActivity or another ChartActivity
             Toast.makeText(this, "Reports Clicked", Toast.LENGTH_SHORT).show();
-            // Create an Intent to start PriorityChartActivity
             Intent intent = new Intent(BaseActivity.this, ChartActivity.class);
             startActivity(intent);
         });
@@ -63,6 +72,7 @@ public class BaseActivity extends AppCompatActivity {
     /**
      * Method for child activities to set their own layout into the content_frame.
      * @param layoutResID The layout resource ID to be inflated.
+     * @author Manav
      */
     protected void setChildContentView(int layoutResID) {
         FrameLayout contentFrame = findViewById(R.id.content_frame);
