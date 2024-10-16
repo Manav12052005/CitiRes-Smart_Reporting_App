@@ -2,6 +2,9 @@ import json
 import random
 from datetime import datetime, timedelta
 
+# Python script to randomly generate 2500 instances of reports and add them to reports_dataset.json.
+# @author Manav -both generate_reports.py and reports_dataset.json
+
 # ----------------------------
 # Data Pools for Report Fields
 # ----------------------------
