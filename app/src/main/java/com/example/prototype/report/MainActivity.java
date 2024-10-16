@@ -2,6 +2,7 @@ package com.example.prototype.report;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -117,7 +118,10 @@ public class MainActivity extends BaseActivity implements Observer {
             if (result != null) {
                 Intent intent = result.getData();
                 if (intent != null && result.getResultCode() == RESULT_OK) {
-                    Report addedReport = (Report) intent.getSerializableExtra("added_report", Report.class);
+                    Report addedReport = null;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        addedReport = (Report) intent.getSerializableExtra("added_report", Report.class);
+                    }
                     if (addedReport != null) {
                         // Add new report to data sources
                         reportList.add(0, addedReport);

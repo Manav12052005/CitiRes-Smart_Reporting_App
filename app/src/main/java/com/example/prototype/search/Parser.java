@@ -1,11 +1,9 @@
 package com.example.prototype.search;
 
-import android.util.Log;
-
 import com.example.prototype.entity.Report;
-
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class Parser {
 
@@ -31,7 +29,6 @@ public class Parser {
                 String key = keyValue[0].trim();
                 String value = keyValue[1].trim();
 
-
                 results = filterByKeyValue(key, value, results);
             }
         }
@@ -47,47 +44,58 @@ public class Parser {
     private static List<Report> filterByKeyValue(String key, String value, List<Report> reports) {
         List<Report> filteredReports = new ArrayList<>();
 
-        for (Report report : reports) {
-            switch (key) {
-                case "description":
+        switch (key.toLowerCase()) {
+            case "description":
+                for (Report report : reports) {
                     if (report.getDescription().toLowerCase().contains(value)) {
                         filteredReports.add(report);
                     }
-                    break;
-                case "location":
+                }
+                break;
+            case "location":
+                for (Report report : reports) {
                     if (report.getLocation().toLowerCase().contains(value)) {
                         filteredReports.add(report);
                     }
-                    break;
-                case "priority":
+                }
+                break;
+            case "priority":
+                for (Report report : reports) {
                     if (report.getPriority().toString().toLowerCase().contains(value)) {
                         filteredReports.add(report);
                     }
-                    break;
-                case "category":
+                }
+                break;
+            case "category":
+                for (Report report : reports) {
                     if (report.getCategory().toString().toLowerCase().contains(value)) {
                         filteredReports.add(report);
                     }
-                    break;
-                case "user":
+                }
+                break;
+            case "user":
+                for (Report report : reports) {
                     if (report.getUser().getName().toLowerCase().contains(value)) {
                         filteredReports.add(report);
                     }
-                    break;
-                case "likes":
-                    try {
-                        int likesValue = Integer.parseInt(value);
+                }
+                break;
+            case "likes":
+                try {
+                    int likesValue = Integer.parseInt(value);
+                    for (Report report : reports) {
                         if (report.getLikes() == likesValue) {
                             filteredReports.add(report);
                         }
-                    } catch (NumberFormatException e) {
-                        Log.d("Parser", "Invalid number for likes: " + value);
                     }
-                    break;
-                default:
-                    Log.d("Parser", "Unknown key: " + key);
-                    break;
-            }
+                } catch (NumberFormatException e) {
+                    // Return the unmodified reports list if likes value is invalid
+                    return reports;
+                }
+                break;
+            default:
+                // Return the unmodified reports list if key is unknown
+                return reports;
         }
 
         return filteredReports;
@@ -114,3 +122,4 @@ public class Parser {
         return filteredReports;
     }
 }
+
