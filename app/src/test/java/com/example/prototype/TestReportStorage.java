@@ -11,27 +11,25 @@ import com.example.prototype.entity.Category;
 import com.example.prototype.entity.Priority;
 import com.example.prototype.entity.Report;
 import com.example.prototype.entity.User;
+import com.example.prototype.report.ReportCounter;
 
 import org.junit.Test;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class TestReportStorage {
 
     AVLTree<Report> reportsTree = new AVLTree<>();
 
     @Test
-    public void test1() {
+    public void integratedTest() {
         LocalDateTime dateTime = LocalDateTime.now();
         assertTrue(reportsTree.isEmpty());
         Report report1 = new Report(1, "hello", "home", Priority.HIGH, new User("John"), Category.Community, dateTime, 100);
         reportsTree.put(1, report1);
         assertEquals(1, reportsTree.size());
-        assertEquals(report1, reportsTree.get(1));
-        report1.like();
-        assertEquals(101, report1.getLikes());
-        report1.unlike();
         assertEquals(report1, reportsTree.get(1));
         reportsTree.put(1, new Report(1, "hi", "home", Priority.HIGH, new User("John"), Category.Community, dateTime, 100));
         assertEquals("hi", reportsTree.get(1).getDescription());
@@ -47,9 +45,23 @@ public class TestReportStorage {
         assertEquals(List.of(report3, report2, report1), reportsTree.fromLargeToSmall());
         reportsTree.remove(1);
         assertNull(reportsTree.get(1));
+        assertThrows(NoSuchElementException.class, () -> reportsTree.remove(1));
         reportsTree.remove(2);
         reportsTree.remove(100);
         assertNull(reportsTree.get(2));
         assertTrue(reportsTree.isEmpty());
+        for (int i = 0; i < 100; i++) {
+            int var = i;
+            assertThrows(NoSuchElementException.class, () -> reportsTree.remove(var));
+        }
+    }
+
+    @Test
+    public void testReportCounter() {
+        assertEquals(2501, ReportCounter.getReportId());
+        for (int i = 0; i < 1000; i++) {
+            assertEquals(2501 + i, ReportCounter.getReportId());
+            ReportCounter.inc();
+        }
     }
 }

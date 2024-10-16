@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+/**
+ * @author Yuan Shi u7787385
+ */
 public class Report implements Serializable {
     private int reportId;//set to be primary key, auto increment.
     private String description;

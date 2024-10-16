@@ -27,7 +27,7 @@ public class AVLTreeTest {
     }
 
     @Test
-    public void testInitialTreeEmpty() {
+    public void testEmptyTree() {
         AVLTree<String> emptyTree = new AVLTree<>();
         assertTrue(emptyTree.isEmpty());
     }
@@ -40,7 +40,14 @@ public class AVLTreeTest {
     }
 
     @Test
-    public void testPutNewKey() {
+    public void testContain() {
+        for (int i = 1; i <= 20; i++) {
+            assertTrue(avlTree.contains(i));
+        }
+    }
+
+    @Test
+    public void testInsertNewKey() {
         assertEquals(20, avlTree.size());
         avlTree.put(21, "twenty-one");
         assertEquals("twenty-one", avlTree.get(21));
@@ -57,40 +64,46 @@ public class AVLTreeTest {
     @Test
     public void testRemoveExistingKey() {
         avlTree.remove(20);
-        assertEquals(19, avlTree.size());
         assertNull(avlTree.get(20));
+        assertEquals(19, avlTree.size());
     }
 
     @Test
     public void testRemoveNonExistingKey() {
-        assertThrows(NoSuchElementException.class, () -> { avlTree.remove(25); });
+        assertThrows(NoSuchElementException.class, () -> {
+            avlTree.remove(25);
+        });
         assertEquals(20, avlTree.size());
     }
 
     @Test
     public void testRemoveOnEmptyTree() {
         AVLTree<String> emptyTree = new AVLTree<>();
-        assertThrows(NoSuchElementException.class, () -> { emptyTree.remove(1); });
+        for (int i = 0; i < 100; i++) {
+            int var = i;
+            assertThrows(NoSuchElementException.class, () -> {
+                emptyTree.remove(var);
+            });
+        }
         assertEquals(0, emptyTree.size());
     }
 
-
     @Test
-    public void testSortedOrderFromSmallToLarge() {
-        assertEquals(List.of("1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-                        "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"),
-                avlTree.fromSmallToLarge());
-    }
-
-    @Test
-    public void testSortedOrderFromLargeToSmall() {
+    public void testSortedFromLargeToSmall() {
         assertEquals(List.of("20", "19", "18", "17", "16", "15", "14", "13", "12", "11",
                         "10", "9", "8", "7", "6", "5", "4", "3", "2", "1"),
                 avlTree.fromLargeToSmall());
     }
 
     @Test
-    public void testIsEmpty() {
+    public void testSortedFromSmallToLarge() {
+        assertEquals(List.of("1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+                        "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"),
+                avlTree.fromSmallToLarge());
+    }
+
+    @Test
+    public void testIsEmptyAfterRemoval() {
         for (int i = 1; i <= 20; i++) {
             avlTree.remove(i);
         }
@@ -98,27 +111,12 @@ public class AVLTreeTest {
     }
 
     @Test
-    public void testRemoveAllAndVerifyEmpty() {
-        for (int i = 1; i <= 20; i++) {
-            avlTree.remove(i);
-        }
-        assertTrue(avlTree.isEmpty());
-    }
-
-    @Test
-    public void testPutAndRemoveSequence() {
+    public void testPutAndRemove() {
         avlTree.put(21, "twenty-one");
+        assertEquals(21, avlTree.size());
         assertEquals("twenty-one", avlTree.get(21));
         avlTree.remove(21);
         assertNull(avlTree.get(21));
-    }
-
-    @Test
-    public void testSizeAfterPutAndRemove() {
-        assertEquals(20, avlTree.size());
-        avlTree.put(21, "twenty-one");
-        assertEquals(21, avlTree.size());
-        avlTree.remove(21);
         assertEquals(20, avlTree.size());
     }
 
