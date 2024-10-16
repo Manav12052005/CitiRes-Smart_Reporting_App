@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+/**
+ * The implementation of AVLTree to store data.
+ * @param <R>
+ * @author Yuan Shi u7787385
+ */
 public class AVLTree<R> {
 
     class AVLNode {
@@ -65,6 +70,11 @@ public class AVLTree<R> {
         return yellow;
     }
 
+    /**
+     * left rotate
+     * @param red
+     * @return
+     */
     private AVLNode leftRotate(AVLNode red) {
         AVLNode yellow = red.right;
         AVLNode green = yellow.left;
@@ -85,6 +95,11 @@ public class AVLTree<R> {
         return leftRotate(node);
     }
 
+    /**
+     * balance the tree after operations
+     * @param node the node to start balancing
+     * @return the balanced node
+     */
     private AVLNode balance(AVLNode node) {
         if (node == null) {
             return null;
@@ -129,22 +144,18 @@ public class AVLTree<R> {
     }
 
     public R get(int key) {
-        R value = doGet(root, key);
-//        if (value == null) {
-//            throw new NoSuchElementException("Key not found: " + key);
-//        }
+        R value = getRec(root, key);
         return value;
     }
 
-    private R doGet(AVLNode node, int key) {
+    private R getRec(AVLNode node, int key) {
         if (node == null) {
             return null; // Key not found
         }
-
         if (key < node.key) {
-            return doGet(node.left, key);
+            return getRec(node.left, key);
         } else if (key > node.key) {
-            return doGet(node.right, key);
+            return getRec(node.right, key);
         } else {
             return node.value;
         }
@@ -189,7 +200,7 @@ public class AVLTree<R> {
     }
 
     public boolean contains(int key) {
-        return doGet(root, key) != null;
+        return getRec(root, key) != null;
     }
 
     private AVLNode doRemove(AVLNode node, int key) {

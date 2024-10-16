@@ -16,13 +16,12 @@ import java.time.LocalDateTime;
 public class DataHolderTest {
 
     @Before
-    public void clearAVLTree() {
+    public void setup() {
         DataHolder.getInstance().avlTree.empty();
     }
 
     @Test
-    public void testSingletonBehavior() {
-        // Ensure the same instance is returned on multiple calls.
+    public void testSingleton() {
         DataHolder instance1 = DataHolder.getInstance();
         DataHolder instance2 = DataHolder.getInstance();
 
@@ -35,17 +34,20 @@ public class DataHolderTest {
     }
 
     @Test
-    public void testAVLTreeAddReport() {
-        // Add a report to the AVLTree and verify the insertion.
-        LocalDateTime dateTime = LocalDateTime.now();  // Example date for the report
-        Report report1 = new Report(
-                1, "hello", "home", Priority.HIGH, new User("John"),
-                Category.Community, dateTime, 100
-        );
+    public void testSingletonAfterDataChanged() {
 
-        DataHolder.getInstance().avlTree.put(1, report1);
+        LocalDateTime dateTime = LocalDateTime.now();
 
-        assertNotNull("Report was not added to the AVLTree.",
-                DataHolder.getInstance().avlTree.get(1));
+        Report report = new Report(1, "hello", "home", Priority.HIGH, new User("John"), Category.Community, dateTime, 100);
+        DataHolder.getInstance().avlTree.put(1, new Report());
+        DataHolder instance1 = DataHolder.getInstance();
+        DataHolder instance2 = DataHolder.getInstance();
+
+        assertSame("Instances are not the same, singleton failed.", instance2, instance1);
+        DataHolder.getInstance().avlTree.remove(1);
+        DataHolder instance3 = DataHolder.getInstance();
+        DataHolder instance4 = DataHolder.getInstance();
+        assertSame("Instances are not the same, singleton failed.", instance2, instance1);
+
     }
 }

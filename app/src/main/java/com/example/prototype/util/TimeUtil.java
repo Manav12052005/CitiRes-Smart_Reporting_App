@@ -7,6 +7,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Utility methods dealing with days and time
+ * @author Yuan Shi u7787385
+ */
 public class TimeUtil {
     public static boolean isToday(LocalDateTime time) {
         LocalDate today = LocalDate.now();
