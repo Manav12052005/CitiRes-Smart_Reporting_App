@@ -32,6 +32,13 @@ import com.example.prototype.R;
 import com.example.prototype.entity.Priority;
 import com.example.prototype.entity.Report;
 
+/**
+ * Customized adapter to show single entry on the dashboard.
+ * @author Yuan Shi u7787385
+ * The build of customized array adapter using the following external resource:
+ * https://medium.com/mindorks/custom-array-adapters-made-easy-b6c4930560dd
+ *  Contributed on this class by completing scheduled deletion feature.
+ */
 public class ReportAdapter extends ArrayAdapter<Report> {
     private Context context;
     private List<Report> reports;
@@ -43,7 +50,6 @@ public class ReportAdapter extends ArrayAdapter<Report> {
     TextView id;
     ImageView locationIcon;
     private Observer listener;
-
 
     public ReportAdapter(Context context, List<Report> reports, Observer listener) {
         super(context, 0, reports);
@@ -134,25 +140,6 @@ public class ReportAdapter extends ArrayAdapter<Report> {
         } else {
             likeButton.setImageResource(R.drawable.unlike);
         }
-
-        likeButton.setOnClickListener(new View.OnClickListener() {
-            private boolean isLiked = report.getLikes() > 0; // Track the current like state
-
-            @Override
-            public void onClick(View v) {
-                if (isLiked) {
-                    report.unlike(); // Decrement likes
-                    likeButton.setImageResource(R.drawable.unlike); // Change icon to unliked
-                } else {
-                    report.like(); // Increment likes
-                    likeButton.setImageResource(R.drawable.liked_heart); // Change icon to liked
-                }
-                updateLikeCountDisplay(likeCountTextView, report); // Update displayed like count
-                isLiked = !isLiked; // Toggle the like state
-            }
-        });
-
-
         return listItem;
     }
 
@@ -168,7 +155,13 @@ public class ReportAdapter extends ArrayAdapter<Report> {
         }
     }
 
-    // Schedule the deletion using AlarmManager
+
+    /**
+     * Schedule the deletion using AlarmManager
+     * @param report
+     * @param delayInMillis
+     * @author
+     */
     private void scheduleDeletion(Report report, long delayInMillis) {
         // Create a new Handler to handle delayed execution
         Handler handler = new Handler(Looper.getMainLooper());
@@ -215,11 +208,6 @@ public class ReportAdapter extends ArrayAdapter<Report> {
         timePicker.setTitle("Select Time to Delete");
         timePicker.show();
     }
-
-    private void updateLikeCountDisplay(TextView likeCountTextView, Report report) {
-        likeCountTextView.setText(String.valueOf(report.getLikes())); // Update TextView with new likes count
-    }
-
 
     private void setPriorityBackground(TextView priorityView, Priority priority) {
         int color;

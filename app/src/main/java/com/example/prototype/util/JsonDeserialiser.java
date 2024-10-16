@@ -13,6 +13,12 @@ import com.google.gson.JsonParseException;
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 
+/**
+ * A class for building customized json-deserializer
+ * @author Yuan Shi u7787385
+ * Since it is not directly taught in the course, I reference external resource:
+ * https://medium.com/@alexandre.therrien3/personalized-serializer-and-deserializer-using-java-gson-library-c079de3974d4
+ */
 public class JsonDeserialiser implements JsonDeserializer<Report> {
     @Override
     public Report deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {

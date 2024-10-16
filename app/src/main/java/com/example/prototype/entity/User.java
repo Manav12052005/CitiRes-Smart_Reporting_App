@@ -5,6 +5,9 @@ import androidx.annotation.NonNull;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * @author Yuan Shi u7787835
+ */
 public class User implements Serializable {
     private final String name;
 
