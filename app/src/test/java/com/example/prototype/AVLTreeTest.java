@@ -120,6 +120,17 @@ public class AVLTreeTest {
         assertEquals(20, avlTree.size());
     }
 
+    @Test
+    public void testLargeNumber() {
+        for (int i = 0; i < 5000000; i++) {
+            avlTree.put(i, i + "");
+        }
+        assertEquals(5000000, avlTree.size());
+        for (int i = 0; i < 5000000; i++) {
+            assertEquals(i+"", avlTree.get(i));
+        }
+    }
+
     @After
     public void tearDown() {
         avlTree = null;

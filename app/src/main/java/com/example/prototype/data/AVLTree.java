@@ -1,6 +1,5 @@
 package com.example.prototype.data;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -10,6 +9,7 @@ import java.util.NoSuchElementException;
  *
  * @param <R>
  * @author Yuan Shi u7787385
+ *
  */
 public class AVLTree<R> {
 
