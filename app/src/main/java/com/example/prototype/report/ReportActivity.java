@@ -1,5 +1,6 @@
     package com.example.prototype.report;
 
+
     import android.app.Activity;
     import android.content.Intent;
     import android.os.Bundle;
@@ -46,6 +47,19 @@
     import android.app.AlarmManager;
     import android.app.PendingIntent;
 
+    /*
+     * Author : Amogh Agarwal ( Other members have modified certain aspects of code to implement certain features )
+     * University ID: U7782814
+     * Class Purpose: This class is designed for conducting the report activity. The Report Activity
+     * is accessed from the main activity and is used to add reports to the database. It used various
+     * classes such as the report class, the various UI buttons, as well as permissions such as gps for
+     * location
+     * AI Use: I have used ChatGPT for optimising code and also for error handling. Also, I have used
+     * it if I didn't know how to approach and solve a specific problem such as spinner buttons.
+     * */
+
+
+    // Creating the various buttons from the report template.
     public class ReportActivity extends BaseActivity {
         private Spinner spinnerCategory, spinnerPriority;
         private EditText editTextDescription;
@@ -61,20 +75,16 @@
             super.onCreate(savedInstanceState);
             setChildContentView(R.layout.activity_report2);
 
-            // Retrieve the username from intent extras
             username = getIntent().getStringExtra("USER");
             Toast.makeText(this, "Current User: " + username, Toast.LENGTH_SHORT).show();
-            // Initialize UI elements
-            //spinnerLocation = findViewById(R.id.spinner_location);
+            // Initializing the UI elements by linking the buttons to the template buttons.
             spinnerCategory = findViewById(R.id.spinner_category);
             spinnerPriority = findViewById(R.id.spinner_priority);
             editTextDescription = findViewById(R.id.edittext_description);
-            //editTextTaskId = findViewById(R.id.edittext_task_id);
-            //editTextPicture = findViewById(R.id.edittext_picture_link);
             buttonSubmit = findViewById(R.id.button_submit);
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
-            // spinner for categories
+            // Creating the spinner for categories
             Category[] categories = Category.values();
             ArrayAdapter<Category> categoryArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categories);
             categoryArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -94,7 +104,7 @@
                 }
             });
 
-            // spinner for priorities
+            // Creating the spinner for priorities
             Priority[] priorities = Priority.values();
             ArrayAdapter<Priority> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, priorities);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -115,7 +125,6 @@
                 }
             });
 
-            //checkLocationPermissionAndSubmit();
 
             // for getting text from the inout boxes after submit button is clicked
             buttonSubmit.setOnClickListener(new View.OnClickListener() {
@@ -152,6 +161,7 @@
             });
         }
 
+        // This function gets the location permission from the user if not already granted by the user.
         private void checkLocationPermissionAndSubmit() {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED) {
@@ -162,6 +172,7 @@
             }
         }
 
+        // This function checks if the permission is received or not by the app.
         public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
             if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
@@ -173,6 +184,7 @@
             }
         }
 
+        // This function gets the latitude and longitude of the location and stores them.
         private void getLocationAndSubmitReport() {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 fusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
@@ -190,6 +202,7 @@
             }
         }
 
+        // This function is used to submit report and adding it to the database.
         private void submitReport() {
             String description = editTextDescription.getText().toString();
             Category selectedCategory = (Category) spinnerCategory.getSelectedItem();
@@ -204,7 +217,6 @@
             assert addresses != null;
             Address address = addresses.get(0);
             String locationName = address.getAddressLine(0);
-            String location = address.toString();
 
             if (description.isEmpty()) {
                 Toast.makeText(getApplicationContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
@@ -224,6 +236,8 @@
             }
         }
 
+
+        // Function to create a new Report object based on te input received by the app.
         private Report constructReport(String description, String locationName, Category selectedCategory, Priority selectedPriority) {
             Report newReport = new Report();
             newReport.setDescription(description);
