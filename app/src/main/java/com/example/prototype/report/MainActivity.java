@@ -49,16 +49,18 @@ import java.util.List;
  * 4. Displaying individual reports
  * 5. Sorting reports
  * 6. Deleting Reports
- *
+ * <p>
  * It extends BaseActivity to show the dashboard and is set as ChildContent.
- *
+ * <p>
  * Part of Features - [Search], [Search-Filter], [DataStream], [LoadShowData], [Data-Deletion]
+ *
  * @author Yuan - ListView, ReportAdapter for viewing existing and newly added reports.
- *              - DataStream Thread. Load_Show_Data.
+ * - DataStream Thread. Load_Show_Data.
+ * - Passing data to and from another activity. I reference android studio's official documentation through
+ *      following link: https://developer.android.com/training/basics/intents/result.
  * @author Harry - Search Button and Functionality, Sort and Filter Functionality.
  * @author Manav - Passing Username intent to ReportActivity.
- *
- * */
+ */
 
 public class MainActivity extends BaseActivity implements Observer {
     private ReportAdapter adapterSort;

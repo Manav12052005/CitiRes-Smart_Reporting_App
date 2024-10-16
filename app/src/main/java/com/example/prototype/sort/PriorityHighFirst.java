@@ -5,6 +5,11 @@ import com.example.prototype.util.PriorityUtil;
 
 import java.util.List;
 
+/**
+ * Class for Sorting based on priority high first.
+ * @author Harry Xia u7556816 original author for sorting feature
+ * @author Yuan Shi u7787385 Refactored the class using Factory Design Pattern.
+ */
 public class PriorityHighFirst implements ReportSorter {
     @Override
     public List<Report> sort(List<Report> reports) {

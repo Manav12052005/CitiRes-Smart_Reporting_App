@@ -16,6 +16,10 @@ import org.junit.Test;
 
 import java.time.LocalDateTime;
 
+/**
+ * Test for JsonDeserializer.
+ * @author Yuan Shi u7787385
+ */
 public class JsonDeserializerTest {
     String userJsonStrCorr = "{\"reportId\": 1, \"description\": \"Broken\", \"location\": \"Lane\",\"priority\": \"LOW\", \"category\": \"Infrastructure\",\"user\": \"Frank Brown\",\"localDateTime\": \"2023-12-09T04:32:04\",\"likes\": 420}";
 

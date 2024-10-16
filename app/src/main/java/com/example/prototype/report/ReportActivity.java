@@ -47,7 +47,7 @@
     import android.app.AlarmManager;
     import android.app.PendingIntent;
 
-    /*
+    /**
      * Author : Amogh Agarwal ( Other members have modified certain aspects of code to implement certain features )
      * University ID: U7782814
      * Class Purpose: This class is designed for conducting the report activity. The Report Activity
@@ -56,7 +56,11 @@
      * location
      * AI Use: I have used ChatGPT for optimising code and also for error handling. Also, I have used
      * it if I didn't know how to approach and solve a specific problem such as spinner buttons.
-     * */
+     *
+     * Author: Yuan Shi u7787385
+     * Contributed in this class by construct the report and pass the report back to MainActivity.
+     *
+     **/
 
 
     // Creating the various buttons from the report template.
@@ -236,8 +240,10 @@
             }
         }
 
-
-        // Function to create a new Report object based on te input received by the app.
+        /**
+         * Function to create a new Report object based on te input received by the app.
+         * @author Yuan Shi u7787385
+         */
         private Report constructReport(String description, String locationName, Category selectedCategory, Priority selectedPriority) {
             Report newReport = new Report();
             newReport.setDescription(description);
