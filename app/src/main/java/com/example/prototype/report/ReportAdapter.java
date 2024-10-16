@@ -34,10 +34,11 @@ import com.example.prototype.entity.Report;
 
 /**
  * Customized adapter to show single entry on the dashboard.
+ *
  * @author Yuan Shi u7787385
  * The build of customized array adapter using the following external resource:
  * https://medium.com/mindorks/custom-array-adapters-made-easy-b6c4930560dd
- *  Contributed on this class by completing scheduled deletion feature.
+ * Contributed on this class by completing scheduled deletion feature.
  */
 public class ReportAdapter extends ArrayAdapter<Report> {
     private Context context;
@@ -140,8 +141,30 @@ public class ReportAdapter extends ArrayAdapter<Report> {
         } else {
             likeButton.setImageResource(R.drawable.unlike);
         }
+        likeButton.setOnClickListener(new View.OnClickListener() {
+            private boolean isLiked = report.getLikes() > 0; // Track the current like state
+
+            @Override
+            public void onClick(View v) {
+                if (isLiked) {
+                    report.unlike(); // Decrement likes
+                    likeButton.setImageResource(R.drawable.unlike); // Change icon to unliked
+                } else {
+                    report.like(); // Increment likes
+                    likeButton.setImageResource(R.drawable.liked_heart); // Change icon to liked
+                }
+                updateLikeCountDisplay(likeCountTextView, report); // Update displayed like count
+                isLiked = !isLiked; // Toggle the like state
+            }
+        });
+
         return listItem;
     }
+
+    private void updateLikeCountDisplay(TextView likeCountTextView, Report report) {
+        likeCountTextView.setText(String.valueOf(report.getLikes())); // Update TextView with new likes count
+    }
+
 
     // Delete a report immediately
     private void deleteReport(int reportId) {
@@ -158,6 +181,7 @@ public class ReportAdapter extends ArrayAdapter<Report> {
 
     /**
      * Schedule the deletion using AlarmManager
+     *
      * @param report
      * @param delayInMillis
      * @author
