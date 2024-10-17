@@ -54,7 +54,7 @@ import java.util.List;
  * <p>
  * Part of Features - [Search], [Search-Filter], [DataStream], [LoadShowData], [Data-Deletion]
  *
- * @author Yuan - ListView, ReportAdapter for viewing existing and newly added reports.
+ * @author Yuan u7787385 - ListView, ReportAdapter for viewing existing and newly added reports.
  * - DataStream Thread. Load_Show_Data.
  * - Passing data to and from another activity. I reference android studio's official documentation through
  *      following link: https://developer.android.com/training/basics/intents/result.

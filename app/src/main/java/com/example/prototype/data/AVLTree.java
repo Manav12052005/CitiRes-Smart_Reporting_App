@@ -1,5 +1,7 @@
 package com.example.prototype.data;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -9,9 +11,8 @@ import java.util.NoSuchElementException;
  *
  * @param <R>
  * @author Yuan Shi u7787385
- *
  */
-public class AVLTree<R> {
+public class AVLTree<R> implements Tree<R> {
 
     class AVLNode {
         int key;
@@ -28,6 +29,8 @@ public class AVLTree<R> {
             this.value = value;
         }
     }
+
+    AVLNode root;
 
     private int height(AVLNode node) {
         if (node == null) {
@@ -55,46 +58,30 @@ public class AVLTree<R> {
         return height(node.left) - height(node.right);
     }
 
-    /**
-     * right rotate
-     *
-     * @param red the node to be right rotated
-     * @return new root
-     */
-    private AVLNode rightRotate(AVLNode red) {
-        AVLNode yellow = red.left;
-        AVLNode green = yellow.right;
-        yellow.right = red;
-        red.left = green;
-        updateHeight(red);
-        updateHeight(yellow);
-        return yellow;
+    private AVLNode rightRotate(AVLNode parent) {
+        AVLNode newParent = parent.left;
+        AVLNode child = newParent.right;
+
+        newParent.right = parent;
+        parent.left = child;
+
+        updateHeight(parent);
+        updateHeight(newParent);
+
+        return newParent;
     }
 
-    /**
-     * left rotate
-     *
-     * @param red
-     * @return
-     */
-    private AVLNode leftRotate(AVLNode red) {
-        AVLNode yellow = red.right;
-        AVLNode green = yellow.left;
-        yellow.left = red;
-        red.right = green;
-        updateHeight(red);
-        updateHeight(yellow);
-        return yellow;
-    }
+    private AVLNode leftRotate(AVLNode parent) {
+        AVLNode newParent = parent.right;
+        AVLNode child = newParent.left;
 
-    private AVLNode leftRightRotate(AVLNode node) {
-        node.left = leftRotate(node.left);
-        return rightRotate(node);
-    }
+        newParent.left = parent;
+        parent.right = child;
 
-    private AVLNode rightLeftRotate(AVLNode node) {
-        node.right = rightRotate(node.right);
-        return leftRotate(node);
+        updateHeight(parent);
+        updateHeight(newParent);
+
+        return newParent;
     }
 
     /**
@@ -111,56 +98,54 @@ public class AVLTree<R> {
         if (comp > 1 && balance_factor(node.left) >= 0) {
             return rightRotate(node);
         } else if (comp > 1 && balance_factor(node.left) < 0) {
-            return leftRightRotate(node);
+            node.left = leftRotate(node.left);
+            return rightRotate(node);
         } else if (comp < -1 && balance_factor(node.right) > 0) {
-            return rightLeftRotate(node);
+            node.right = rightRotate(node.right);
+            return leftRotate(node);
         } else if (comp < -1 && balance_factor(node.right) <= 0) {
             return leftRotate(node);
         }
         return node;
     }
 
-    AVLNode root;
-
     public void put(int key, R value) {
         if (value == null) {
             throw new IllegalArgumentException("Value cannot be null.");
         }
-        root = doPut(root, key, value);
+        root = putRec(root, key, value);
     }
 
-    private AVLNode doPut(AVLNode node, int key, R value) {
+    private AVLNode putRec(AVLNode node, int key, R value) {
         if (node == null) {
             return new AVLNode(key, value);
         }
         if (key == node.key) {
             node.value = value;
             return node;
-        }
-        if (key < node.key) {
-            node.left = doPut(node.left, key, value);
+        } else if (key < node.key) {
+            node.left = putRec(node.left, key, value);
         } else {
-            node.right = doPut(node.right, key, value);
+            node.right = putRec(node.right, key, value);
         }
         updateHeight(node);
         return balance(node);
     }
 
     public R get(int key) {
-        R value = getRec(root, key);
-        return value;
+        return getRec(root, key);
     }
 
     private R getRec(AVLNode node, int key) {
         if (node == null) {
-            return null; // Key not found
+            return null;
         }
-        if (key < node.key) {
-            return getRec(node.left, key);
-        } else if (key > node.key) {
-            return getRec(node.right, key);
-        } else {
+        if (key == node.key) {
             return node.value;
+        } else if (key < node.key) {
+            return getRec(node.left, key);
+        } else {
+            return getRec(node.right, key);
         }
     }
 
@@ -225,17 +210,22 @@ public class AVLTree<R> {
             } else if (node.right == null) {
                 node = node.left;
             } else {
-                AVLNode s = node.right;
-                while (s.left != null) {
-                    s = s.left;
-                }
-                s.right = removeRec(node.right, s.key);
-                s.left = node.left;
-                node = s;
+                node = getAvlNodeAfterDeletion(node);
             }
         }
         updateHeight(node);
         return balance(node);
+    }
+
+    private AVLNode getAvlNodeAfterDeletion(AVLNode node) {
+        AVLNode asc = node.right;
+        while (asc.left != null) {
+            asc = asc.left;
+        }
+        //get the ascending node
+        asc.right = removeRec(node.right, asc.key);//handle ascending node
+        asc.left = node.left;//ascending node replace the deleted node
+        return asc;
     }
 
     public int size() {
