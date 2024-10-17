@@ -11,6 +11,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.prototype.report.MainActivity;
 import com.example.prototype.R;
 
+/**
+ * @AUTHOR Saheb Yuvraj Singh u7781798
+ * THe Login activity class manages the user login interface , it allows users to input credentials
+ * (username and password) and handles the logic. If the login authentication is successful the user
+ * is redirected to the Main Activity but if it fails an error message is displayed.
+ *
+ * Features-
+ * -stores the login details to push to main upon authentication
+ * - Displays a Toast message if login fails, informing the user of invalid credentials.
+ *
+ *
+ */
+
 public class LoginActivity extends AppCompatActivity {
 
     private EditText usernameEditText, passwordEditText;

@@ -39,8 +39,8 @@ import com.example.prototype.entity.Report;
  * @author Yuan Shi u7787385
  * The build of customized array adapter using the following external resource:
  * https://medium.com/mindorks/custom-array-adapters-made-easy-b6c4930560dd
+ * @author Yuvarj u7781798  Contributed on this class by completing scheduled deletion feature.
  *
- * @author Yuvraj u7781798 Contributed on this class by completing scheduled deletion feature.
  * @author Amogh Agarwal u7782814(implemented the UI feedback for delete report)
  */
 public class ReportAdapter extends ArrayAdapter<Report> {

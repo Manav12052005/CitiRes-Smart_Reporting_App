@@ -199,23 +199,23 @@ public class AVLTree<R> {
         if (!contains(key)) {
             throw new NoSuchElementException("Key not found: " + key);
         }
-        root = doRemove(root, key);
+        root = removeRec(root, key);
     }
 
     public boolean contains(int key) {
         return getRec(root, key) != null;
     }
 
-    private AVLNode doRemove(AVLNode node, int key) {
+    private AVLNode removeRec(AVLNode node, int key) {
         //1.
         if (node == null) {
             return null;
         }
         //2.
         if (key < node.key) {
-            node.left = doRemove(node.left, key);
+            node.left = removeRec(node.left, key);
         } else if (key > node.key) {
-            node.right = doRemove(node.right, key);
+            node.right = removeRec(node.right, key);
         } else {
             //3.
             if (node.left == null && node.right == null) {
@@ -229,7 +229,7 @@ public class AVLTree<R> {
                 while (s.left != null) {
                     s = s.left;
                 }
-                s.right = doRemove(node.right, s.key);
+                s.right = removeRec(node.right, s.key);
                 s.left = node.left;
                 node = s;
             }
