@@ -36,7 +36,7 @@ import com.example.prototype.entity.Report;
  * It extends BaseActivity to show the dashboard.
  * It consists of a simple heading and 3 buttons for each graph routed to their specific activity.
  * Part of Feature - Data_Graphical and Interact_Scheduled.
- * @author Manav Singh - Data_Graphical
+ * @author Manav Singh - u7782612 (Methods - onCreate)- Data_Graphical
  * @author Yuvraj - Interact_Scheduled Functionality (Methods - scheduleChartDisplay and showTimePickerDialogForChart).
  * */
 

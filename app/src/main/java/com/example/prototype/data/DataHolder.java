@@ -7,7 +7,7 @@ import com.example.prototype.entity.Report;
  * The instance was previously in MainActivity, but later moved to DataHolder. This was done
  * to increase accessibility for other activities.
  * Part of Feature - Tree Implementation
- * @author Manav Singh - This class
+ * @author Manav Singh - This class - u7782612
  * @author Yuan - Made this into singleton DP*/
 
 public class DataHolder {

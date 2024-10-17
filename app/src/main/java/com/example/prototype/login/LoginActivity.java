@@ -21,6 +21,7 @@ import com.example.prototype.R;
  * -stores the login details to push to main upon authentication
  * - Displays a Toast message if login fails, informing the user of invalid credentials.
  *
+ * @author Manav - Passed Username intent to MainActivity. - u7782612
  *
  */
 

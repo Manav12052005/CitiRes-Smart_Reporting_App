@@ -59,7 +59,7 @@ import java.util.List;
  * - Passing data to and from another activity. I reference android studio's official documentation through
  *      following link: https://developer.android.com/training/basics/intents/result.
  * @author Harry - Search Button and Functionality, Sort and Filter Functionality.
- * @author Manav - Passing Username intent to ReportActivity.
+ * @author Manav - Passing Username intent to ReportActivity and extending BaseAcitvity and configuring ChildContentView.
  * @author Amogh - Helped with various functions across the file.
  */
 

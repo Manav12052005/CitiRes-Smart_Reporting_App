@@ -28,7 +28,7 @@ import java.util.List;
  * It shows percentage of reports in every category.
  * It extends BaseActivity to show the dashboard and is set as ChildContent.
  * Part of Feature - Data_Graphical
- * @author Manav Singh*/
+ * @author Manav Singh u7782612*/
 
 public class CategoryChartActivity extends BaseActivity {
     private PieChart pieChart;

@@ -46,8 +46,7 @@ import java.time.LocalDateTime;
  * is accessed from the main activity and is used to add reports to the database. It used various
  * classes such as the report class, the various UI buttons, as well as permissions such as gps for
  * location
- * AI Use: I have used ChatGPT for optimising code and also for error handling. Also, I have used
- * it if I didn't know how to approach and solve a specific problem such as spinner buttons.
+ *
  * <p>
  * Author: Yuan Shi u7787385
  * Contributed in this class by construct the report and pass the report back to MainActivity.

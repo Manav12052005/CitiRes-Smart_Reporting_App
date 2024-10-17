@@ -94,6 +94,15 @@ assets:
   - I have used ChatGPT to build the cardview layout xml file since it looked good. - Yuan Shi
   - I double checked with the ChatGPT about the possibility of using Observer design pattern before writing the code about passing data between activities, but without copying the code. - Yuan Shi
   - I used ChatGPT to read the error messages of android logcat, without copying its code. - Yuan Shi
+- <Authenticator, Login Activity, UserSession Modifications to the user class to open in different modes for testing
+  or app interactivity was understood with the help of chatGPT.
+- < Methords to read a json file and implement login page were taken from multiple youtube sources
+  https://youtu.be/orXJRPNvAc4?si=mA63o6BkOSpZ7xHq;https://youtu.be/H2potb8pGDQ?si=8FAK2e3N7N3GXZQm
+- <AlertDialog,scheduled tasks were made using chatGPT and youtube ;https://youtu.be/xPYINCsIQVg?si=_HXyPZBPpv0RjJm_;
+  https://youtu.be/sNyZCyisxX0?si=c5hz5PDCRBsl3wyO;
+  -Chatgpt has been used to make modifications to help with testing class as the testing class does
+  not access the credentials file.
+-
 
 4. How long did it take to complete this assignment (approximately, in hours)?
   - <100> hours
@@ -108,7 +117,7 @@ members:
     uid: u7782814
   - name: Yuan Shi
     uid: u7787385
-  - name:
-    uid:
+  - name: Saheb Yuvraj Singh
+    uid: u7781798
   - name:
     uid:
