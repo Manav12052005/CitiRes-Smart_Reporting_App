@@ -80,8 +80,21 @@ Note that the core criteria of contribution is based on `code contribution` (the
     - [Report Writing?] [Slides preparation?]*
     - [You are welcome to provide anything that you consider as a contribution to the project or team.] e.g., APK, setups, firebase* <br><br>
 
-2. **UID2, Name2**  I have xx% contribution, as follows: <br>
-- ...
+2. **u7787385, Yuan Shi**  I have 20% contribution, as follows: <br>
+- **Code Contribution in the final App**
+    - AVLTree implementation, including feature tree deletion - class AVLTree: [AVLTree.java](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/data/AVLTree.java?ref_type=heads)
+    - Implement loadShowData feature. package:[entity](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/tree/main/app/src/main/java/com/example/prototype/entity?ref_type=heads), class:[ReportAdapter.java](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/report/ReportAdapter.java?ref_type=heads) [JsonDeserializer.java](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/util/JsonDeserialiser.java?ref_type=heads)
+    - Implement Data-stream feature. [MainActivity.class](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/report/MainActivity.java?ref_type=heads), methods: `startStreamThread()` and `stopStreamThread()`
+    - Utilize 3 design patterns in the project.
+
+- **Code and App Design**
+    - Finish design patterns parts as well as data structure parts in the report,in addition to my relevant part.
+    - MainActivity integration, created MainActivity and interate the whole app together. -class MainActivity.
+    - Initial design of the UI for the dashboard.
+    - Write code to help facilate data exchange between activities. [ReportActivity.java](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/report/ReportActivity.java?ref_type=heads)line196-201.
+    - Utilize 2 design patterns and the complete surprise feature task 1 and 2 by refacering Harry's code.
+
+
 3. **U7782814, Amogh Agarwal**  I have 20% contribution, as follows: <br>
 - **Code Contribution in the final App**
     - Report Submission Feature - class ReportActivity: [ReportActivity.java](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/411f230b8c6fff7d70fc1481b2cca36973f0a122/app/src/main/java/com/example/prototype/report/ReportActivity.java)
@@ -326,37 +339,32 @@ also made the UI interface uniform in terms of Layout.
    * Description of our implementation: We used a python script to create 2500 instances of report which are our main data files. It uses the random function to generate reports from pre-defined data pools for fields - location, category, priority, users, date, time and likes to ensure a large diversity in the dataset. For each report, a unique integer id is attached. Each report is saved as a dictionary and added to a list, which is ultimately serialised into a formatted JSON file reports_dataset.json. <br>
 
 
-3. [Search] (medium)  
-   * Code:[Class: Parser](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/search/Parser.java), [Class: Tokenizer](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/search/Tokenizer.java),
-   [Method: setupSearchView()](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/report/MainActivity.java#L191-209), [Method: refreshDisplayedList()](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/report/MainActivity.java#L219-236)
-   * Description of feature: The search feature allows users to perform complex searches on the reports. Users can enter queries using key-value pairs to filter specific attributes (e.g., location:Main St, priority:high) and general keywords to search across all attributes (e.g., pothole). The app processes these queries and displays reports that match the search criteria.<br>
-   * Description of your implementation: The implementation uses a two-step process involving tokenization and parsing.   
-   1. Tokenizer: The Tokenizer class handles the preprocessing of the user's input query. It removes special characters (except the colon : used in key-value pairs), converts the input to lower case for case-insensitive matching, and splits the input into tokens based on whitespace. It distinguishes between key-value tokens (containing a colon) and general tokens.  
-   2. Parser:  The Parser class interprets the tokens and applies appropriate filters to the list of reports. It separates the tokens into key-value pairs and general tokens.  
-      For key-value pairs, the parser matches the key to specific report attributes (such as description, location, priority, category, user, and likes). It filters the reports by comparing the attribute's value to the provided value, supporting partial matches for strings and exact matches for numerical fields like likes.  
-      Edge cases are handled gracefully. For example, if an invalid key is provided, the parser ignores it and continues processing the rest of the query. If a non-numeric value is provided for a numeric field like likes, the parser catches the exception and continues without filtering by that criterion.  
-      For general tokens, the parser searches across multiple report attributes, including description, location, category, priority, user, and likes. It includes reports where any of these attributes contain the general token.<br>
-   <br>
-
-4. [LoadShowData]. Description of the feature ... (easy) 
-    * Code: [Class MainActivity, method loadData()](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/util/JsonDeserialiser.java?ref_type=heads)
-    * Code: [Class ReportAdapter, method getView()](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/util/JsonDeserialiser.java?ref_type=heads)
-    * Code: [Class AVLTree, the entire file](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/util/JsonDeserialiser.java?ref_type=heads)
-    * Code: [Class JsonDeserialiser, the entire file](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/util/JsonDeserialiser.java?ref_type=heads)
-    * Description of feature: The AVLTree loads data from json file, converting them into Reports class and store them on the AVLTree, the dashboard displays reports instances onto the dashboard in scrolling order, with each report instance containg all the information about the report.
-    * Description of your implementation: The loadData method reads data from json file in the assets folder and convert into a list of reports. The AVLTree add the reports onto itself, with reportId as its key, and Report class instance as the value. To show the data onto the dashboard, a customized array adapter is used to show the reports onto the dashboard, with relevant information dsiplayed nicely.<br>
-5. [DataStream]. Description of the feature ... (medium)
-   * Code: [Class MainActivity, methods startStreamThread, stopStreamThread, onStart, onStop](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/report/MainActivity.java?ref_type=heads) 
-   * Description of feature: This feature allows the app to automatically add new report instances to the dashboard and store them in the AVL tree at specified time intervals, simulating the behavior of multiple users continuously submitting reports when encountering issues. The data stream process halts whenever the user navigates to another activity or performs a search.<br>
-   * Description of your implementation: A single thread controls the data stream without relying on advanced Android threading techniques. The thread reads data from a JSON file, deserializes it into a list of report instances, and iterates through the list to add each report to the AVL tree for storage. The runOnUiThread method is used to reflect the changes on the dashboard in real time. After adding a report, the thread pauses for a specified interval using Thread.sleep(). If the user switches to another activity or performs a search, the streaming process halts. Upon returning to the main dashboard, the stream resumes from where it left off. The implementation properly handles Android lifecycle events, ensuring the stream starts or resumes when needed and stops appropriately when leaving the MainActivity or interacting with the search bar. <br>
-
-6. [LoadShowData]. Description of the feature ... (easy)
+3. [LoadShowData]. Description of the feature ... (easy)
     * Code: [Class MainActivity, method loadData()](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/report/MainActivity.java?ref_type=heads)
     * Code: [Class ReportAdapter, method getView()](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/report/ReportAdapter.java?ref_type=heads)
     * Code: [Class AVLTree, the entire file](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/data/AVLTree.java?ref_type=heads)
     * Code: [Class JsonDeserialiser, the entire file](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/util/JsonDeserialiser.java?ref_type=heads)
     * Description of feature: The AVLTree loads data from json file, converting them into Reports class and store them on the AVLTree, the dashboard displays reports instances onto the dashboard in scrolling order, with each report instance containg all the information about the report.
     * Description of your implementation: The loadData method reads data from json file in the assets folder and convert into a list of reports. The AVLTree add the reports onto itself, with reportId as its key, and Report class instance as the value. To show the data onto the dashboard, a customized array adapter is used to show the reports onto the dashboard, with relevant information dsiplayed nicely.<br>
+4. [DataStream]. Description of the feature ... (medium)
+    * Code: [Class MainActivity, methods startStreamThread, stopStreamThread, onStart, onStop](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/report/MainActivity.java?ref_type=heads)
+    * Description of feature: This feature allows the app to automatically add new report instances to the dashboard and store them in the AVL tree at specified time intervals, simulating the behavior of multiple users continuously submitting reports when encountering issues. The data stream process halts whenever the user navigates to another activity or performs a search.<br>
+    * Description of your implementation: A single thread controls the data stream without relying on advanced Android threading techniques. The thread reads data from a JSON file, deserializes it into a list of report instances, and iterates through the list to add each report to the AVL tree for storage. The runOnUiThread method is used to reflect the changes on the dashboard in real time. After adding a report, the thread pauses for a specified interval using Thread.sleep(). If the user switches to another activity or performs a search, the streaming process halts. Upon returning to the main dashboard, the stream resumes from where it left off. The implementation properly handles Android lifecycle events, ensuring the stream starts or resumes when needed and stops appropriately when leaving the MainActivity or interacting with the search bar. <br>
+
+5. [Search] (medium)
+    * Code:[Class: Parser](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/search/Parser.java), [Class: Tokenizer](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/search/Tokenizer.java),
+      [Method: setupSearchView()](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/report/MainActivity.java#L190-208), [Method: refreshDisplayedList()](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/report/MainActivity.java#L218-235)
+    * Description of feature: The search feature allows users to perform complex searches on the reports. Users can enter queries using key-value pairs to filter specific attributes (e.g., location:Main St, priority:high) and general keywords to search across all attributes (e.g., pothole). The app processes these queries and displays reports that match the search criteria.<br>
+    * Description of your implementation: The implementation uses a two-step process involving tokenization and parsing.
+    1. Tokenizer: The Tokenizer class handles the preprocessing of the user's input query. It removes special characters (except the colon : used in key-value pairs), converts the input to lower case for case-insensitive matching, and splits the input into tokens based on whitespace. It distinguishes between key-value tokens (containing a colon) and general tokens.
+    2. Parser:  The Parser class interprets the tokens and applies appropriate filters to the list of reports. It separates the tokens into key-value pairs and general tokens.  
+       For key-value pairs, the parser matches the key to specific report attributes (such as description, location, priority, category, user, and likes). It filters the reports by comparing the attribute's value to the provided value, supporting partial matches for strings and exact matches for numerical fields like likes.  
+       Edge cases are handled gracefully. For example, if an invalid key is provided, the parser ignores it and continues processing the rest of the query. If a non-numeric value is provided for a numeric field like likes, the parser catches the exception and continues without filtering by that criterion.  
+       For general tokens, the parser searches across multiple report attributes, including description, location, category, priority, user, and likes. It includes reports where any of these attributes contain the general token.<br>
+       <br>
+
+    * Description of feature: Our dataset is stored in a json file in the folder report_dataset_generator. This feature is intended to have a dataset consisting of 2500 instances of our primary data which is reports. A comprehensive dataset of this size and variety allows for robust and accurate testing of the core functionalities in our application (Such as Searching, Sorting and Data Visualisation). It simulates a real-world scenario wherin an app will have a diverse variety of user-inputs and should be able to handle large volues of data efficiently. <br>
+    * Description of our implementation: We used a python script to create 2500 instances of report which are our main data files. It uses the random function to generate reports from pre-defined data pools for fields - location, category, priority, users, date, time and likes to ensure a large diversity in the dataset. For each report, a unique integer id is attached. Each report is saved as a dictionary and added to a list, which is ultimately serialised into a formatted JSON file reports_dataset.json. <br>
 
 7. [UI Feedback]. Description of the feature ... (easy)
     * Code: [Class BaseActivity, method onCreate](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/b98c45c8d17d8fefb6b2c1463ec23ecb1082342f/app/src/main/java/com/example/prototype/util/BaseActivity.java)

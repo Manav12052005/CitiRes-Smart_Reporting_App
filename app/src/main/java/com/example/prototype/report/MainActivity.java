@@ -57,7 +57,7 @@ import java.util.List;
  * @author Yuan u7787385 - ListView, ReportAdapter for viewing existing and newly added reports.
  * - DataStream Thread. Load_Show_Data.
  * - Passing data to and from another activity. I reference android studio's official documentation through
- *      following link: https://developer.android.com/training/basics/intents/result.
+ * following link: https://developer.android.com/training/basics/intents/result.
  * @author Harry - Search Button and Functionality, Sort and Filter Functionality.
  * @author Manav - Passing Username intent to ReportActivity and extending BaseAcitvity and configuring ChildContentView.
  * @author Amogh - Helped with various functions across the file.
@@ -275,6 +275,7 @@ public class MainActivity extends BaseActivity implements Observer {
                     break;
                 }
                 Report report = streamReports.get(i);
+                report.setReportId(ReportCounter.getReportId());
                 int reportId = report.getReportId();
                 if (DataHolder.avlTree.get(reportId) == null) {
                     report.setLocalDateTime(LocalDateTime.now());
@@ -288,6 +289,7 @@ public class MainActivity extends BaseActivity implements Observer {
                         refreshDisplayedList();
                     });
                 }
+                ReportCounter.inc();
             }
         });
         streamThread.start();
