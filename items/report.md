@@ -126,20 +126,7 @@ Target Users: The target users for this app are the citizens of a city. Below ar
     UI Feedback: A toast message displays: "Report Submitted Successfully!" confirming the action.
     Outcome: The pothole is logged, and the city’s infrastructure department is notified.
 
-
-    Scenario 2: Reporting an Emergency (Fire Incident)
-    User: City Resident (e.g., Mark)
-    Precondition: Mark witnesses a fire at a nearby building.
-    Action: Mark opens the app in an urgent situation and selects "Add Report." He categorizes the report under "Environmental" or "Infrastructure," depending on the situation. Mark sets the report priority to "HIGH" to indicate the emergency. The GPS feature automatically captures Mark's current location for accurate reporting. Mark adds details about the fire and submits the report.
-    UI Feedback: A toast message displays: "High-Priority Report Submitted! Authorities have been notified."
-    Outcome: The report is flagged as a high-priority issue, and the relevant authorities (e.g., fire department) are alerted to respond based on the GPS location and details provided. The authorities receive the report as a high-priority case, enabling them to respond promptly to the emergency situation.
-
-    Scenario 3: Submitting a GPS-Based Report
-    User: City Resident (e.g., Alice)
-    Precondition: Alice notices a broken streetlight on her evening walk.
-    Action: Alice opens the app and selects "Add Report." The GPS system captures her exact location. She chooses the "Maintenance" category and submits the report. UI Feedback: A toast message displays: "Task added Successfully."Outcome: The report is stored with precise location data, allowing for easy dispatch of a repair team.
-
-    Scenario 4: Deleting a Report
+    Scenario 2: Deleting a Report
     User: City Resident (e.g., Sarah)
     Precondition: Sarah has previously submitted a report that she now wants to remove because the issue has been resolved.
     Action: Sarah opens the app and navigates to her submitted reports. She selects the report that she wants to delete. Sarah taps the "Delete Report" button. A confirmation dialog appears, asking if she is sure she wants to delete the report. Sarah confirms the deletion.
@@ -147,7 +134,7 @@ Target Users: The target users for this app are the citizens of a city. Below ar
     Outcome: The selected report is removed from the app's database and no longer appears in any report listings.
     Postcondition: The report is permanently deleted from the system, and any linked data (e.g., charts, statistics) is updated to reflect the removal.
 
-    Scenario 5: Scheduling a Report Deletion
+    Scenario 3: Scheduling a Report Deletion
     User: City Resident (e.g., John)
     Precondition: John has submitted a report but knows the issue will be resolved in the future and prefers to schedule the deletion in advance.
     Action: John opens the app and navigates to his list of submitted reports. He selects the report that he wants to delete at a future date. John chooses the "Schedule Delete" option and selects a future date and time when the report should be deleted. The app confirms that the deletion is scheduled.
@@ -155,6 +142,7 @@ Target Users: The target users for this app are the citizens of a city. Below ar
     Outcome: The app will automatically delete the report at the specified time.
     Postcondition: The report will be deleted at the scheduled time, and the app will update all related data and statistics to reflect the deletion.
 
+A basic User Diagram to explain the process is provided in the items also. Here is the link (https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/e5bf70848fb0433634cda4cf32be9ae96607ed18/items/UserDiagram.png)
 
 ### Application UML
 
