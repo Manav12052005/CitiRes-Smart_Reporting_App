@@ -448,21 +448,21 @@ Feature Category: Data <br>
 
 To resolve these issues, I refactored the code to use a `Factory Design Pattern`:
 
-1. I defined a Functional Interface called `ReportSorter` with a `sort()` method.
+-  I defined a Functional Interface called `ReportSorter` with a `sort()` method.
 
-2. I implemented Different Sorters: Created different classes that implemented the `ReportSorter` interface, each providing a specific sorting method.
+-  I implemented Different Sorters: Created different classes that implemented the `ReportSorter` interface, each providing a specific sorting method.
 
-3. I then Built a Sorter Factory called `ReportSorterfactory` to generate Sorter instances based on the input position.
+-  I then Built a Sorter Factory called `ReportSorterfactory` to generate Sorter instances based on the input position.
 
 This new approach improved the robustness and maintainability of the sorting logic. Now, adding new sorting algorithms does not require modifying the existing factory but simply adding a new implementation of the Sorter interface.
 
 Relevant Git Commits, Files, and Line Numbers (On or After 10 October):
 
-Commit SHA: bb36739f0c9ce9fdcc165370f1e10af5030364c9
-File: src/com/example/prototype/report/MainActivity.java
-Lines: 237-240
-File: all the files under package src/com/example/prototype/sort <br>
-Link to Commit: https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/commit/bb36739f0c9ce9fdcc165370f1e10af5030364c9<br>
+    Commit SHA: bb36739f0c9ce9fdcc165370f1e10af5030364c9
+    File: src/com/example/prototype/report/MainActivity.java
+    Lines: 237-240
+    File: all the files under package src/com/example/prototype/sort <br>
+    Link to Commit: https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/commit/bb36739f0c9ce9fdcc165370f1e10af5030364c9<br>
 (Note: The sortReports method in MainActivity was refactored by my teammate - the original author after October 10 to enhance its readability. The version I worked on differs slightly from the original one I provided due to these improvements. However, due to project requirement, I am not permitted to provide any commits or code changes made after October 10.)
 
 3. Licence chosen - Apache Licence - 2.0
@@ -474,8 +474,10 @@ Link to Commit: https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/commit/bb36739
         - offer further legal protection that is beneficial to users and contributors alike
         - facilitatea simple collaboration using third-party library integration, like MPAndroidChart.
 
-Overall, this licence strikes a decent compromise between encouraging the development of open-source software and safeguarding intellectual property.
-
+    Overall, this licence strikes a decent compromise between encouraging the development of open-source software and safeguarding intellectual property.
+    <br>
+4. 
+4. 
 ## Testing Summary
 
 *[What features have you tested? What is your testing coverage?]*
