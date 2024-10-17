@@ -26,7 +26,7 @@ import java.util.List;
  * It shows number of reports in every priority.
  * It extends BaseActivity to show the dashboard and is set as ChildContent.
  * Part of Feature - Data_Graphical
- * @author Manav Singh*/
+ * @author Manav Singh u7782612*/
 
 public class PriorityChartActivity extends BaseActivity {
 

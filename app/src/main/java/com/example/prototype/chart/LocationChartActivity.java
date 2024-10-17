@@ -31,7 +31,7 @@ import java.util.Map;
  * If a new report with a different location is added, the chart is updated automatically.
  * It extends BaseActivity to show the dashboard and is set as ChildContent.
  * Part of Feature - Data_Graphical
- * @author Manav Singh*/
+ * @author Manav Singh - u7782612*/
 
 public class LocationChartActivity extends BaseActivity {
 

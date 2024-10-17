@@ -30,7 +30,7 @@ import com.example.prototype.report.MainActivity;
  * UI bloat.
  * It is the parent content view for all other activities.
  * It implements the SetChildContentView which defines how the other activities will display on-screen.
- * @author Manav
+ * @author Manav Singh - u7782612
  * */
 
 

@@ -14,7 +14,7 @@ import java.util.HashSet;
  * It makes 3 maps, one for each chart.
  * Part of Feature - Data_Graphical
  * These are tested in ReportAnalyzerTest.java
- * @author Manav Singh
+ * @author Manav Singh u7782612
  * @author Amogh Agarwal - Testing Adjustments.*/
 
 
