@@ -102,31 +102,73 @@ Note that the core criteria of contribution is based on `code contribution` (the
 
 *[Provide use cases and examples of people using your application. Who are the target users of your application? How do the users use your application?]*
 
-*Here is a pet training application example*
+Citizen Reporting
+Scenario 1: Reporting a Pothole
+User: City Resident (e.g., John)
+Precondition: John is driving and encounters a pothole on the road.
+Action:
+John opens the app on his mobile device.
+He selects "Add Report" and chooses the "Infrastructure" category.
+The GPS feature auto-captures his current location.
+He adds additional details about the pothole and submits the report.
+UI Feedback: A toast message displays: "Report Submitted Successfully!" confirming the action.
+Outcome: The pothole is logged, and the city’s infrastructure department is notified.
 
-*Molly wants to inquiry about her cat, McPurr's recent troublesome behaviour*
-1. *Molly notices that McPurr has been hostile since...*
-2. *She makes a post about... with the tag...*
-3. *Lachlan, a vet, writes a reply to Molly's post...*
-4. ...
-5. *Molly gives Lachlan's reply a 'tick' response*
 
-*Here is a map navigation application example*
+Scenario 2: Reporting an Emergency (Fire Incident)
+User: City Resident (e.g., Mark)
 
-*Targets Users: Drivers*
+Precondition: Mark witnesses a fire at a nearby building.
 
-* *Users can use it to navigate in order to reach the destinations.*
-* *Users can learn the traffic conditions*
-* ...
+Action:
 
-*Target Users: Those who want to find some good restaurants*
+Mark opens the app in an urgent situation and selects "Add Report."
+He categorizes the report under "Environmental" or "Infrastructure," depending on the situation.
+Mark sets the report priority to "HIGH" to indicate the emergency.
+The GPS feature automatically captures Mark's current location for accurate reporting.
+Mark adds details about the fire and submits the report.
+UI Feedback: A toast message displays: "High-Priority Report Submitted! Authorities have been notified."
 
-* *Users can find nearby restaurants and the application can give recommendations*
-* ...
+Outcome: The report is flagged as a high-priority issue, and the relevant authorities 
+(e.g., fire department) are alerted to respond based on the GPS location and details provided. 
+The authorities receive the report as a high-priority case, enabling them to respond promptly to 
+the emergency situation.
 
-*List all the use cases in text descriptions or create use case diagrams. Please refer to https://www.visual-paradigm.com/guide/uml-unified-modeling-language/what-is-use-case-diagram/ for use case diagram.*
+Scenario 3: Submitting a GPS-Based Report
+User: City Resident (e.g., Alice)
+Precondition: Alice notices a broken streetlight on her evening walk.
+Action:
+Alice opens the app and selects "Add Report."
+The GPS system captures her exact location.
+She chooses the "Maintenance" category and submits the report.
+UI Feedback: A toast message displays: "Task added Successfully."
+Outcome: The report is stored with precise location data, allowing for easy dispatch of a repair team.
 
-<hr> 
+Scenario 4: Deleting a Report
+User: City Resident (e.g., Sarah)
+Precondition: Sarah has previously submitted a report that she now wants to remove because the issue has been resolved.
+Action:
+Sarah opens the app and navigates to her submitted reports.
+She selects the report that she wants to delete.
+Sarah taps the "Delete Report" button.
+A confirmation dialog appears, asking if she is sure she wants to delete the report.
+Sarah confirms the deletion.
+UI Feedback: A toast message displays: "Report deleted successfully."
+Outcome: The selected report is removed from the app's database and no longer appears in any report listings.
+Postcondition: The report is permanently deleted from the system, and any linked data (e.g., charts, statistics) is updated to reflect the removal.
+
+Scenario 5: Scheduling a Report Deletion
+User: City Resident (e.g., John)
+Precondition: John has submitted a report but knows the issue will be resolved in the future and prefers to schedule the deletion in advance.
+Action:
+John opens the app and navigates to his list of submitted reports.
+He selects the report that he wants to delete at a future date.
+John chooses the "Schedule Delete" option and selects a future date and time when the report should be deleted.
+The app confirms that the deletion is scheduled.
+UI Feedback: A toast message displays: "Report deleted successfully" when the report is deleted.
+Outcome: The app will automatically delete the report at the specified time.
+Postcondition: The report will be deleted at the scheduled time, and the app will update all related data and statistics to reflect the deletion.
+
 
 ### Application UML
 
