@@ -289,9 +289,11 @@ also made the UI interface uniform in terms of Layout.
    * Description of feature: ... <br>
    * Description of your implementation: ... <br>
 
-2. [DataFiles]. I used a python script to create 2500 instances of report which are our main data files. It uses the random function to generate reports from pre-defined data pools for fields - location, category, priority, users, date, time and likes to ensure diversity. For each report, a unique integer id is attached. Each report is saved as a dictionary and added to a list, which is ultimately serialised into a formatted JSON file reports_dataset.json.
+2. [DataFiles]. Description of the feature ... (easy)
    * Code to the Data File [reports_dataset.json](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/4211a2b73d3609ae153915b5ea24e70b69bb785c/report_dataset_generator/generate_reports.py).
-
+   * Description of feature: Our dataset is stored in a json file in the folder report_dataset_generator. This feature is intended to have a dataset consisting of 2500 instances of our primary data which is reports. A comprehensive dataset of this size and variety allows for robust and accurate testing of the core functionalities in our application (Such as Searching, Sorting and Data Visualisation). It simulates a real-world scenario wherin an app will have a diverse variety of user-inputs and should be able to handle large volues of data efficiently. <br>
+   * Description of our implementation: We used a python script to create 2500 instances of report which are our main data files. It uses the random function to generate reports from pre-defined data pools for fields - location, category, priority, users, date, time and likes to ensure a large diversity in the dataset. For each report, a unique integer id is attached. Each report is saved as a dictionary and added to a list, which is ultimately serialised into a formatted JSON file reports_dataset.json. <br>
+   
 3. []
    <br>
 
@@ -300,6 +302,15 @@ also made the UI interface uniform in terms of Layout.
    * Code: [Class MainActivity, methods startStreamThread, stopStreamThread, onStart, onStop](https://gitlab.cecs.anu.edu.au/comp2100/group-project/ga-23s2/-/blob/main/items/media/_examples/Dummy.java#L22-43) and Class Y, ...
    * Description of feature: This feature allows the app to automatically add new report instances to the dashboard and store them in the AVL tree at specified time intervals, simulating the behavior of multiple users continuously submitting reports when encountering issues. The data stream process halts whenever the user navigates to another activity or performs a search.<br>
    * Description of your implementation: A single thread controls the data stream without relying on advanced Android threading techniques. The thread reads data from a JSON file, deserializes it into a list of report instances, and iterates through the list to add each report to the AVL tree for storage. The runOnUiThread method is used to reflect the changes on the dashboard in real time. After adding a report, the thread pauses for a specified interval using Thread.sleep(). If the user switches to another activity or performs a search, the streaming process halts. Upon returning to the main dashboard, the stream resumes from where it left off. The implementation properly handles Android lifecycle events, ensuring the stream starts or resumes when needed and stops appropriately when leaving the MainActivity or interacting with the search bar. <br>
+
+5. [UXUI] Description of the feature ... (easy)
+    * Code: [Layout XML-file : activity_main.xml](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/0dfa6e401f0e1e40998f356b148f66c09a1be5fb/app/src/main/res/layout/activity_main.xml), [Layout XML-file : activity_base.xml](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/0dfa6e401f0e1e40998f356b148f66c09a1be5fb/app/src/main/res/layout/activity_base.xml), [Layout XML-file : activity_login.xml](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/0dfa6e401f0e1e40998f356b148f66c09a1be5fb/app/src/main/res/layout/activity_login.xml)
+   * Description of feature: To maintain a uniform and consistent design language throughout the application, we ensured that the colors, fonts, and UI element styles worked with each other in harmony and made the User visual experience pleasant and enjoyable.
+      * Font Used : Poppins
+      * Colour Scheme : Black and White (Minimalistic)
+      * UI Element Style : IOS 17 Filled Icons <br>
+   * Description of your implementation: Maintaining a consistent design language and structure throughout without creating huge duplicate amounts of code was a challenge to us in the start of the project. This challenge was overcome by deciding to implement a foundational activity page that would display other activities as secondary content within the layout screen. This was implemented in BaseActivity which serves as the primary content view whose properties are inherited by every other activity. It incorporates features for navigation to different pages of the app as well as a fixed standard layout window which ensures that the size of the displayed activity is the same everytime without the need for explicit instruction. This helped us keep the design language consistent along with the usage of uniform UI features. <br>
+<br>
 
 ### Custom Features
 Feature Category: Privacy <br>
