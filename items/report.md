@@ -340,15 +340,16 @@ also made the UI interface uniform in terms of Layout.
    * Description of our implementation: We used a python script to create 2500 instances of report which are our main data files. It uses the random function to generate reports from pre-defined data pools for fields - location, category, priority, users, date, time and likes to ensure a large diversity in the dataset. For each report, a unique integer id is attached. Each report is saved as a dictionary and added to a list, which is ultimately serialised into a formatted JSON file reports_dataset.json. <br>
    
 3. [LoadShowData]. Description of the feature ... (easy) 
-    * Code: [Class AVLTree]
-    * Description of feature: The AVLTree loads data from json file, converting them into Reports class and store them on the AVLTree, the dashboard displays reports instances onto the dashboard in scrolling order, with each report instance containg all the information about the report. 
+    * Code: [Class MainActivity, method loadData()](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/util/JsonDeserialiser.java?ref_type=heads)
+    * Code: [Class ReportAdapter, method getView()](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/util/JsonDeserialiser.java?ref_type=heads)
+    * Code: [Class AVLTree, the entire file](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/util/JsonDeserialiser.java?ref_type=heads)
+    * Code: [Class JsonDeserialiser, the entire file](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/util/JsonDeserialiser.java?ref_type=heads)
+    * Description of feature: The AVLTree loads data from json file, converting them into Reports class and store them on the AVLTree, the dashboard displays reports instances onto the dashboard in scrolling order, with each report instance containg all the information about the report.
    <br>
    * Description of your implementation: The loadData method reads data from json file in the assets folder and convert into a list of reports. The AVLTree add the reports onto itself, with reportId as its key, and Report class instance as the value. To show the data onto the dashboard, a customized array adapter is used to show the reports onto the dashboard, with relevant information dsiplayed nicely.
 
-
-
 4. [DataStream]. Description of the feature ... (medium)
-   * Code: [Class MainActivity, methods startStreamThread, stopStreamThread, onStart, onStop](https://gitlab.cecs.anu.edu.au/comp2100/group-project/ga-23s2/-/blob/main/items/media/_examples/Dummy.java#L22-43) and Class Y, ...
+   * Code: [Class MainActivity, methods startStreamThread, stopStreamThread, onStart, onStop](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/report/MainActivity.java?ref_type=heads) 
    * Description of feature: This feature allows the app to automatically add new report instances to the dashboard and store them in the AVL tree at specified time intervals, simulating the behavior of multiple users continuously submitting reports when encountering issues. The data stream process halts whenever the user navigates to another activity or performs a search.<br>
    * Description of your implementation: A single thread controls the data stream without relying on advanced Android threading techniques. The thread reads data from a JSON file, deserializes it into a list of report instances, and iterates through the list to add each report to the AVL tree for storage. The runOnUiThread method is used to reflect the changes on the dashboard in real time. After adding a report, the thread pauses for a specified interval using Thread.sleep(). If the user switches to another activity or performs a search, the streaming process halts. Upon returning to the main dashboard, the stream resumes from where it left off. The implementation properly handles Android lifecycle events, ensuring the stream starts or resumes when needed and stops appropriately when leaving the MainActivity or interacting with the search bar. <br>
 
@@ -374,8 +375,8 @@ Feature Category: Privacy <br>
 
 Feature Category: Firebase Integration <br>
 3. [Data-deletion] Description of the feature (medium)
-   * Code: [Class AVLTree, method remove](https://gitlab.cecs.anu.edu.au/comp2100/group-project/ga-23s2/-/blob/main/items/media/_examples/Dummy.java#L22-43) and ...
-   * [Class ReportAdapter](../src/path/to/class/file.java#L30-85): methods deleteButton.setOnClickListener, deleteReport(), C, lines of code:
+   * Code: [Class AVLTree, method remove](https://gitlab.cecs.anu.edu.au/comp2100/group-project/ga-23s2/-/blob/main/items/media/_examples/Dummy.java#L22-43)
+   * [Class ReportAdapter](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/report/ReportAdapter.java?ref_type=heads): methods deleteButton.setOnClickListener, deleteReport()
    * Description of your implementation: I firstly wrote the code of removing an element from the AVLTree. Recursion is used here, with the use of helper recur method removeRec(). It breaks into 3 cases of removing, with the consideration of height update and tree rebalancing. Then in the ReportAdapter, If you click on the deletion button, the report get removed from the list of array adapter used for showing the report items, and then pass the reportId to the MainActivity to delete the report from the tree.  <br>
 
 <hr>
@@ -435,7 +436,26 @@ To resolve these issues, I refactored the code to use a Factory Design Pattern:
    - *Code coverage: ...*
    - *Types of tests created and descriptions: ...*
 
-2. xxx
+2. Tests for tree's behaviour.
+    - Code: [AVLTreeTest Class, entire file](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/test/java/com/example/prototype/AVLTreeTest.java?ref_type=heads) for the [AVLTree Class, entire file](https://gitlab.cecs.anu.edu.au/comp2100/group-project/ga-23s2/-/blob/main/items/media/_examples/Dummy.java#L22-43)
+   - *Number of test cases: 13*
+   - *Code coverage: 100%*
+   - *Types of tests created and descriptions: use int as key and String as value, a bunch of unit tests including: setup test, behaviour tests on insert, remove, modify, get and sorting and traversal. Also extreme case of large data and no data is tested either. Exception are checked as well on non-exsistence keys, throw NoSuchElementException.*
+3. Tests for load data.
+    - Code: [JsonDeserializerTest](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/test/java/com/example/prototype/JsonDeserializerTest.java?ref_type=heads) for the [JsonDeserialiser class, entire file](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/util/JsonDeserialiser.java?ref_type=heads)
+    - *Number of test cases: 2*
+    - *Code coverage: 80%*
+    - *Types of tests created and descriptions: Read in both a valid json string and an invalid json string, the valid one should be converted into a valid Report class, with attributes match perfectly. The invalid one, upon deserialize on it, will throw NullPointerException.*
+4. Tests for reports addition and removal.
+    - Code: [ReportStorageTest](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/test/java/com/example/prototype/ReportStorageTest.java?ref_type=heads) for the [AVLTree Class, entire file](https://gitlab.cecs.anu.edu.au/comp2100/group-project/ga-23s2/-/blob/main/items/media/_examples/Dummy.java#L22-43) 
+    - *Number of test cases: 1*
+    - *Code coverage: 70%*
+    - *Types of tests created and descriptions: 1 big integration test use Report as the generic type to test whether Reports are stored and removed correctly, this integration test involves error handling, boundary case of empty size, also mutation test involving changing value to fail the test.*
+5. Tests for singleton behaviour
+    - Code: [DataHoldertest](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/test/java/com/example/prototype/DataHolderTest.java?ref_type=heads) for the [DataHolder class, entire file](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/data/DataHolder.java?ref_type=heads)
+    - *Number of test cases: 4*
+    - *Code coverage: 80%*
+    - *Types of tests created and descriptions: Including setup test, test 2 instances are the same on empty tree and on non-empty tree, after the tree has added or removed some elements. *
 
 ...
 
