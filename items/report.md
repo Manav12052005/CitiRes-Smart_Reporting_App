@@ -82,18 +82,23 @@ Note that the core criteria of contribution is based on `code contribution` (the
 
 2. **u7787385, Yuan Shi**  I have 20% contribution, as follows: <br>
 - **Code Contribution in the final App**
-    - AVLTree implementation, including feature tree deletion - class AVLTree: [AVLTree.java](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/data/AVLTree.java?ref_type=heads)
+    - AVLTree implementation, including feature tree data-deletion - class AVLTree: [AVLTree.java](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/data/AVLTree.java?ref_type=heads)
     - Implement loadShowData feature. package:[entity](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/tree/main/app/src/main/java/com/example/prototype/entity?ref_type=heads), class:[ReportAdapter.java](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/report/ReportAdapter.java?ref_type=heads) [JsonDeserializer.java](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/util/JsonDeserialiser.java?ref_type=heads)
     - Implement Data-stream feature. [MainActivity.class](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/report/MainActivity.java?ref_type=heads), methods: `startStreamThread()` and `stopStreamThread()`
     - Utilize 3 design patterns in the project.
 
 - **Code and App Design**
-    - Finish design patterns parts as well as data structure parts in the report,in addition to my relevant part.
-    - MainActivity integration, created MainActivity and interate the whole app together. -class MainActivity.
+    - Propose and design AVLTree to store data. 
+    - Design Report instance with all the attributes. 
+    - Design AVLTree unit and integration tests, DataHolder test and LoadData test. 
+    - MainActivity integration, created MainActivity and interact the whole app together.
+    - Utilize 2 design patterns.
     - Initial design of the UI for the dashboard.
-    - Write code to help facilate data exchange between activities. [ReportActivity.java](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/report/ReportActivity.java?ref_type=heads)line196-201.
-    - Utilize 2 design patterns and the complete surprise feature task 1 and 2 by refacering Harry's code.
 
+- **Others**:
+    - Finish design patterns parts as well as data structure parts in the report,in addition to my relevant part.
+    - Write code to help facilitate data exchange between activities. [ReportActivity.java](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/report/ReportActivity.java?ref_type=heads)line196-201.
+    - Complete surprise feature task 1 and 2 by refactoring Harry's code.
 
 3. **U7782814, Amogh Agarwal**  I have 20% contribution, as follows: <br>
 - **Code Contribution in the final App**
@@ -412,7 +417,7 @@ Feature Category: Data <br>
 4. [Data-deletion] Description of the feature (medium)
     * Code: [Class AVLTree, method remove](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/data/AVLTree.java?ref_type=heads)
     * [Class ReportAdapter](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/report/ReportAdapter.java?ref_type=heads): methods deleteButton.setOnClickListener, deleteReport()
-    * Description of your implementation: I firstly wrote the code of removing an element from the AVLTree. Recursion is used here, with the use of helper recur method `removeRec()`. In this method, it first considers the extreme case where the tree is empty. Then if then key to delete is less than the current node's value, it travers to left, same case for greater than. If the two values are equal, it is furtherly divided into 3 cases. If the node to dele have no child, have one child, and have 2 childs. The most tricky part is the 2 childs case. You need to find the ascending child using while loop and manages the childs of the ascending node, and then replace it back to the deleted node. We also need to consider height update and tree rebalancing. Then in the ReportAdapter class, If you click on the deletion button, the report get removed from the list of array adapter used for showing the report items, using method called `deleteReport()`, and then pass the `reportId` to the MainActivity to delete the report from the tree using `Observer` design pattern.  <br>
+    * Description of your implementation: I firstly wrote the code of removing an element from the AVLTree. Recursion is used here, with the use of helper recur method `removeRec()`. In this method, it first considers the extreme case where the tree is empty. Then if then key to delete is less than the current node's value, it travers to left, same case for greater than. If the two values are equal, it is furtherly divided into 3 cases. If the node to dele have no child, have one child, and have 2 childs. The most tricky part is the 2 childs case. You need to find the ascending child using while loop and manages the childs of the ascending node, and then replace it back to the deleted node. We also need to consider height update and tree rebalancing. Then in the ReportAdapter class, If you click on the deletion button, the report get removed from the list of array adapter used for showing the report items, using method called `deleteReport()`, and then pass the `reportId` to the MainActivity to delete the report from the tree using `Observer` design pattern. There is a drawback in my implementation: the preloaded data stream’s reportId starts at 3000, rather than continuing from the current report’s ID. I attempted to modify it so that IDs would increment sequentially based on the latest report, but it seemed to introduce a race condition. I haven't had enough time to fully resolve the issue. However, since the reportId only needs to be unique, the exact sequence is not critical.<br>
 
 5. [Data-GPS]. Description of the feature  (easy)
     * Code: [Class ReportActivity, methods checkLocationPermissionAndSubmit, getLocationAnSubmitReport, onRequestPermissionResult](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/2d09ad6910cb2804f4cf5dc737e07f647ba9898c/app/src/main/java/com/example/prototype/report/ReportActivity.java)
@@ -546,8 +551,6 @@ Overall, this licence strikes a decent compromise between encouraging the develo
 
 <br> <hr>
 
-
-
 ## Summary of Known Errors and Bugs
 
 *[Where are the known errors and bugs? What consequences might they lead to?]*
@@ -556,11 +559,9 @@ Overall, this licence strikes a decent compromise between encouraging the develo
 *Here is an example:*
 
 1. *Bug 1:*
-    - *A space bar (' ') in the sign in email will crash the application.*
-    - ...
+    - *There is a drawback in my implementation: the preloaded data stream’s reportId starts at 3000, rather than continuing from the current report’s ID.*
+    -  I attempted to modify it so that IDs would increment sequentially based on the latest report, but it seemed to introduce a race condition. I haven't had enough time to fully resolve the issue. However, since the reportId only needs to be unique, the exact sequence is not critical.
 
-2. *Bug 2:*
-3. ...
 
 <br> <hr>
 
