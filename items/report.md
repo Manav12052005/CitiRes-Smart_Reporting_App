@@ -145,6 +145,7 @@ This is an important section of your report and should include all technical dec
 
 - Details about the design patterns used (where in the code, justification of the choice, etc)
 
+
 *Please give clear and concise descriptions for each subsections of this part. It would be better to list all the concrete items for each subsection and give no more than `5` concise, crucial reasons of your design.
 
 <hr>
@@ -225,6 +226,8 @@ Here is a partial (short) example for the subsection `Data Structures`:*
     * *Objective: Enables an object (subject) to communicate any changes in state to its dependents (observers), usually in a decoupled fashion.*
     * *Code Locations: MainActivity implements Observer interface: This pattern allows MainActivity to observe and respond to data changes or events, such as when a report is added or removed, or when sorting is updated, from other activities.*
     * *Reasons:The observer design helps to maintain the user interface current with modifications to the data (e.g., when report data changes in MainActivity).*
+  3. Factory Pattern
+     *is developped as a surprise feature.*
 
 <hr>
 
@@ -294,8 +297,12 @@ also made the UI interface uniform in terms of Layout.
    * Description of feature: Our dataset is stored in a json file in the folder report_dataset_generator. This feature is intended to have a dataset consisting of 2500 instances of our primary data which is reports. A comprehensive dataset of this size and variety allows for robust and accurate testing of the core functionalities in our application (Such as Searching, Sorting and Data Visualisation). It simulates a real-world scenario wherin an app will have a diverse variety of user-inputs and should be able to handle large volues of data efficiently. <br>
    * Description of our implementation: We used a python script to create 2500 instances of report which are our main data files. It uses the random function to generate reports from pre-defined data pools for fields - location, category, priority, users, date, time and likes to ensure a large diversity in the dataset. For each report, a unique integer id is attached. Each report is saved as a dictionary and added to a list, which is ultimately serialised into a formatted JSON file reports_dataset.json. <br>
    
-3. []
+3. [LoadShowData]. Description of the feature ... (easy) 
+    * Code: [Class AVLTree]
+    * Description of feature: The AVLTree loads data from json file, converting them into Reports class and store them on the AVLTree, the dashboard displays reports instances onto the dashboard in scrolling order, with each report instance containg all the information about the report. 
    <br>
+   * Description of your implementation: The loadData method reads data from json file in the assets folder and convert into a list of reports. The AVLTree add the reports onto itself, with reportId as its key, and Report class instance as the value. To show the data onto the dashboard, a customized array adapter is used to show the reports onto the dashboard, with relevant information dsiplayed nicely.
+
 
 
 4. [DataStream]. Description of the feature ... (medium)
@@ -324,10 +331,10 @@ Feature Category: Privacy <br>
    <br><br>
 
 Feature Category: Firebase Integration <br>
-3. [FB-Auth] Description of the feature (easy)
-   * Code: [Class X, entire file](https://gitlab.cecs.anu.edu.au/comp2100/group-project/ga-23s2/-/blob/main/items/media/_examples/Dummy.java#L22-43) and Class Y, ...
-   * [Class B](../src/path/to/class/file.java#L30-85): methods A, B, C, lines of code: 30 to 85
-   * Description of your implementation: ... <br>
+3. [Data-deletion] Description of the feature (medium)
+   * Code: [Class AVLTree, method remove](https://gitlab.cecs.anu.edu.au/comp2100/group-project/ga-23s2/-/blob/main/items/media/_examples/Dummy.java#L22-43) and ...
+   * [Class ReportAdapter](../src/path/to/class/file.java#L30-85): methods deleteButton.setOnClickListener, deleteReport(), C, lines of code:
+   * Description of your implementation: I firstly wrote the code of removing an element from the AVLTree. Recursion is used here, with the use of helper recur method removeRec(). It breaks into 3 cases of removing, with the consideration of height update and tree rebalancing. Then in the ReportAdapter, If you click on the deletion button, the report get removed from the list of array adapter used for showing the report items, and then pass the reportId to the MainActivity to delete the report from the tree.  <br>
 
 <hr>
 
@@ -335,10 +342,43 @@ Feature Category: Firebase Integration <br>
 
 *Instructions:*
 - If implemented, explain how your solution addresses the task (any detail requirements will be released with the surprise feature specifications).
-- State that "Surprise feature is not implemented" otherwise.
+
 
 <br> <hr>
 
+(i) Identifying a Code Component for Refactoring with a Design Pattern
+
+Before releasing the surprise feature, our group had already implemented two design patterns in the codebase. While reviewing my teammate's code, I found a code snippet using a switch statement to determine different sorting actions based on the position of the input. This component could benefit from being refactored using the Factory Design Pattern.
+
+The original code involved multiple conditional branches with a switch statement, which made the code less flexible and harder to maintain as new sorting requirements emerged, which led to several issues:
+
+    Lack of Extensibility: Whenever new sorting logic was introduced, we had to modify the existing switch statement, which violated the Open-Closed Principle.
+    Complexity: The switch statement made the code less readable and harder to maintain as the number of conditional branches increased.
+
+    Relevant Git Commits, Files, and Line Numbers (Before 10 October):
+
+        Commit  SHA:e13cd0f77d1d93ea7d4e362b1e6807bf449930ee
+        Like: 
+        File: src/com/example/prototype/sorting/MainActivity.java
+        Lines: 238-284
+        Link to Commit: https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/064ef98de1ce8743521e2d2a3943707b1c227132/app/src/main/java/com/example/prototype/MainActivity.java
+
+(ii) Correcting the Implementation Issues Identified
+
+To resolve these issues, I refactored the code to use a Factory Design Pattern:
+
+    I defined a Functional Interface called Sorter  with a sort() method. I Implemented Different Sorters: Created different classes that implemented the Sorter interface, each providing a specific sorting method.I then Built a Sorter Factory: Developed a SorterFactory class to generate appropriate Sorter instances based on the input position.
+
+ This new approach improved the robustness and maintainability of the sorting logic. Now, adding new sorting algorithms does not require modifying the existing factory but simply adding a new implementation of the Sorter interface.
+
+    Relevant Git Commits, Files, and Line Numbers (On or After 10 October):
+
+        Commit SHA: bb36739f0c9ce9fdcc165370f1e10af5030364c9
+          File: src/com/example/prototype/report/MainActivity.java
+            Lines: 237-240
+          File: all the files under package src/com/example/prototype/sort
+            Link to Commit: https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/commit/bb36739f0c9ce9fdcc165370f1e10af5030364c9
+    (Note: The sortReports method in MainActivity was refactored by my teammate - the original author after October 10 to enhance its readability. The version I worked on differs slightly from the original one I provided due to these improvements. However, due to project requirement, I am not permitted to provide any commits or code changes made after October 10.)
 
 ## Testing Summary
 
