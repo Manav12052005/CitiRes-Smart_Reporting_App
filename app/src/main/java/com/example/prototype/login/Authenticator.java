@@ -10,23 +10,35 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+/**
+ * @author Saheb Yuvraj Singh u7781798
+ * The Authenticator class is responsible for handling user authentication using a singleton class
+ * It loads credentials from JSON file in test mode.
+ *
+ *Key Features:
+ * -Singleton pattern
+ * -Using json file to inject credentials using username and password.
+ *-Uses Credentials a helper class to represent a pair of usernmae and password
+ *chatgpt has been used to make modifications to help with testing class as the testing class does
+ * not access the credentials file.
+ */
+
 
 public class Authenticator {
-    // Singleton instance
     private static Authenticator instance;
 
-    // List to hold username and password pairs
+
     private List<Credential> credentials;
 
-    // Private flag to disable loading logic for tests
+
     private boolean isTestMode = false;
 
-    // Private constructor to prevent instantiation
+
     private Authenticator() {
         credentials = new ArrayList<>();
     }
 
-    // Synchronized method to ensure thread-safety in production (with context)
+
     public static synchronized Authenticator getInstance(Context context) {
         if (instance == null) {
             instance = new Authenticator();
@@ -35,7 +47,7 @@ public class Authenticator {
         return instance;
     }
 
-    // Synchronized method to allow injecting test credentials (for unit tests)
+    //Returns the singleton instance
     public static synchronized Authenticator getInstance(List<Credential> testCredentials) {
         if (instance == null || instance.isTestMode) {  // Allow resetting in test mode
             instance = new Authenticator();
@@ -45,12 +57,12 @@ public class Authenticator {
         return instance;
     }
 
-    // Allow resetting instance for testing purposes
+    //Resets the singleton instance
     public static synchronized void resetInstance() {
         instance = null;
     }
 
-    // Method to handle login logic
+    // Method to handle login logic and verifies if the provided credentials match
     public boolean login(String username, String password) {
         for (Credential credential : credentials) {
             if (credential.getUsername().equals(username) && credential.getPassword().equals(password)) {
@@ -63,7 +75,7 @@ public class Authenticator {
     // Method to load credentials from the JSON file in production
     private void loadJson(Context context) {
         if (isTestMode) {
-            return; // Skip loading JSON during testing
+            return; // Skip loading JSON during testing (chatgpt change)
         }
 
         try {
