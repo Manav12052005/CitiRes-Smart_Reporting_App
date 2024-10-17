@@ -422,6 +422,17 @@ This new approach improved the robustness and maintainability of the sorting log
             Link to Commit: https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/commit/bb36739f0c9ce9fdcc165370f1e10af5030364c9
     (Note: The sortReports method in MainActivity was refactored by my teammate - the original author after October 10 to enhance its readability. The version I worked on differs slightly from the original one I provided due to these improvements. However, due to project requirement, I am not permitted to provide any commits or code changes made after October 10.)
 
+3. Licence chosen - Apache Licence - 2.0
+
+   We selected Apache 2.0 due to its: 
+   - Permissive licence, suitable for both commercial and open-source applications.
+   - Offers greater freedom for software development and dissemination in the future.
+   - Contains explicit patent grants that have the following advantages:
+       - offer further legal protection that is beneficial to users and contributors alike 
+       - facilitatea simple collaboration using third-party library integration, like MPAndroidChart. 
+
+Overall, this licence strikes a decent compromise between encouraging the development of open-source software and safeguarding intellectual property.
+
 ## Testing Summary
 
 *[What features have you tested? What is your testing coverage?]*
