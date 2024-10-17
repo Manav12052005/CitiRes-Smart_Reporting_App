@@ -13,7 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
-
+/**
+ * @author Saheb Yuvraj Singh u7781798
+ * This class tests the LoginActivity class and utilises the Authenticator class to check the
+ * validity of used credentials. It performs 3 main tests of valid input,invalid input and empty
+ * covering all cases including edge cases. ChatGPT has been utilized to fix bugs mainly assert NULL
+ * to clear data before running next testcases.
+ */
 public class LoginTest {
 
     private Authenticator authenticator;
@@ -75,7 +81,7 @@ public class LoginTest {
         boolean loginSuccess = authenticator.login(invalidUsername, invalidPassword);
 
         assertFalse(loginSuccess);
-        assertNull(UserSession.getCurrentUser()); // Ensure no user is set after failed login
+        assertNull(UserSession.getCurrentUser());
     }
 
     @Test
@@ -86,6 +92,6 @@ public class LoginTest {
         boolean loginSuccess = authenticator.login(emptyUsername, emptyPassword);
 
         assertFalse(loginSuccess);
-        assertNull(UserSession.getCurrentUser()); // Ensure no user is set after failed login
+        assertNull(UserSession.getCurrentUser());
     }
 }
