@@ -94,6 +94,8 @@ assets:
   - I have used ChatGPT to build the cardview layout xml file since it looked good. - Yuan Shi
   - I double checked with the ChatGPT about the possibility of using Observer design pattern before writing the code about passing data between activities, but without copying the code. - Yuan Shi
   - I used ChatGPT to read the error messages of android logcat, without copying its code. - Yuan Shi
+  - I used ChatGPT to help me create method to remove special characters for search query. - Harry
+  - I used ChatGPT to help me solve display updated report after sort and search by implementing refreshDisplayList() method. - Harry
 - <Authenticator, Login Activity, UserSession Modifications to the user class to open in different modes for testing
   or app interactivity was understood with the help of chatGPT.
 - < Methords to read a json file and implement login page were taken from multiple youtube sources
@@ -119,5 +121,5 @@ members:
     uid: u7787385
   - name: Saheb Yuvraj Singh
     uid: u7781798
-  - name:
-    uid:
+  - name: Harry Xia
+    uid: u7556816
