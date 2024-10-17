@@ -358,15 +358,6 @@ also made the UI interface uniform in terms of Layout.
     * Description of feature: The AVLTree loads data from json file, converting them into Reports class and store them on the AVLTree, the dashboard displays reports instances onto the dashboard in scrolling order, with each report instance containg all the information about the report.
     * Description of your implementation: The loadData method reads data from json file in the assets folder and convert into a list of reports. The AVLTree add the reports onto itself, with reportId as its key, and Report class instance as the value. To show the data onto the dashboard, a customized array adapter is used to show the reports onto the dashboard, with relevant information dsiplayed nicely.<br>
 
-6. [UXUI] Description of the feature ... (easy)
-    * Code: [Layout XML-file : activity_main.xml](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/0dfa6e401f0e1e40998f356b148f66c09a1be5fb/app/src/main/res/layout/activity_main.xml), [Layout XML-file : activity_base.xml](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/0dfa6e401f0e1e40998f356b148f66c09a1be5fb/app/src/main/res/layout/activity_base.xml), [Layout XML-file : activity_login.xml](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/0dfa6e401f0e1e40998f356b148f66c09a1be5fb/app/src/main/res/layout/activity_login.xml)
-    * Description of feature: To maintain a uniform and consistent design language throughout the application, we ensured that the colors, fonts, and UI element styles worked with each other in harmony and made the User visual experience pleasant and enjoyable.
-        * Font Used : Poppins
-        * Colour Scheme : Black and White (Minimalistic)
-        * UI Element Style : IOS 17 Filled Icons <br>
-    * Description of your implementation: Maintaining a consistent design language and structure throughout without creating huge duplicate amounts of code was a challenge to us in the start of the project. This challenge was overcome by deciding to implement a foundational activity page that would display other activities as secondary content within the layout screen. This was implemented in BaseActivity which serves as the primary content view whose properties are inherited by every other activity. It incorporates features for navigation to different pages of the app as well as a fixed standard layout window which ensures that the size of the displayed activity is the same every time without the need for explicit instruction. This helped us keep the design language consistent along with the usage of uniform UI features. <br>
-
-
 7. [UI Feedback]. Description of the feature ... (easy)
     * Code: [Class BaseActivity, method onCreate](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/b98c45c8d17d8fefb6b2c1463ec23ecb1082342f/app/src/main/java/com/example/prototype/util/BaseActivity.java)
     * Code: [Class ReportActivity, method onCreate](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/b98c45c8d17d8fefb6b2c1463ec23ecb1082342f/app/src/main/java/com/example/prototype/report/ReportActivity.java)
@@ -410,15 +401,12 @@ Feature Category: Data <br>
         4. The `refreshDisplayedList` method integrates both search and sort functionalities to update the list of reports displayed to the user. This method ensures that any changes in search queries or sort options are immediately reflected in the UI.
         5. The `updateStreamState` method controls the data streaming thread based on the current search and sort states. If the user is not searching or sorting, the data stream continues to add new reports periodically.
 
-5. [Data-deletion] Description of the feature (medium)
+4. [Data-deletion] Description of the feature (medium)
     * Code: [Class AVLTree, method remove](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/data/AVLTree.java?ref_type=heads)
     * [Class ReportAdapter](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/report/ReportAdapter.java?ref_type=heads): methods deleteButton.setOnClickListener, deleteReport()
     * Description of your implementation: I firstly wrote the code of removing an element from the AVLTree. Recursion is used here, with the use of helper recur method `removeRec()`. In this method, it first considers the extreme case where the tree is empty. Then if then key to delete is less than the current node's value, it travers to left, same case for greater than. If the two values are equal, it is furtherly divided into 3 cases. If the node to dele have no child, have one child, and have 2 childs. The most tricky part is the 2 childs case. You need to find the ascending child using while loop and manages the childs of the ascending node, and then replace it back to the deleted node. We also need to consider height update and tree rebalancing. Then in the ReportAdapter class, If you click on the deletion button, the report get removed from the list of array adapter used for showing the report items, using method called `deleteReport()`, and then pass the `reportId` to the MainActivity to delete the report from the tree using `Observer` design pattern.  <br>
 
-<hr>
-
-Feature Category: Greater Data Usage, Handling and Sophistication <br>
-4. [Data-GPS]. Description of the feature  (easy)
+5. [Data-GPS]. Description of the feature  (easy)
     * Code: [Class ReportActivity, methods checkLocationPermissionAndSubmit, getLocationAnSubmitReport, onRequestPermissionResult](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/2d09ad6910cb2804f4cf5dc737e07f647ba9898c/app/src/main/java/com/example/prototype/report/ReportActivity.java)
     * Description of your implementation: This feature automatically gets the user's location using the GPS when submitting the report, removing the need for manual entry. After getting the GPS coordinates, I then implemented a reverse geocoding process to convert the coordinates into a street address, which is included in the report submission. This feature improves the accuracy and ease of reporting, while also providing detailed location to the relevant authorities.
       <br>
