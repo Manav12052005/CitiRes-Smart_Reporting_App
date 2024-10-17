@@ -82,7 +82,23 @@ Note that the core criteria of contribution is based on `code contribution` (the
 
 2. **UID2, Name2**  I have xx% contribution, as follows: <br>
   - ...
+3. **U7782814, Amogh Agarwal**  I have 20% contribution, as follows: <br>
+- **Code Contribution in the final App**
+    - Report Submission Feature - class ReportActivity: [ReportActivity.java](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/411f230b8c6fff7d70fc1481b2cca36973f0a122/app/src/main/java/com/example/prototype/report/ReportActivity.java)
+    - Data Analysis and Graph Generation - class ReportAnalyzer: [ReportAnalyzer.java](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/411f230b8c6fff7d70fc1481b2cca36973f0a122/app/src/main/java/com/example/prototype/chart/ReportAnalyzer.java)
+    - Report Deletion UI Feedback - class ReportAdapter: [ReportAdapter.java](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/e660597bd3b42e5b9412a2b4ce5e2a7121715609/app/src/main/java/com/example/prototype/report/ReportAdapter.java)
+    - Assisted other members in various features and code implementation in the app <br><br>
+  
+- **Code and App Design**
+    - Proposed and implemented the ReportActivity, handling the report submission process, including GPS location retrieval and scheduling report submissions.
+    - Proposed and implemented the ReportAnalyzer class for analyzing report data, generating insights for chart displays.
+    - Collaborated with the team in app design, including UI feedback elements and GPS integration for the ReportActivity.* <br><br>
 
+- **Others**: (only if significant and significantly different from an "average contribution")
+    - Created simple UML diagrams for the app, since the other member was unable to initally make it due to other tasks.
+    - Wrote the initial drafts of the conflict resolution plan and contributed to the final draft as well.
+    - Developed the control flow graph for one of the core features.
+    - Contributed significantly to writing the report, ensuring that all contributions and team efforts were documented accurately.
 
 
 ## Application Description
@@ -103,71 +119,43 @@ Note that the core criteria of contribution is based on `code contribution` (the
 *[Provide use cases and examples of people using your application. Who are the target users of your application? How do the users use your application?]*
 
 Citizen Reporting
-Scenario 1: Reporting a Pothole
-User: City Resident (e.g., John)
-Precondition: John is driving and encounters a pothole on the road.
-Action:
-John opens the app on his mobile device.
-He selects "Add Report" and chooses the "Infrastructure" category.
-The GPS feature auto-captures his current location.
-He adds additional details about the pothole and submits the report.
-UI Feedback: A toast message displays: "Report Submitted Successfully!" confirming the action.
-Outcome: The pothole is logged, and the city’s infrastructure department is notified.
+Target Users: The target users for this app are the citizens of a city. Below are a few example cases for the use of the application.
+
+    Scenario 1: Reporting a Pothole
+    User: City Resident (e.g., John)
+    Precondition: John is driving and encounters a pothole on the road.
+    Action:John opens the app on his mobile device. He selects "Add Report" and chooses the "Infrastructure" category. The GPS feature auto-captures his current location. He adds additional details about the pothole and submits the report.
+    UI Feedback: A toast message displays: "Report Submitted Successfully!" confirming the action.
+    Outcome: The pothole is logged, and the city’s infrastructure department is notified.
 
 
-Scenario 2: Reporting an Emergency (Fire Incident)
-User: City Resident (e.g., Mark)
+    Scenario 2: Reporting an Emergency (Fire Incident)
+    User: City Resident (e.g., Mark)
+    Precondition: Mark witnesses a fire at a nearby building.
+    Action: Mark opens the app in an urgent situation and selects "Add Report." He categorizes the report under "Environmental" or "Infrastructure," depending on the situation. Mark sets the report priority to "HIGH" to indicate the emergency. The GPS feature automatically captures Mark's current location for accurate reporting. Mark adds details about the fire and submits the report.
+    UI Feedback: A toast message displays: "High-Priority Report Submitted! Authorities have been notified."
+    Outcome: The report is flagged as a high-priority issue, and the relevant authorities (e.g., fire department) are alerted to respond based on the GPS location and details provided. The authorities receive the report as a high-priority case, enabling them to respond promptly to the emergency situation.
 
-Precondition: Mark witnesses a fire at a nearby building.
+    Scenario 3: Submitting a GPS-Based Report
+    User: City Resident (e.g., Alice)
+    Precondition: Alice notices a broken streetlight on her evening walk.
+    Action: Alice opens the app and selects "Add Report." The GPS system captures her exact location. She chooses the "Maintenance" category and submits the report. UI Feedback: A toast message displays: "Task added Successfully."Outcome: The report is stored with precise location data, allowing for easy dispatch of a repair team.
 
-Action:
+    Scenario 4: Deleting a Report
+    User: City Resident (e.g., Sarah)
+    Precondition: Sarah has previously submitted a report that she now wants to remove because the issue has been resolved.
+    Action: Sarah opens the app and navigates to her submitted reports. She selects the report that she wants to delete. Sarah taps the "Delete Report" button. A confirmation dialog appears, asking if she is sure she wants to delete the report. Sarah confirms the deletion.
+    UI Feedback: A toast message displays: "Report deleted successfully."
+    Outcome: The selected report is removed from the app's database and no longer appears in any report listings.
+    Postcondition: The report is permanently deleted from the system, and any linked data (e.g., charts, statistics) is updated to reflect the removal.
 
-Mark opens the app in an urgent situation and selects "Add Report."
-He categorizes the report under "Environmental" or "Infrastructure," depending on the situation.
-Mark sets the report priority to "HIGH" to indicate the emergency.
-The GPS feature automatically captures Mark's current location for accurate reporting.
-Mark adds details about the fire and submits the report.
-UI Feedback: A toast message displays: "High-Priority Report Submitted! Authorities have been notified."
-
-Outcome: The report is flagged as a high-priority issue, and the relevant authorities 
-(e.g., fire department) are alerted to respond based on the GPS location and details provided. 
-The authorities receive the report as a high-priority case, enabling them to respond promptly to 
-the emergency situation.
-
-Scenario 3: Submitting a GPS-Based Report
-User: City Resident (e.g., Alice)
-Precondition: Alice notices a broken streetlight on her evening walk.
-Action:
-Alice opens the app and selects "Add Report."
-The GPS system captures her exact location.
-She chooses the "Maintenance" category and submits the report.
-UI Feedback: A toast message displays: "Task added Successfully."
-Outcome: The report is stored with precise location data, allowing for easy dispatch of a repair team.
-
-Scenario 4: Deleting a Report
-User: City Resident (e.g., Sarah)
-Precondition: Sarah has previously submitted a report that she now wants to remove because the issue has been resolved.
-Action:
-Sarah opens the app and navigates to her submitted reports.
-She selects the report that she wants to delete.
-Sarah taps the "Delete Report" button.
-A confirmation dialog appears, asking if she is sure she wants to delete the report.
-Sarah confirms the deletion.
-UI Feedback: A toast message displays: "Report deleted successfully."
-Outcome: The selected report is removed from the app's database and no longer appears in any report listings.
-Postcondition: The report is permanently deleted from the system, and any linked data (e.g., charts, statistics) is updated to reflect the removal.
-
-Scenario 5: Scheduling a Report Deletion
-User: City Resident (e.g., John)
-Precondition: John has submitted a report but knows the issue will be resolved in the future and prefers to schedule the deletion in advance.
-Action:
-John opens the app and navigates to his list of submitted reports.
-He selects the report that he wants to delete at a future date.
-John chooses the "Schedule Delete" option and selects a future date and time when the report should be deleted.
-The app confirms that the deletion is scheduled.
-UI Feedback: A toast message displays: "Report deleted successfully" when the report is deleted.
-Outcome: The app will automatically delete the report at the specified time.
-Postcondition: The report will be deleted at the scheduled time, and the app will update all related data and statistics to reflect the deletion.
+    Scenario 5: Scheduling a Report Deletion
+    User: City Resident (e.g., John)
+    Precondition: John has submitted a report but knows the issue will be resolved in the future and prefers to schedule the deletion in advance.
+    Action: John opens the app and navigates to his list of submitted reports. He selects the report that he wants to delete at a future date. John chooses the "Schedule Delete" option and selects a future date and time when the report should be deleted. The app confirms that the deletion is scheduled.
+    UI Feedback: A toast message displays: "Report deleted successfully" when the report is deleted.
+    Outcome: The app will automatically delete the report at the specified time.
+    Postcondition: The report will be deleted at the scheduled time, and the app will update all related data and statistics to reflect the deletion.
 
 
 ### Application UML
@@ -363,10 +351,10 @@ also made the UI interface uniform in terms of Layout.
 
 
 6. [UI Feedback]. Description of the feature ... (easy)
-    * Code: [Class BaseActivity, method onCreate,(https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/b98c45c8d17d8fefb6b2c1463ec23ecb1082342f/app/src/main/java/com/example/prototype/util/BaseActivity.java)] 
-    * Code: [Class ReportActivity, method onCreate,(https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/b98c45c8d17d8fefb6b2c1463ec23ecb1082342f/app/src/main/java/com/example/prototype/report/ReportActivity.java) ]
-    * Code: [Class ReportAdapter, method getView,(https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/b98c45c8d17d8fefb6b2c1463ec23ecb1082342f/app/src/main/java/com/example/prototype/report/ReportAdapter.java)]
-    * Code: [Class MainActivity, method onCreate,(https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/b98c45c8d17d8fefb6b2c1463ec23ecb1082342f/app/src/main/java/com/example/prototype/report/MainActivity.java)]
+    * Code: [Class BaseActivity, method onCreate](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/b98c45c8d17d8fefb6b2c1463ec23ecb1082342f/app/src/main/java/com/example/prototype/util/BaseActivity.java)
+    * Code: [Class ReportActivity, method onCreate](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/b98c45c8d17d8fefb6b2c1463ec23ecb1082342f/app/src/main/java/com/example/prototype/report/ReportActivity.java) 
+    * Code: [Class ReportAdapter, method getView](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/b98c45c8d17d8fefb6b2c1463ec23ecb1082342f/app/src/main/java/com/example/prototype/report/ReportAdapter.java)
+    * Code: [Class MainActivity, method onCreate](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/b98c45c8d17d8fefb6b2c1463ec23ecb1082342f/app/src/main/java/com/example/prototype/report/MainActivity.java)
     * Description of feature: The UI feedback feature provides real-time notifications and visual feedback to the user to enhance their experience when interacting within the app, such as navigating between activities, selecting options, liking/unliking reports, adding reports, or deleting them.
     * Description of your implementation: BaseActivity: Toast notifications provide feedback when users interact with navigation buttons (menuDashboard and menuReports), confirming their actions to enhance the responsiveness of the app.
     * Description of your implementation:ReportActivity: In this activity, toast messages confirm the selection of categories and priorities from the dropdowns, providing immediate feedback on user choices. Additionally, when submitting a report, a toast notification appears to confirm that the action was successful.
@@ -409,7 +397,7 @@ Feature Category: Firebase Integration <br>
 Feature Category: Greater Data Usage, Handling and Sophistication <br>
 4. [Data-GPS]. Description of the feature  (easy)
    * Code: [Class ReportActivity, methods checkLocationPermissionAndSubmit, getLocationAnSubmitReport, onRequestPermissionResult](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/2d09ad6910cb2804f4cf5dc737e07f647ba9898c/app/src/main/java/com/example/prototype/report/ReportActivity.java)
-   * Description of your implementation: I wrote this feature to get the location of the user when submitting a report. This means that the user does not have to manually type the address. As a result, we can use the GPS for an accurate location which could be shared with the relevant authorities to identify the location of the problem and fix easily.  <br>
+   * Description of your implementation: This feature automatically retrieves the user's current location using GPS when submitting a report, eliminating the need for manual entry of the address. By obtaining the GPS coordinates (latitude and longitude), we ensure that the reported location is precise, which is crucial for efficiently addressing the issue. I then implemented a reverse geocoding process to convert these coordinates into a street address, which is included in the report submission. This feature improves the accuracy and ease of reporting, while also providing detailed location information to the relevant authorities for quicker resolution.  <br>
      <br>
 
 ### Surprise Feature
@@ -491,14 +479,12 @@ To resolve these issues, I refactored the code to use a Factory Design Pattern:
     - Code: [ReportAnalyzerTest , entire file](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/816e13112c10e701a0fbe44e41dbabcba3ed5ee6/app/src/test/java/com/example/prototype/ReportAnalyzerTest.java) for the [ReportAnalyzer, entire file](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/816e13112c10e701a0fbe44e41dbabcba3ed5ee6/app/src/main/java/com/example/prototype/chart/ReportAnalyzer.java)
     - *Number of test cases: 5*
     - *Code coverage: 100%*
-    - *Types of tests created and descriptions:
-      testGetPriorityCounts: Tests whether the method getPriorityCounts() correctly calculates the number of reports for each priority level (LOW, MIDDLE, HIGH) based on the input list of reports. It also verifies handling of edge cases like null or empty report lists.
-      testGetCategoryCounts: Verifies that the getCategoryCounts() method returns the correct counts for each report category (e.g., Maintenance, Environmental, Infrastructure), including when the report list is empty.
-      testGetLocationCounts: Ensures that the getLocationCounts() method accurately calculates the number of reports for each location and handles edge cases like null or empty locations.
-      testEmptyReports: Confirms that the methods for getting priority, category, and location counts return zero for all values when given an empty report list.
-      testReportsWithNullValues: Tests how the methods handle reports with null fields (like priority, category, or location) and ensures the correct data is still processed while null values are ignored.*
-
-...
+    - * Types of tests created and descriptions: The test suite verifies the methods for retrieving report counts by priority, category, and location. It includes checks for correct counts, handling of null values, and edge cases like empty report lists. Specifically:
+        1.  testGetPriorityCounts: Ensures that the method getPriorityCounts() calculates the correct counts for each priority level (LOW, MIDDLE, HIGH).
+        2.  testGetCategoryCounts: Verifies that getCategoryCounts() returns accurate counts for each report category, including Maintenance, Environmental, and Infrastructure.
+        3.  testGetLocationCounts: Confirms that getLocationCounts() correctly tracks report counts for various locations.
+        4.  testEmptyReports: Tests all methods with empty reports, ensuring that zero counts are returned for all priority, category, and location queries.
+        5.  testReportsWithNullValues: Checks that reports with null values for priority, category, or location are handled properly, ensuring null values are ignored and valid fields are still processed correctly.
 
 <br> <hr>
 
