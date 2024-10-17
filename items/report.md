@@ -360,6 +360,18 @@ also made the UI interface uniform in terms of Layout.
       * Colour Scheme : Black and White (Minimalistic)
       * UI Element Style : IOS 17 Filled Icons <br>
    * Description of your implementation: Maintaining a consistent design language and structure throughout without creating huge duplicate amounts of code was a challenge to us in the start of the project. This challenge was overcome by deciding to implement a foundational activity page that would display other activities as secondary content within the layout screen. This was implemented in BaseActivity which serves as the primary content view whose properties are inherited by every other activity. It incorporates features for navigation to different pages of the app as well as a fixed standard layout window which ensures that the size of the displayed activity is the same everytime without the need for explicit instruction. This helped us keep the design language consistent along with the usage of uniform UI features. <br>
+
+
+6. [UI Feedback]. Description of the feature ... (easy)
+    * Code: [Class BaseActivity, method onCreate,(https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/b98c45c8d17d8fefb6b2c1463ec23ecb1082342f/app/src/main/java/com/example/prototype/util/BaseActivity.java)] 
+    * Code: [Class ReportActivity, method onCreate,(https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/b98c45c8d17d8fefb6b2c1463ec23ecb1082342f/app/src/main/java/com/example/prototype/report/ReportActivity.java) ]
+    * Code: [Class ReportAdapter, method getView,(https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/b98c45c8d17d8fefb6b2c1463ec23ecb1082342f/app/src/main/java/com/example/prototype/report/ReportAdapter.java)]
+    * Code: [Class MainActivity, method onCreate,(https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/b98c45c8d17d8fefb6b2c1463ec23ecb1082342f/app/src/main/java/com/example/prototype/report/MainActivity.java)]
+    * Description of feature: The UI feedback feature provides real-time notifications and visual feedback to the user to enhance their experience when interacting within the app, such as navigating between activities, selecting options, liking/unliking reports, adding reports, or deleting them.
+    * Description of your implementation: BaseActivity: Toast notifications provide feedback when users interact with navigation buttons (menuDashboard and menuReports), confirming their actions to enhance the responsiveness of the app.
+    * Description of your implementation:ReportActivity: In this activity, toast messages confirm the selection of categories and priorities from the dropdowns, providing immediate feedback on user choices. Additionally, when submitting a report, a toast notification appears to confirm that the action was successful.
+    * Description of your implementation:ReportAdapter: This class provides feedback when users like or unlike reports, with the heart icon changing state immediately to reflect the action. A confirmation dialog is also used when deleting a report, giving users the option to delete immediately or schedule the deletion, improving interaction clarity.
+    * Description of your implementation:MainActivity: Upon adding a new report, the report list is immediately updated, and the user is notified with a toast, while the report count is also updated to reflect the latest changes, ensuring the interface remains responsive and up-to-date with user actions.
 <br>
 
 ### Custom Features
