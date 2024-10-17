@@ -15,7 +15,10 @@ import com.example.prototype.search.Tokenizer;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Test for search function
+ * @author Harry Xia u7556816
+ */
 public class ReportSearchTest {
 
     private List<Report> reportList;
