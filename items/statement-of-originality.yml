@@ -81,6 +81,8 @@ assets:
   and passing data as intent to display graphs. (Methods in ReportAnalyzer)] - Manav>
   - <Base Activity, the design choice to have a foundational activity always visible was taken and implemented with
     the help of ChatGPT - Manav>
+  - I used ChatGPT for the implementation of Spinners and GPS function in the ReportActivity class since I was not able to work them out myself - Amogh
+  - I have also used ChatGPT for the ReportAnalyzerTest cases since I was not sure about the edge cases as to why the tests were failing. With the use of ChatGPT, I also debugged the code - Amogh
 
 4. How long did it take to complete this assignment (approximately, in hours)?
   - <100> hours
@@ -91,8 +93,8 @@ assets:
 members:
   - name: Manav Singh
     uid: u7782612
-  - name:
-    uid:
+  - name: Amogh Agarwal
+    uid: u7782814
   - name:
     uid:
   - name:
