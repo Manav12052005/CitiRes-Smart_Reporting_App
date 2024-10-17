@@ -330,20 +330,22 @@ also made the UI interface uniform in terms of Layout.
 
 2. [DataFiles]. Description of the feature ... (easy)
    * Code to the Data File [reports_dataset.json](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/4211a2b73d3609ae153915b5ea24e70b69bb785c/report_dataset_generator/generate_reports.py).
+
+3. [Search] (medium)  
+   * Code:[Class: Parser](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/search/Parser.java), [Class: Tokenizer](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/search/Tokenizer.java),
+   [Method: setupSearchView()](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/report/MainActivity.java#L190-208), [Method: refreshDisplayedList()](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/report/MainActivity.java#L218-235)
+   * Description of feature: The search feature allows users to perform complex searches on the reports. Users can enter queries using key-value pairs to filter specific attributes (e.g., location:Main St, priority:high) and general keywords to search across all attributes (e.g., pothole). The app processes these queries and displays reports that match the search criteria.<br>
+   * Description of your implementation: The implementation uses a two-step process involving tokenization and parsing.   
+   1. Tokenizer: The Tokenizer class handles the preprocessing of the user's input query. It removes special characters (except the colon : used in key-value pairs), converts the input to lower case for case-insensitive matching, and splits the input into tokens based on whitespace. It distinguishes between key-value tokens (containing a colon) and general tokens.  
+   2. Parser:  The Parser class interprets the tokens and applies appropriate filters to the list of reports. It separates the tokens into key-value pairs and general tokens.  
+      For key-value pairs, the parser matches the key to specific report attributes (such as description, location, priority, category, user, and likes). It filters the reports by comparing the attribute's value to the provided value, supporting partial matches for strings and exact matches for numerical fields like likes.  
+      Edge cases are handled gracefully. For example, if an invalid key is provided, the parser ignores it and continues processing the rest of the query. If a non-numeric value is provided for a numeric field like likes, the parser catches the exception and continues without filtering by that criterion.  
+      For general tokens, the parser searches across multiple report attributes, including description, location, category, priority, user, and likes. It includes reports where any of these attributes contain the general token.<br>
+   <br>
+   
    * Description of feature: Our dataset is stored in a json file in the folder report_dataset_generator. This feature is intended to have a dataset consisting of 2500 instances of our primary data which is reports. A comprehensive dataset of this size and variety allows for robust and accurate testing of the core functionalities in our application (Such as Searching, Sorting and Data Visualisation). It simulates a real-world scenario wherin an app will have a diverse variety of user-inputs and should be able to handle large volues of data efficiently. <br>
    * Description of our implementation: We used a python script to create 2500 instances of report which are our main data files. It uses the random function to generate reports from pre-defined data pools for fields - location, category, priority, users, date, time and likes to ensure a large diversity in the dataset. For each report, a unique integer id is attached. Each report is saved as a dictionary and added to a list, which is ultimately serialised into a formatted JSON file reports_dataset.json. <br>
-
-3. [Search] (medium)
-    * Code:[Class: Parser](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/search/Parser.java), [Class: Tokenizer](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/search/Tokenizer.java),
-      [Method: setupSearchView()](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/report/MainActivity.java#L190-208), [Method: refreshDisplayedList()](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/report/MainActivity.java#L218-235)
-    * Description of feature: The search feature allows users to perform complex searches on the reports. Users can enter queries using key-value pairs to filter specific attributes (e.g., location:Main St, priority:high) and general keywords to search across all attributes (e.g., pothole). The app processes these queries and displays reports that match the search criteria.<br>
-    * Description of your implementation: The implementation uses a two-step process involving tokenization and parsing.
-    1. Tokenizer: The Tokenizer class handles the preprocessing of the user's input query. It removes special characters (except the colon : used in key-value pairs), converts the input to lower case for case-insensitive matching, and splits the input into tokens based on whitespace. It distinguishes between key-value tokens (containing a colon) and general tokens.
-    2. Parser:  The Parser class interprets the tokens and applies appropriate filters to the list of reports. It separates the tokens into key-value pairs and general tokens.  
-       For key-value pairs, the parser matches the key to specific report attributes (such as description, location, priority, category, user, and likes). It filters the reports by comparing the attribute's value to the provided value, supporting partial matches for strings and exact matches for numerical fields like likes.  
-       Edge cases are handled gracefully. For example, if an invalid key is provided, the parser ignores it and continues processing the rest of the query. If a non-numeric value is provided for a numeric field like likes, the parser catches the exception and continues without filtering by that criterion.  
-       For general tokens, the parser searches across multiple report attributes, including description, location, category, priority, user, and likes. It includes reports where any of these attributes contain the general token.<br>
-       <br>
+   
 4. [LoadShowData]. Description of the feature ... (easy) 
     * Code: [Class MainActivity, method loadData()](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/util/JsonDeserialiser.java?ref_type=heads)
     * Code: [Class ReportAdapter, method getView()](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/util/JsonDeserialiser.java?ref_type=heads)
@@ -393,11 +395,7 @@ Feature Category: Data <br>
    * Description of your implementation: ... <br>
      <br>
 3. [Search-Filter] (easy)
-    * Code: [Class MainActivity; methods setupSearchView](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/report/MainActivity.java#L190-208)
-    * Code: [Class MainActivity; methods setupSortSpinner](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/report/MainActivity.java#L164-188)
-    * Code: [Class MainActivity; methods refreshDisplayedList](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/report/MainActivity.java#L218-235)
-    * Code: [Class MainActivity; methods sortReports](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/report/MainActivity.java#L237-240)
-    * Code: [Class MainActivity; methods updateStreamState](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/report/MainActivity.java#L210-216)
+    * Code: Class MainActivity; methods setupSearchView, setupSortSpinner, refreshDisplayedList, sortReports, updateStreamState; UI components SearchView, Spinner.
     * Description of feature: The Search-Filter feature allows users to search and filter reports using appropriate UI components. Users can enter search queries to filter reports based on specific criteria and sort the resulting list using various sorting options.
     * Description of your implementation:
         1. The implementation integrates both search and sort functionalities within the MainActivity class, utilizing UI components such as `SearchView` and `Spinner` to provide an interactive interface.
@@ -486,25 +484,11 @@ Overall, this licence strikes a decent compromise between encouraging the develo
 *Here is an example:*
 
 1. Tests for Search
-   - Code: [ReportSearchTest](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/test/java/com/example/prototype/ReportSearchTest.java) for the [Parser class](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/search/Parser.java) and [Tokenizer class](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/search/Tokenizer.java)
-   - *Number of test cases: 16*
-   - *Code coverage: 90%*
-   - *Types of tests created and descriptions: testSearchByDescription: Verifies that searching by the description attribute returns the correct report.
-     testSearchByLocation: Ensures that searching by location filters reports accurately.
-     testSearchByPriority: Confirms that searching by priority retrieves reports with the specified priority level.
-     testSearchByCategory: Checks that searching by category returns the appropriate report.
-     testSearchByUser: Validates that searching by user filters reports submitted by the specified user.
-     testSearchByLikes: Tests that searching by likes returns reports with the exact number of likes.
-     testSearchGeneralToken: Ensures that general search terms filter reports across multiple attributes.
-     testSearchMultipleTokens: Verifies that combining key-value pairs with general tokens filters reports based on all provided criteria.
-     testPartialMatches: Confirms that partial keyword matches successfully retrieve relevant reports.*
-   - Edge Case Tests: testEmptyQuery: Checks that an empty search query returns all available reports.
-     testInvalidKey: Ensures that using an invalid key in the search query does not filter out any reports.
-     testNoResults: Confirms that a search query with no matching reports returns an empty list.
-     testSpecialCharacters: Validates that search queries containing special characters are handled gracefully.
-     testCaseInsensitivity: Tests that the search functionality is case-insensitive.
-     testInvalidLikesValue: Ensures that providing a non-numeric value for likes does not cause the search to fail.
-     testMultipleKeyValuePairs: Verifies that multiple key-value pairs in a search query correctly filter reports based on all specified criteria.
+   - Code: [TokenizerTest Class, entire file](https://gitlab.cecs.anu.edu.au/comp2100/group-project/ga-23s2/-/blob/main/items/media/_examples/Dummy.java) for the [Tokenizer Class, entire file](https://gitlab.cecs.anu.edu.au/comp2100/group-project/ga-23s2/-/blob/main/items/media/_examples/Dummy.java#L22-43)
+   - *Number of test cases: ...*
+   - *Code coverage: ...*
+   - *Types of tests created and descriptions: ...*
+
 2. Tests for tree's behaviour.
     - Code: [AVLTreeTest Class, entire file](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/test/java/com/example/prototype/AVLTreeTest.java?ref_type=heads) for the [AVLTree Class, entire file](https://gitlab.cecs.anu.edu.au/comp2100/group-project/ga-23s2/-/blob/main/items/media/_examples/Dummy.java#L22-43)
    - *Number of test cases: 13*
