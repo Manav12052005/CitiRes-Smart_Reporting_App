@@ -4,7 +4,12 @@ import com.example.prototype.entity.Report;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * The parser class is responsible for interpreting user search queries.
+ * It separates the input into key-value pairs and general tokens, then applies
+ * corresponding filters to the list .
+ * @author Harry Xia u7556816
+ */
 public class Parser {
 
     public static List<Report> parseWithGrammar(List<String> tokens, List<Report> reports) {

@@ -21,6 +21,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Test for sort and filter function
+ * @author Harry Xia u7556816
+ */
 public class ReportSortTest {
 
     private List<Report> reportList;

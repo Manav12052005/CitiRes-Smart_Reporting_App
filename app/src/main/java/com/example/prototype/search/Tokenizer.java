@@ -4,7 +4,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-
+/**
+ * The Tokenizer class ensures that the input is standardized
+ * by removing special characters and splitting
+ * the input based on spaces.
+ * @author Harry Xia u7556816
+ */
 public class Tokenizer {
     // Matches any character that is not a letter, number, or colon
     private static final Pattern NON_WORD_PATTERN = Pattern.compile("[^\\p{L}\\p{N}:]+");
