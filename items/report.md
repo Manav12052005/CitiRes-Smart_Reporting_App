@@ -487,6 +487,16 @@ To resolve these issues, I refactored the code to use a Factory Design Pattern:
     - *Number of test cases: 4*
     - *Code coverage: 80%*
     - *Types of tests created and descriptions: Including setup test, test 2 instances are the same on empty tree and on non-empty tree, after the tree has added or removed some elements. *
+6. Tests for Report Graphs
+    - Code: [ReportAnalyzerTest , entire file](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/816e13112c10e701a0fbe44e41dbabcba3ed5ee6/app/src/test/java/com/example/prototype/ReportAnalyzerTest.java) for the [ReportAnalyzer, entire file](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/816e13112c10e701a0fbe44e41dbabcba3ed5ee6/app/src/main/java/com/example/prototype/chart/ReportAnalyzer.java)
+    - *Number of test cases: 5*
+    - *Code coverage: 100%*
+    - *Types of tests created and descriptions:
+      testGetPriorityCounts: Tests whether the method getPriorityCounts() correctly calculates the number of reports for each priority level (LOW, MIDDLE, HIGH) based on the input list of reports. It also verifies handling of edge cases like null or empty report lists.
+      testGetCategoryCounts: Verifies that the getCategoryCounts() method returns the correct counts for each report category (e.g., Maintenance, Environmental, Infrastructure), including when the report list is empty.
+      testGetLocationCounts: Ensures that the getLocationCounts() method accurately calculates the number of reports for each location and handles edge cases like null or empty locations.
+      testEmptyReports: Confirms that the methods for getting priority, category, and location counts return zero for all values when given an empty report list.
+      testReportsWithNullValues: Tests how the methods handle reports with null fields (like priority, category, or location) and ensures the correct data is still processed while null values are ignored.*
 
 ...
 
