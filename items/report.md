@@ -542,5 +542,3 @@ This shall include an agreed procedure for situations including (but not limited
 - A member didn't complete the assigned task which should've been completed before the checkpoint, and the checkpoint is approaching.
 - A member is unreachable (didn't respond messages in your agreed communication channels and emails in two days).
 - The team have different understandings toward the requirement of the assignment.
-
-
