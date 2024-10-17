@@ -32,10 +32,10 @@ Note that you should have removed ALL TEMPLATE/INSTRUCTION textes in your submis
 *Instruction: please place the CORRECT link to your firebase repository here (with comp21006442@gmail.com added as an Editor)*
 
 - Firebase Repository Link: <I do not use Firebase> // TODO
-   - Confirm: [ ] I have already added comp21006442@gmail.com as a Editor to the Firebase project prior to due date.
+    - Confirm: [ ] I have already added comp21006442@gmail.com as a Editor to the Firebase project prior to due date.
 - Two user accounts for markers' access are usable on the app's APK (do not change the username and password unless there are exceptional circumstances. Note that they are not real e-mail addresses in use):
-   - Username: comp2100@anu.edu.au	Password: comp2100 [ x ] // TODO: check if done
-   - Username: comp6442@anu.edu.au	Password: comp6442 [ x ] // TODO: check if done
+    - Username: comp2100@anu.edu.au	Password: comp2100 [ x ] // TODO: check if done
+    - Username: comp6442@anu.edu.au	Password: comp6442 [ x ] // TODO: check if done
 
 ## Team Members and Roles
 The key area(s) of responsibilities for each member
@@ -67,21 +67,21 @@ Note that the core criteria of contribution is based on `code contribution` (the
 *Here is an example: (Note that you should remove the entire section (e.g. "others") if it is not applicable)*
 
 1. **UID1, Name1**  I have 30% contribution, as follows: <br>
-  - **Code Contribution in the final App**
+- **Code Contribution in the final App**
     - Feature A1, A2, A3 - class Dummy: [Dummy.java](https://gitlab.cecs.anu.edu.au/comp2100/group-project/ga-23s2/-/blob/main/items/media/_examples/Dummy.java)
     - XYZ Design Pattern -  class AnotherClass: [functionOne()](https://gitlab.cecs.anu.edu.au/comp2100/group-project/ga-23s2/-/blob/main/items/media/_examples/Dummy.java#L22-43), [function2()](the-URL)
     - ... (any other contribution in the code, including UI and data files) ... [Student class](../src/path/to/class/Student.java), ..., etc.*, [LanguageTranslator class](../src/path/to/class/LanguageTranslator.java): function1(), function2(), ... <br><br>
 
-  - **Code and App Design** 
+- **Code and App Design**
     - [What design patterns, data structures, did the involved member propose?]*
     - [UI Design. Specify what design did the involved member propose? What tools were used for the design?]* <br><br>
 
-  - **Others**: (only if significant and significantly different from an "average contribution") 
+- **Others**: (only if significant and significantly different from an "average contribution")
     - [Report Writing?] [Slides preparation?]*
     - [You are welcome to provide anything that you consider as a contribution to the project or team.] e.g., APK, setups, firebase* <br><br>
 
 2. **UID2, Name2**  I have xx% contribution, as follows: <br>
-  - ...
+- ...
 
 
 
@@ -129,9 +129,9 @@ The GPS feature automatically captures Mark's current location for accurate repo
 Mark adds details about the fire and submits the report.
 UI Feedback: A toast message displays: "High-Priority Report Submitted! Authorities have been notified."
 
-Outcome: The report is flagged as a high-priority issue, and the relevant authorities 
-(e.g., fire department) are alerted to respond based on the GPS location and details provided. 
-The authorities receive the report as a high-priority case, enabling them to respond promptly to 
+Outcome: The report is flagged as a high-priority issue, and the relevant authorities
+(e.g., fire department) are alerted to respond based on the GPS location and details provided.
+The authorities receive the report as a high-priority case, enabling them to respond promptly to
 the emergency situation.
 
 Scenario 3: Submitting a GPS-Based Report
@@ -257,19 +257,19 @@ Here is a partial (short) example for the subsection `Data Structures`:*
 *[What design patterns did your team utilise? Where and why?]*
 
 1. Singleton Pattern
-   * *Objective: Assures that a class is produced just once and offers a global point of access to that one instance.*
-   * Code Locations: Class Authenticator: Throughout the app's lifetime, just one instance of Authenticator is produced thanks to the getInstance() method.
-   * *Reasons:When we desire a single source of truth for the authentication logic used throughout the application, such as with Authenticator, we use singletons to govern the creation of objects.*
+    * *Objective: Assures that a class is produced just once and offers a global point of access to that one instance.*
+    * Code Locations: Class Authenticator: Throughout the app's lifetime, just one instance of Authenticator is produced thanks to the getInstance() method.
+    * *Reasons:When we desire a single source of truth for the authentication logic used throughout the application, such as with Authenticator, we use singletons to govern the creation of objects.*
 
-   * *Code Locations: Class DataHolder: Here, the singleton design pattern is used to maintain a single instance of the AVL tree throughout the program.*
-   * *Reasons: Here,The Singleton pattern ensures that report instances are loaded into the AVL tree only once, maintaining consistent access and avoiding duplication throughout the application.*
+    * *Code Locations: Class DataHolder: Here, the singleton design pattern is used to maintain a single instance of the AVL tree throughout the program.*
+    * *Reasons: Here,The Singleton pattern ensures that report instances are loaded into the AVL tree only once, maintaining consistent access and avoiding duplication throughout the application.*
 
 2. Observer Pattern
     * *Objective: Enables an object (subject) to communicate any changes in state to its dependents (observers), usually in a decoupled fashion.*
     * *Code Locations: MainActivity implements Observer interface: This pattern allows MainActivity to observe and respond to data changes or events, such as when a report is added or removed, or when sorting is updated, from other activities.*
     * *Reasons:The observer design helps to maintain the user interface current with modifications to the data (e.g., when report data changes in MainActivity).*
-  3. Factory Pattern
-     *is developped as a surprise feature.*
+3. Factory Pattern
+   *is developped as a surprise feature.*
 
 <hr>
 
@@ -280,7 +280,7 @@ There are two main types of grammars in this implementation:
    "KeyValueToken = key : value"  
    example: "location:Main St", "priority:high"
 2. General Token Grammar: Represents general search terms that apply to any attribute of the reports. These are useful for broad searches where the user is looking for a term that could appear in multiple fields.
-   "GeneralToken = word" 
+   "GeneralToken = word"
    example: "Noise", "Broken"
 ### Tokenizer
 The tokenizer breaks the user input into discrete tokens, identifying both key-value pairs and general tokens. It ensures that the input is standardized by removing special characters and splitting the input based on spaces.
@@ -308,13 +308,13 @@ The parser interprets the tokens generated by the tokenizer and applies them to 
 
 ### Others
 
-A feature we would like to highlight that we implemented was forming a 
-foundational activity - BaseActivity which acts as an Interface for all
+A feature we would like to highlight that we implemented was forming a
+foundational activity - [BaseActivity](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/f6a52c64a740d49233e09fb4476b1a96d191f5c8/app/src/main/java/com/example/prototype/util/BaseActivity.java) which acts as an Interface for all
 the other activities for the application. It lays out the inheriting
 activity as a child view and displays the foundation as the primary
-content. 
-This also integrates a central navigation system which allows for 
-accesibility to other activities. 
+content.
+This also integrates a central navigation system which allows for
+accesibility to other activities.
 
 The purpose of this feature was to have a standard design for every
 page of the application and increase code reusability. It prevented
@@ -330,40 +330,40 @@ also made the UI interface uniform in terms of Layout.
 
 ### Basic Features
 1. [LogIn]. Description of the feature ... (easy)
-   * Code: [Class X, methods Z, Y](https://gitlab.cecs.anu.edu.au/comp2100/group-project/ga-23s2/-/blob/main/items/media/_examples/Dummy.java#L22-43) and Class Y, ...
-   * Description of feature: ... <br>
-   * Description of your implementation: ... <br>
+    * Code: [Class X, methods Z, Y](https://gitlab.cecs.anu.edu.au/comp2100/group-project/ga-23s2/-/blob/main/items/media/_examples/Dummy.java#L22-43) and Class Y, ...
+    * Description of feature: ... <br>
+    * Description of your implementation: ... <br>
 
 2. [DataFiles]. Description of the feature ... (easy)
-   * Code to the Data File [reports_dataset.json](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/4211a2b73d3609ae153915b5ea24e70b69bb785c/report_dataset_generator/generate_reports.py).
-   * Description of feature: Our dataset is stored in a json file in the folder report_dataset_generator. This feature is intended to have a dataset consisting of 2500 instances of our primary data which is reports. A comprehensive dataset of this size and variety allows for robust and accurate testing of the core functionalities in our application (Such as Searching, Sorting and Data Visualisation). It simulates a real-world scenario wherin an app will have a diverse variety of user-inputs and should be able to handle large volues of data efficiently. <br>
-   * Description of our implementation: We used a python script to create 2500 instances of report which are our main data files. It uses the random function to generate reports from pre-defined data pools for fields - location, category, priority, users, date, time and likes to ensure a large diversity in the dataset. For each report, a unique integer id is attached. Each report is saved as a dictionary and added to a list, which is ultimately serialised into a formatted JSON file reports_dataset.json. <br>
-   
-3. [LoadShowData]. Description of the feature ... (easy) 
+    * Code to the Data File [reports_dataset.json](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/4211a2b73d3609ae153915b5ea24e70b69bb785c/report_dataset_generator/generate_reports.py).
+    * Description of feature: Our dataset is stored in a json file in the folder report_dataset_generator. This feature is intended to have a dataset consisting of 2500 instances of our primary data which is reports. A comprehensive dataset of this size and variety allows for robust and accurate testing of the core functionalities in our application (Such as Searching, Sorting and Data Visualisation). It simulates a real-world scenario wherin an app will have a diverse variety of user-inputs and should be able to handle large volues of data efficiently. <br>
+    * Description of our implementation: We used a python script to create 2500 instances of report which are our main data files. It uses the random function to generate reports from pre-defined data pools for fields - location, category, priority, users, date, time and likes to ensure a large diversity in the dataset. For each report, a unique integer id is attached. Each report is saved as a dictionary and added to a list, which is ultimately serialised into a formatted JSON file reports_dataset.json. <br>
+
+3. [LoadShowData]. Description of the feature ... (easy)
     * Code: [Class MainActivity, method loadData()](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/util/JsonDeserialiser.java?ref_type=heads)
     * Code: [Class ReportAdapter, method getView()](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/util/JsonDeserialiser.java?ref_type=heads)
     * Code: [Class AVLTree, the entire file](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/util/JsonDeserialiser.java?ref_type=heads)
     * Code: [Class JsonDeserialiser, the entire file](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/util/JsonDeserialiser.java?ref_type=heads)
     * Description of feature: The AVLTree loads data from json file, converting them into Reports class and store them on the AVLTree, the dashboard displays reports instances onto the dashboard in scrolling order, with each report instance containg all the information about the report.
-   <br>
-   * Description of your implementation: The loadData method reads data from json file in the assets folder and convert into a list of reports. The AVLTree add the reports onto itself, with reportId as its key, and Report class instance as the value. To show the data onto the dashboard, a customized array adapter is used to show the reports onto the dashboard, with relevant information dsiplayed nicely.
+      <br>
+    * Description of your implementation: The loadData method reads data from json file in the assets folder and convert into a list of reports. The AVLTree add the reports onto itself, with reportId as its key, and Report class instance as the value. To show the data onto the dashboard, a customized array adapter is used to show the reports onto the dashboard, with relevant information dsiplayed nicely.
 
 4. [DataStream]. Description of the feature ... (medium)
-   * Code: [Class MainActivity, methods startStreamThread, stopStreamThread, onStart, onStop](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/report/MainActivity.java?ref_type=heads) 
-   * Description of feature: This feature allows the app to automatically add new report instances to the dashboard and store them in the AVL tree at specified time intervals, simulating the behavior of multiple users continuously submitting reports when encountering issues. The data stream process halts whenever the user navigates to another activity or performs a search.<br>
-   * Description of your implementation: A single thread controls the data stream without relying on advanced Android threading techniques. The thread reads data from a JSON file, deserializes it into a list of report instances, and iterates through the list to add each report to the AVL tree for storage. The runOnUiThread method is used to reflect the changes on the dashboard in real time. After adding a report, the thread pauses for a specified interval using Thread.sleep(). If the user switches to another activity or performs a search, the streaming process halts. Upon returning to the main dashboard, the stream resumes from where it left off. The implementation properly handles Android lifecycle events, ensuring the stream starts or resumes when needed and stops appropriately when leaving the MainActivity or interacting with the search bar. <br>
+    * Code: [Class MainActivity, methods startStreamThread, stopStreamThread, onStart, onStop](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/report/MainActivity.java?ref_type=heads)
+    * Description of feature: This feature allows the app to automatically add new report instances to the dashboard and store them in the AVL tree at specified time intervals, simulating the behavior of multiple users continuously submitting reports when encountering issues. The data stream process halts whenever the user navigates to another activity or performs a search.<br>
+    * Description of your implementation: A single thread controls the data stream without relying on advanced Android threading techniques. The thread reads data from a JSON file, deserializes it into a list of report instances, and iterates through the list to add each report to the AVL tree for storage. The runOnUiThread method is used to reflect the changes on the dashboard in real time. After adding a report, the thread pauses for a specified interval using Thread.sleep(). If the user switches to another activity or performs a search, the streaming process halts. Upon returning to the main dashboard, the stream resumes from where it left off. The implementation properly handles Android lifecycle events, ensuring the stream starts or resumes when needed and stops appropriately when leaving the MainActivity or interacting with the search bar. <br>
 
 5. [UXUI] Description of the feature ... (easy)
     * Code: [Layout XML-file : activity_main.xml](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/0dfa6e401f0e1e40998f356b148f66c09a1be5fb/app/src/main/res/layout/activity_main.xml), [Layout XML-file : activity_base.xml](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/0dfa6e401f0e1e40998f356b148f66c09a1be5fb/app/src/main/res/layout/activity_base.xml), [Layout XML-file : activity_login.xml](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/0dfa6e401f0e1e40998f356b148f66c09a1be5fb/app/src/main/res/layout/activity_login.xml)
-   * Description of feature: To maintain a uniform and consistent design language throughout the application, we ensured that the colors, fonts, and UI element styles worked with each other in harmony and made the User visual experience pleasant and enjoyable.
-      * Font Used : Poppins
-      * Colour Scheme : Black and White (Minimalistic)
-      * UI Element Style : IOS 17 Filled Icons <br>
-   * Description of your implementation: Maintaining a consistent design language and structure throughout without creating huge duplicate amounts of code was a challenge to us in the start of the project. This challenge was overcome by deciding to implement a foundational activity page that would display other activities as secondary content within the layout screen. This was implemented in BaseActivity which serves as the primary content view whose properties are inherited by every other activity. It incorporates features for navigation to different pages of the app as well as a fixed standard layout window which ensures that the size of the displayed activity is the same every time without the need for explicit instruction. This helped us keep the design language consistent along with the usage of uniform UI features. <br>
+    * Description of feature: To maintain a uniform and consistent design language throughout the application, we ensured that the colors, fonts, and UI element styles worked with each other in harmony and made the User visual experience pleasant and enjoyable.
+        * Font Used : Poppins
+        * Colour Scheme : Black and White (Minimalistic)
+        * UI Element Style : IOS 17 Filled Icons <br>
+    * Description of your implementation: Maintaining a consistent design language and structure throughout without creating huge duplicate amounts of code was a challenge to us in the start of the project. This challenge was overcome by deciding to implement a foundational activity page that would display other activities as secondary content within the layout screen. This was implemented in BaseActivity which serves as the primary content view whose properties are inherited by every other activity. It incorporates features for navigation to different pages of the app as well as a fixed standard layout window which ensures that the size of the displayed activity is the same every time without the need for explicit instruction. This helped us keep the design language consistent along with the usage of uniform UI features. <br>
 
 
 6. [UI Feedback]. Description of the feature ... (easy)
-    * Code: [Class BaseActivity, method onCreate,(https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/b98c45c8d17d8fefb6b2c1463ec23ecb1082342f/app/src/main/java/com/example/prototype/util/BaseActivity.java)] 
+    * Code: [Class BaseActivity, method onCreate,(https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/b98c45c8d17d8fefb6b2c1463ec23ecb1082342f/app/src/main/java/com/example/prototype/util/BaseActivity.java)]
     * Code: [Class ReportActivity, method onCreate,(https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/b98c45c8d17d8fefb6b2c1463ec23ecb1082342f/app/src/main/java/com/example/prototype/report/ReportActivity.java) ]
     * Code: [Class ReportAdapter, method getView,(https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/b98c45c8d17d8fefb6b2c1463ec23ecb1082342f/app/src/main/java/com/example/prototype/report/ReportAdapter.java)]
     * Code: [Class MainActivity, method onCreate,(https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/b98c45c8d17d8fefb6b2c1463ec23ecb1082342f/app/src/main/java/com/example/prototype/report/MainActivity.java)]
@@ -372,16 +372,16 @@ also made the UI interface uniform in terms of Layout.
     * Description of your implementation:ReportActivity: In this activity, toast messages confirm the selection of categories and priorities from the dropdowns, providing immediate feedback on user choices. Additionally, when submitting a report, a toast notification appears to confirm that the action was successful.
     * Description of your implementation:ReportAdapter: This class provides feedback when users like or unlike reports, with the heart icon changing state immediately to reflect the action. A confirmation dialog is also used when deleting a report, giving users the option to delete immediately or schedule the deletion, improving interaction clarity.
     * Description of your implementation:MainActivity: Upon adding a new report, the report list is immediately updated, and the user is notified with a toast, while the report count is also updated to reflect the latest changes, ensuring the interface remains responsive and up-to-date with user actions.
-<br>
+      <br>
 
 ### Custom Features
 Feature Category: Privacy <br>
 Feature Category: Data <br>
 1. [Data-Graphical]. Description of the feature  (hard)
-   * Code: [Class ReportAnalyzer](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/0dfa6e401f0e1e40998f356b148f66c09a1be5fb/app/src/main/java/com/example/prototype/chart/ReportAnalyzer.java), [method getPriorityCounts](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/f6a52c64a740d49233e09fb4476b1a96d191f5c8/app/src/main/java/com/example/prototype/chart/ReportAnalyzer.java#L23-38), [method getCategoryCounts] (https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/f6a52c64a740d49233e09fb4476b1a96d191f5c8/app/src/main/java/com/example/prototype/chart/ReportAnalyzer.java#L40-53), [method getLocationCounts](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/f6a52c64a740d49233e09fb4476b1a96d191f5c8/app/src/main/java/com/example/prototype/chart/ReportAnalyzer.java#L55-78) [Class ChartActivity](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/f6a52c64a740d49233e09fb4476b1a96d191f5c8/app/src/main/java/com/example/prototype/chart/ChartActivity.java), [Class LocationChartActivity](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/f6a52c64a740d49233e09fb4476b1a96d191f5c8/app/src/main/java/com/example/prototype/chart/LocationChartActivity.java), [Class CategoryChartActivity](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/f6a52c64a740d49233e09fb4476b1a96d191f5c8/app/src/main/java/com/example/prototype/chart/CategoryChartActivity.java) and [Class PriorityChartActivity](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/f6a52c64a740d49233e09fb4476b1a96d191f5c8/app/src/main/java/com/example/prototype/chart/PriorityChartActivity.java).
-   * Description of your implementation: The MPAndroid Chart library is used to display meaningful data graphically in our application. The graphical representation makes analyzing data more intuitive for users. It also makes it easier to deduce observations by the governing authority of this application and these observations can play a key role in forming future decisions that determine the operation of the intended smart city. To view these graphs, the user is able to navigate to the graphs section of the app from any page in the app using the dashboard. The graphs button on the dashboard routes the user to ChartActivity where the user has options of reports to choose from. The implementation consists of 3 different types of graphs displaying important information that portray the trends in report filing based on Priority, Location and Category.
-   
-    
+    * Code: [Class ReportAnalyzer](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/0dfa6e401f0e1e40998f356b148f66c09a1be5fb/app/src/main/java/com/example/prototype/chart/ReportAnalyzer.java), [method getPriorityCounts](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/f6a52c64a740d49233e09fb4476b1a96d191f5c8/app/src/main/java/com/example/prototype/chart/ReportAnalyzer.java#L23-38), [method getCategoryCounts] (https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/f6a52c64a740d49233e09fb4476b1a96d191f5c8/app/src/main/java/com/example/prototype/chart/ReportAnalyzer.java#L40-53), [method getLocationCounts](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/f6a52c64a740d49233e09fb4476b1a96d191f5c8/app/src/main/java/com/example/prototype/chart/ReportAnalyzer.java#L55-78) [Class ChartActivity](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/f6a52c64a740d49233e09fb4476b1a96d191f5c8/app/src/main/java/com/example/prototype/chart/ChartActivity.java), [Class LocationChartActivity](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/f6a52c64a740d49233e09fb4476b1a96d191f5c8/app/src/main/java/com/example/prototype/chart/LocationChartActivity.java), [Class CategoryChartActivity](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/f6a52c64a740d49233e09fb4476b1a96d191f5c8/app/src/main/java/com/example/prototype/chart/CategoryChartActivity.java) and [Class PriorityChartActivity](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/f6a52c64a740d49233e09fb4476b1a96d191f5c8/app/src/main/java/com/example/prototype/chart/PriorityChartActivity.java).
+    * Description of your implementation: The MPAndroid Chart library is used to display meaningful data graphically in our application. The graphical representation makes analyzing data more intuitive for users. It also makes it easier to deduce observations by the governing authority of this application and these observations can play a key role in forming future decisions that determine the operation of the intended smart city. To view these graphs, the user is able to navigate to the graphs section of the app from any page in the app using the dashboard. The graphs button on the dashboard routes the user to ChartActivity where the user has options of reports to choose from. The implementation consists of 3 different types of graphs displaying important information that portray the trends in report filing based on Priority, Location and Category.
+
+
       - Priority Bar Graph - Pressing the Priority Graph button routes the user to the PriorityChartActivity which implements a standard bar graph to display the amount of reports categorised by their priority - (High, Medium, Low). The activity page retrieves the data in the form of extra intent passed on by ChartActivity which utilises the method getPriorityCounts from ReportAnalyzer. This information is passed on as a HashMap which iterates through the input(reports) and counts the number of reports in each priority. This HashMap is then used to display the Bar Graph using the MPAndroidChart library with standard implementation. 
       - Category Pie Graph - Pressing the Category Graph button routes the user to the CategoryChartActivity which implements a standard pie graph to display the amount of reports categorised by their category - (Maintenance, Safety, Public, Utilities, Environmental, Community, Infrastructure). The activity page retrieves the data in the form of extra intent passed on by ChartActivity which utilises the method getCategoryCounts from ReportAnalyzer. This information is passed on as a HashMap which iterates through the input(reports) and counts the percentage of reports in each category. This HashMap is then used to display the Pie Chart using the MPAndroidChart library with standard implementation.
       - Location Radar Graph - Pressing the Location Graph button routes the user to the LocationChartActivity which implements a standard radar graph to display the amount of reports categorised by their location - (form sample data and newly added report locations). The activity page retrieves the data in the form of extra intent passed on by ChartActivity which utilises the method getLocationCounts from ReportAnalyzer. This information is passed on as a HashSet which iterates through the input(reports) and counts the number of reports in each unique location. This HashSet is then used to display the Radar Graph using the MPAndroidChart library with standard implementation. 
@@ -390,9 +390,9 @@ Feature Category: Data <br>
       ... <br>
      <br>
 1. [Privacy-Request]. Description of the feature  (easy)
-   * Code: [Class X, methods Z, Y](https://gitlab.cecs.anu.edu.au/comp2100/group-project/ga-23s2/-/blob/main/items/media/_examples/Dummy.java#L22-43) and Class Y, ...
-   * Description of your implementation: ... <br>
-     <br>
+    * Code: [Class X, methods Z, Y](https://gitlab.cecs.anu.edu.au/comp2100/group-project/ga-23s2/-/blob/main/items/media/_examples/Dummy.java#L22-43) and Class Y, ...
+    * Description of your implementation: ... <br>
+      <br>
 
 2. [Privacy-Block]. Description ... ... (medium)
    ... ...
@@ -400,36 +400,32 @@ Feature Category: Data <br>
 
 Feature Category: Firebase Integration <br>
 3. [Data-deletion] Description of the feature (medium)
-   * Code: [Class AVLTree, method remove](https://gitlab.cecs.anu.edu.au/comp2100/group-project/ga-23s2/-/blob/main/items/media/_examples/Dummy.java#L22-43)
-   * [Class ReportAdapter](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/report/ReportAdapter.java?ref_type=heads): methods deleteButton.setOnClickListener, deleteReport()
-   * Description of your implementation: I firstly wrote the code of removing an element from the AVLTree. Recursion is used here, with the use of helper recur method removeRec(). It breaks into 3 cases of removing, with the consideration of height update and tree rebalancing. Then in the ReportAdapter, If you click on the deletion button, the report get removed from the list of array adapter used for showing the report items, and then pass the reportId to the MainActivity to delete the report from the tree.  <br>
+    * Code: [Class AVLTree, method remove](https://gitlab.cecs.anu.edu.au/comp2100/group-project/ga-23s2/-/blob/main/items/media/_examples/Dummy.java#L22-43)
+    * [Class ReportAdapter](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/report/ReportAdapter.java?ref_type=heads): methods deleteButton.setOnClickListener, deleteReport()
+    * Description of your implementation: I firstly wrote the code of removing an element from the AVLTree. Recursion is used here, with the use of helper recur method removeRec(). It breaks into 3 cases of removing, with the consideration of height update and tree rebalancing. Then in the ReportAdapter, If you click on the deletion button, the report get removed from the list of array adapter used for showing the report items, and then pass the reportId to the MainActivity to delete the report from the tree.  <br>
 
 <hr>
 
 Feature Category: Greater Data Usage, Handling and Sophistication <br>
 4. [Data-GPS]. Description of the feature  (easy)
-   * Code: [Class ReportActivity, methods checkLocationPermissionAndSubmit, getLocationAnSubmitReport, onRequestPermissionResult](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/2d09ad6910cb2804f4cf5dc737e07f647ba9898c/app/src/main/java/com/example/prototype/report/ReportActivity.java)
-   * Description of your implementation: I wrote this feature to get the location of the user when submitting a report. This means that the user does not have to manually type the address. As a result, we can use the GPS for an accurate location which could be shared with the relevant authorities to identify the location of the problem and fix easily.  <br>
-     <br>
+    * Code: [Class ReportActivity, methods checkLocationPermissionAndSubmit, getLocationAnSubmitReport, onRequestPermissionResult](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/2d09ad6910cb2804f4cf5dc737e07f647ba9898c/app/src/main/java/com/example/prototype/report/ReportActivity.java)
+    * Description of your implementation: I wrote this feature to get the location of the user when submitting a report. This means that the user does not have to manually type the address. As a result, we can use the GPS for an accurate location which could be shared with the relevant authorities to identify the location of the problem and fix easily.  <br>
+      <br>
 
 ### Surprise Feature
 
-*Instructions:*
-- If implemented, explain how your solution addresses the task (any detail requirements will be released with the surprise feature specifications).
-
-
 <br> <hr>
 
-(i) Identifying a Code Component for Refactoring with a Design Pattern
+1. Identifying a Code Component for Refactoring with a Design Pattern
+   Before releasing the surprise feature, our group had already implemented two design patterns in the codebase. While reviewing my teammate's code, I found a code snippet using a switch statement to determine different sorting actions based on the position of the input. This component could benefit from being refactored using the Factory Design Pattern.
 
-Before releasing the surprise feature, our group had already implemented two design patterns in the codebase. While reviewing my teammate's code, I found a code snippet using a switch statement to determine different sorting actions based on the position of the input. This component could benefit from being refactored using the Factory Design Pattern.
+   The original code involved multiple conditional branches with a     switch statement, which made the code less flexible and harder to maintain as new sorting requirements emerged, which led to several issues:
 
-The original code involved multiple conditional branches with a switch statement, which made the code less flexible and harder to maintain as new sorting requirements emerged, which led to several issues:
+   Lack of Extensibility: Whenever new sorting logic was introduced, we had to modify the existing switch statement, which violated the Open-Closed Principle.
 
-    Lack of Extensibility: Whenever new sorting logic was introduced, we had to modify the existing switch statement, which violated the Open-Closed Principle.
-    Complexity: The switch statement made the code less readable and harder to maintain as the number of conditional branches increased.
+   Complexity: The switch statement made the code less readable and harder to maintain as the number of conditional branches increased.
 
-    Relevant Git Commits, Files, and Line Numbers (Before 10 October):
+   Relevant Git Commits, Files, and Line Numbers (Before 10 October):
 
         Commit  SHA:e13cd0f77d1d93ea7d4e362b1e6807bf449930ee
         Like: 
@@ -437,13 +433,17 @@ The original code involved multiple conditional branches with a switch statement
         Lines: 238-284
         Link to Commit: https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/064ef98de1ce8743521e2d2a3943707b1c227132/app/src/main/java/com/example/prototype/MainActivity.java
 
-(ii) Correcting the Implementation Issues Identified
+2. Correcting the Implementation Issues Identified
 
 To resolve these issues, I refactored the code to use a Factory Design Pattern:
 
-    I defined a Functional Interface called Sorter  with a sort() method. I Implemented Different Sorters: Created different classes that implemented the Sorter interface, each providing a specific sorting method.I then Built a Sorter Factory: Developed a SorterFactory class to generate appropriate Sorter instances based on the input position.
+I defined a Functional Interface called Sorter  with a sort() method.
 
- This new approach improved the robustness and maintainability of the sorting logic. Now, adding new sorting algorithms does not require modifying the existing factory but simply adding a new implementation of the Sorter interface.
+I implemented Different Sorters: Created different classes that implemented the Sorter interface, each providing a specific sorting method.
+
+I then Built a Sorter Factory: Developed a SorterFactory class to generate appropriate Sorter instances based on the input position.
+
+This new approach improved the robustness and maintainability of the sorting logic. Now, adding new sorting algorithms does not require modifying the existing factory but simply adding a new implementation of the Sorter interface.
 
     Relevant Git Commits, Files, and Line Numbers (On or After 10 October):
 
@@ -454,6 +454,7 @@ To resolve these issues, I refactored the code to use a Factory Design Pattern:
             Link to Commit: https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/commit/bb36739f0c9ce9fdcc165370f1e10af5030364c9
     (Note: The sortReports method in MainActivity was refactored by my teammate - the original author after October 10 to enhance its readability. The version I worked on differs slightly from the original one I provided due to these improvements. However, due to project requirement, I am not permitted to provide any commits or code changes made after October 10.)
 
+
 ## Testing Summary
 
 *[What features have you tested? What is your testing coverage?]*
@@ -462,23 +463,23 @@ To resolve these issues, I refactored the code to use a Factory Design Pattern:
 *Here is an example:*
 
 1. Tests for Search
-   - Code: [TokenizerTest Class, entire file](https://gitlab.cecs.anu.edu.au/comp2100/group-project/ga-23s2/-/blob/main/items/media/_examples/Dummy.java) for the [Tokenizer Class, entire file](https://gitlab.cecs.anu.edu.au/comp2100/group-project/ga-23s2/-/blob/main/items/media/_examples/Dummy.java#L22-43)
-   - *Number of test cases: ...*
-   - *Code coverage: ...*
-   - *Types of tests created and descriptions: ...*
+    - Code: [TokenizerTest Class, entire file](https://gitlab.cecs.anu.edu.au/comp2100/group-project/ga-23s2/-/blob/main/items/media/_examples/Dummy.java) for the [Tokenizer Class, entire file](https://gitlab.cecs.anu.edu.au/comp2100/group-project/ga-23s2/-/blob/main/items/media/_examples/Dummy.java#L22-43)
+    - *Number of test cases: ...*
+    - *Code coverage: ...*
+    - *Types of tests created and descriptions: ...*
 
 2. Tests for tree's behaviour.
     - Code: [AVLTreeTest Class, entire file](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/test/java/com/example/prototype/AVLTreeTest.java?ref_type=heads) for the [AVLTree Class, entire file](https://gitlab.cecs.anu.edu.au/comp2100/group-project/ga-23s2/-/blob/main/items/media/_examples/Dummy.java#L22-43)
-   - *Number of test cases: 13*
-   - *Code coverage: 100%*
-   - *Types of tests created and descriptions: use int as key and String as value, a bunch of unit tests including: setup test, behaviour tests on insert, remove, modify, get and sorting and traversal. Also extreme case of large data and no data is tested either. Exception are checked as well on non-exsistence keys, throw NoSuchElementException.*
+    - *Number of test cases: 13*
+    - *Code coverage: 100%*
+    - *Types of tests created and descriptions: use int as key and String as value, a bunch of unit tests including: setup test, behaviour tests on insert, remove, modify, get and sorting and traversal. Also extreme case of large data and no data is tested either. Exception are checked as well on non-exsistence keys, throw NoSuchElementException.*
 3. Tests for load data.
     - Code: [JsonDeserializerTest](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/test/java/com/example/prototype/JsonDeserializerTest.java?ref_type=heads) for the [JsonDeserialiser class, entire file](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/main/java/com/example/prototype/util/JsonDeserialiser.java?ref_type=heads)
     - *Number of test cases: 2*
     - *Code coverage: 80%*
     - *Types of tests created and descriptions: Read in both a valid json string and an invalid json string, the valid one should be converted into a valid Report class, with attributes match perfectly. The invalid one, upon deserialize on it, will throw NullPointerException.*
 4. Tests for reports addition and removal.
-    - Code: [ReportStorageTest](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/test/java/com/example/prototype/ReportStorageTest.java?ref_type=heads) for the [AVLTree Class, entire file](https://gitlab.cecs.anu.edu.au/comp2100/group-project/ga-23s2/-/blob/main/items/media/_examples/Dummy.java#L22-43) 
+    - Code: [ReportStorageTest](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/main/app/src/test/java/com/example/prototype/ReportStorageTest.java?ref_type=heads) for the [AVLTree Class, entire file](https://gitlab.cecs.anu.edu.au/comp2100/group-project/ga-23s2/-/blob/main/items/media/_examples/Dummy.java#L22-43)
     - *Number of test cases: 1*
     - *Code coverage: 70%*
     - *Types of tests created and descriptions: 1 big integration test use Report as the generic type to test whether Reports are stored and removed correctly, this integration test involves error handling, boundary case of empty size, also mutation test involving changing value to fail the test.*
