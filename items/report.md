@@ -393,6 +393,12 @@ Feature Category: Firebase Integration <br>
 
 <hr>
 
+Feature Category: Greater Data Usage, Handling and Sophistication <br>
+4. [Data-GPS]. Description of the feature  (easy)
+   * Code: [Class ReportActivity, methods checkLocationPermissionAndSubmit, getLocationAnSubmitReport, onRequestPermissionResult](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/2d09ad6910cb2804f4cf5dc737e07f647ba9898c/app/src/main/java/com/example/prototype/report/ReportActivity.java)
+   * Description of your implementation: I wrote this feature to get the location of the user when submitting a report. This means that the user does not have to manually type the address. As a result, we can use the GPS for an accurate location which could be shared with the relevant authorities to identify the location of the problem and fix easily.  <br>
+     <br>
+
 ### Surprise Feature
 
 *Instructions:*
