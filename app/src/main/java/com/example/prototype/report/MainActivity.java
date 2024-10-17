@@ -275,7 +275,6 @@ public class MainActivity extends BaseActivity implements Observer {
                     break;
                 }
                 Report report = streamReports.get(i);
-                report.setReportId(ReportCounter.getReportId());
                 int reportId = report.getReportId();
                 if (DataHolder.avlTree.get(reportId) == null) {
                     report.setLocalDateTime(LocalDateTime.now());
@@ -289,11 +288,11 @@ public class MainActivity extends BaseActivity implements Observer {
                         refreshDisplayedList();
                     });
                 }
-                ReportCounter.inc();
             }
         });
         streamThread.start();
     }
+
 
     private void stopStreamThread() {
         isRunning = false;  // The thread should stop running
