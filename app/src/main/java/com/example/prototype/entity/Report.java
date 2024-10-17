@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
+ * Entity for report.
  * @author Yuan Shi u7787385
  */
 public class Report implements Serializable {

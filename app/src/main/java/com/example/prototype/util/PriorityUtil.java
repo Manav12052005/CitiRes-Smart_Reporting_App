@@ -2,6 +2,10 @@ package com.example.prototype.util;
 
 import com.example.prototype.entity.Priority;
 
+/**
+ * A util class for dealing with priority.
+ * @author Harry Xia u7556816
+ */
 public class PriorityUtil {
 
     // Custom priority comparator function
