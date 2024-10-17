@@ -486,16 +486,13 @@ This new approach improved the robustness and maintainability of the sorting log
 ## Team Management
 
 ### Meeting Minutes
-* Link to the minutes of your meetings like above. There must be at least 4 team meetings.
-  (each committed within 2 days after the meeting)
-* Your meetings should also have a reasonable date spanning across Week 6 to 11.*
-
-
-- *[Team Meeting 1](link_to_md_file.md)*
-- ...
-- ...
-- [Team Meeting 4](link_to_md_file.md)
-- ... (Add any descriptions if needed) ...
+- *[Team Meeting 1](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/f6a52c64a740d49233e09fb4476b1a96d191f5c8/items/MoM/24_09_2024.md)*
+- [Team Meeting 2](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/f6a52c64a740d49233e09fb4476b1a96d191f5c8/items/MoM/8_10_2024.md)
+- [Team Meeting 3](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/f6a52c64a740d49233e09fb4476b1a96d191f5c8/items/MoM/10_10_2024.md)
+- [Team Meeting 4](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/f6a52c64a740d49233e09fb4476b1a96d191f5c8/items/MoM/16_10_2024.md)
+- The first 2 meetings have additional commits after the 48 Hour deadline, but they only consist of formatting changes.
+The changes only include removing whitespace and informational text added by course staff and refactoring changes. 
+The minutes themselves have not undergone any changes.
 
 <hr>
 
