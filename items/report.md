@@ -142,7 +142,7 @@ Target Users: The target users for this app are the citizens of a city. Below ar
     Outcome: The app will automatically delete the report at the specified time.
     Postcondition: The report will be deleted at the scheduled time, and the app will update all related data and statistics to reflect the deletion.
 
-A basic User Diagram to explain the process is provided in the items also. Here is the link (https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/e5bf70848fb0433634cda4cf32be9ae96607ed18/items/UserDiagram.png)
+![A basic User Diagram to explain the process is provided in the items also. Here is the Image](UserDiagram.png)
 
 ### Application UML
 
