@@ -116,8 +116,6 @@ Note that the core criteria of contribution is based on `code contribution` (the
 
 ### Application Use Cases and/or Examples
 
-*[Provide use cases and examples of people using your application. Who are the target users of your application? How do the users use your application?]*
-
 Citizen Reporting
 Target Users: The target users for this app are the citizens of a city. Below are a few example cases for the use of the application.
 
@@ -355,11 +353,7 @@ also made the UI interface uniform in terms of Layout.
     * Code: [Class ReportActivity, method onCreate](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/b98c45c8d17d8fefb6b2c1463ec23ecb1082342f/app/src/main/java/com/example/prototype/report/ReportActivity.java) 
     * Code: [Class ReportAdapter, method getView](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/b98c45c8d17d8fefb6b2c1463ec23ecb1082342f/app/src/main/java/com/example/prototype/report/ReportAdapter.java)
     * Code: [Class MainActivity, method onCreate](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/b98c45c8d17d8fefb6b2c1463ec23ecb1082342f/app/src/main/java/com/example/prototype/report/MainActivity.java)
-    * Description of feature: The UI feedback feature provides real-time notifications and visual feedback to the user to enhance their experience when interacting within the app, such as navigating between activities, selecting options, liking/unliking reports, adding reports, or deleting them.
-    * Description of your implementation: BaseActivity: Toast notifications provide feedback when users interact with navigation buttons (menuDashboard and menuReports), confirming their actions to enhance the responsiveness of the app.
-    * Description of your implementation:ReportActivity: In this activity, toast messages confirm the selection of categories and priorities from the dropdowns, providing immediate feedback on user choices. Additionally, when submitting a report, a toast notification appears to confirm that the action was successful.
-    * Description of your implementation:ReportAdapter: This class provides feedback when users like or unlike reports, with the heart icon changing state immediately to reflect the action. A confirmation dialog is also used when deleting a report, giving users the option to delete immediately or schedule the deletion, improving interaction clarity.
-    * Description of your implementation:MainActivity: Upon adding a new report, the report list is immediately updated, and the user is notified with a toast, while the report count is also updated to reflect the latest changes, ensuring the interface remains responsive and up-to-date with user actions.
+    * Description of feature: This feature provides instant feedback to the user while interacting within the app—whether clicking various activities, and options, liking/unliking reports, adding reports, or deleting them. The BaseActivity has toast notifications that provide feedback confirming the user's interaction with navigation buttons such as a dashboard or charts has been received. The ReportActivity displays toast messages from dropdowns about the user's selection of categories and priorities. Also, when they submit a report, a toast notification appears upon successfully submitting a report. ReportAdapter has a changing heart icon as soon as the user likes/dislikes a report. A confirmation dialog also appears when deleting a report, giving users the option to delete it immediately or schedule the deletion. Whenever a new report is added, the report list is immediately updated, and a toast from the MainActivity notifies the user.
 <br>
 
 ### Custom Features
@@ -397,8 +391,8 @@ Feature Category: Firebase Integration <br>
 Feature Category: Greater Data Usage, Handling and Sophistication <br>
 4. [Data-GPS]. Description of the feature  (easy)
    * Code: [Class ReportActivity, methods checkLocationPermissionAndSubmit, getLocationAnSubmitReport, onRequestPermissionResult](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/2d09ad6910cb2804f4cf5dc737e07f647ba9898c/app/src/main/java/com/example/prototype/report/ReportActivity.java)
-   * Description of your implementation: This feature automatically retrieves the user's current location using GPS when submitting a report, eliminating the need for manual entry of the address. By obtaining the GPS coordinates (latitude and longitude), we ensure that the reported location is precise, which is crucial for efficiently addressing the issue. I then implemented a reverse geocoding process to convert these coordinates into a street address, which is included in the report submission. This feature improves the accuracy and ease of reporting, while also providing detailed location information to the relevant authorities for quicker resolution.  <br>
-     <br>
+   * Description of your implementation: This feature automatically gets the user's location using the GPS when submitting the report, removing the need for manual entry. After getting the GPS coordinates, I then implemented a reverse geocoding process to convert the coordinates into a street address, which is included in the report submission. This feature improves the accuracy and ease of reporting, while also providing detailed location to the relevant authorities. 
+<br>
 
 ### Surprise Feature
 
@@ -479,13 +473,9 @@ To resolve these issues, I refactored the code to use a Factory Design Pattern:
     - Code: [ReportAnalyzerTest , entire file](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/816e13112c10e701a0fbe44e41dbabcba3ed5ee6/app/src/test/java/com/example/prototype/ReportAnalyzerTest.java) for the [ReportAnalyzer, entire file](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/816e13112c10e701a0fbe44e41dbabcba3ed5ee6/app/src/main/java/com/example/prototype/chart/ReportAnalyzer.java)
     - *Number of test cases: 5*
     - *Code coverage: 100%*
-    - * Types of tests created and descriptions: The test suite verifies the methods for retrieving report counts by priority, category, and location. It includes checks for correct counts, handling of null values, and edge cases like empty report lists. Specifically:
-        1.  testGetPriorityCounts: Ensures that the method getPriorityCounts() calculates the correct counts for each priority level (LOW, MIDDLE, HIGH).
-        2.  testGetCategoryCounts: Verifies that getCategoryCounts() returns accurate counts for each report category, including Maintenance, Environmental, and Infrastructure.
-        3.  testGetLocationCounts: Confirms that getLocationCounts() correctly tracks report counts for various locations.
-        4.  testEmptyReports: Tests all methods with empty reports, ensuring that zero counts are returned for all priority, category, and location queries.
-        5.  testReportsWithNullValues: Checks that reports with null values for priority, category, or location are handled properly, ensuring null values are ignored and valid fields are still processed correctly.
-
+    - * Types of tests created and descriptions: The test cases verify the methods for retrieving report counts by priority, category, and location. They include checks for correct counts, handling of null values, and edge cases like empty report lists. Specifically: 
+      * testGetPriorityCounts, testGetCategoryCounts, and testGetLocationCounts make sure that the method getPriorityCounts(), getCategoryCounts and getLocationCounts calculate the correct counts for each priority level, Category, and Location respectively. 
+      * testEmptyReports: Tests all methods with empty reports, ensuring that zero counts are returned for all priority, category, and location queries. 3: Checks that reports with null values for priority, category, or location are handled properly, ensuring null values are ignored and valid fields are still processed correctly.
 <br> <hr>
 
 
