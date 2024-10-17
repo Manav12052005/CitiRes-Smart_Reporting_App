@@ -33,10 +33,18 @@ collaboration:
 # add as many "url+licence+comment" entries as necessary
 # (or remove it altogether if you haven't used any external code)
 code:
-  - comment: Chart Library used to implement [Data-Graphical] Feature. Standard code snippets in Chart Activities and their XML's are used as it is.
-    url: https://github.com/PhilJay/MPAndroidChart
+  - url: https://github.com/PhilJay/MPAndroidChart
     licence:  http://www.apache.org/licenses/LICENSE-2.0
-
+    comment: Chart Library used to implement [Data-Graphical] Feature. Standard code snippets in Chart Activities and their XML's are used as it is.
+  - url: https://developer.android.com/training/basics/intents/result
+    licence: NA
+    comment: I reference android studio's official documentation about how passing data to and from another activity.
+  - url: https://medium.com/mindorks/custom-array-adapters-made-easy-b6c4930560dd
+    licence: NA
+    comment: The build of customized array adapter.
+  - url: https://medium.com/@alexandre.therrien3/personalized-serializer-and-deserializer-using-java-gson-library-c079de3974d4
+    licence: NA
+    comment: I reference the following external resource to build a customized json deserializer adapter and register to gson library
 
 # add as many "url+licence+comment" entries as necessary
 # (or remove it altogether if you haven't used any external assets)
@@ -83,6 +91,9 @@ assets:
     the help of ChatGPT - Manav>
   - I used ChatGPT for the implementation of Spinners and GPS function in the ReportActivity class since I was not able to work them out myself - Amogh
   - I have also used ChatGPT for the ReportAnalyzerTest cases since I was not sure about the edge cases as to why the tests were failing. With the use of ChatGPT, I also debugged the code - Amogh
+  - I have used ChatGPT to build the cardview layout xml file since it looked good. - Yuan Shi
+  - I double checked with the ChatGPT about the possibility of using Observer design pattern before writing the code about passing data between activities, but without copying the code. - Yuan Shi
+  - I used ChatGPT to read the error messages of android logcat, without copying its code. - Yuan Shi
 
 4. How long did it take to complete this assignment (approximately, in hours)?
   - <100> hours
@@ -95,8 +106,8 @@ members:
     uid: u7782612
   - name: Amogh Agarwal
     uid: u7782814
-  - name:
-    uid:
+  - name: Yuan Shi
+    uid: u7787385
   - name:
     uid:
   - name:
