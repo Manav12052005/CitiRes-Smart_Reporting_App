@@ -19,8 +19,7 @@ import java.util.List;
  * -Singleton pattern
  * -Using json file to inject credentials using username and password.
  *-Uses Credentials a helper class to represent a pair of usernmae and password
- *chatgpt has been used to make modifications to help with testing class as the testing class does
- * not access the credentials file.
+ *
  */
 
 

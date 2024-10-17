@@ -81,6 +81,16 @@ assets:
   and passing data as intent to display graphs. (Methods in ReportAnalyzer)] - Manav>
   - <Base Activity, the design choice to have a foundational activity always visible was taken and implemented with
     the help of ChatGPT - Manav>
+  - <Authenticator, Login Activity, UserSession Modifications to the user class to open in different modes for testing
+    or app interactivity was understood with the help of chatGPT.
+  - < Methords to read a json file and implement login page were taken from multiple youtube sources
+    https://youtu.be/orXJRPNvAc4?si=mA63o6BkOSpZ7xHq;https://youtu.be/H2potb8pGDQ?si=8FAK2e3N7N3GXZQm
+  - <AlertDialog,scheduled tasks were made using chatGPT and youtube ;https://youtu.be/xPYINCsIQVg?si=_HXyPZBPpv0RjJm_;
+    https://youtu.be/sNyZCyisxX0?si=c5hz5PDCRBsl3wyO;
+  -Chatgpt has been used to make modifications to help with testing class as the testing class does
+    not access the credentials file.
+  -
+
 
 4. How long did it take to complete this assignment (approximately, in hours)?
   - <100> hours
@@ -91,8 +101,8 @@ assets:
 members:
   - name: Manav Singh
     uid: u7782612
-  - name:
-    uid:
+  - name: Saheb Yuvraj Singh
+    uid: u7781798
   - name:
     uid:
   - name:
