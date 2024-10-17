@@ -60,6 +60,7 @@ import java.util.List;
  *      following link: https://developer.android.com/training/basics/intents/result.
  * @author Harry - Search Button and Functionality, Sort and Filter Functionality.
  * @author Manav - Passing Username intent to ReportActivity.
+ * @author Amogh - Helped with various functions across the file.
  */
 
 public class MainActivity extends BaseActivity implements Observer {
