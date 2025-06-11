@@ -37,12 +37,6 @@ Target Users: The target users for this app are the citizens of a city. Below ar
     Outcome: The app will automatically delete the report at the specified time.
     Postcondition: The report will be deleted at the scheduled time, and the app will update all related data and statistics to reflect the deletion.
 
-![User Diagram](UserDiagram.png)
-
-### Application UML
-
-![COMP2100_UML_Diagram_G20](Detailed_UML_diagram.png) <br>
-
 <hr>
 
 ## Code Design and Decisions
@@ -435,21 +429,4 @@ A total of 4 hours by team member - Manav were spent to trying to fix this bug.
 <br>
 <hr>
 
-
-## Team Management
-
-### Meeting Minutes
-- *[Team Meeting 1](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/f6a52c64a740d49233e09fb4476b1a96d191f5c8/items/MoM/24_09_2024.md)*
-- [Team Meeting 2](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/f6a52c64a740d49233e09fb4476b1a96d191f5c8/items/MoM/8_10_2024.md)
-- [Team Meeting 3](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/f6a52c64a740d49233e09fb4476b1a96d191f5c8/items/MoM/10_10_2024.md)
-- [Team Meeting 4](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/f6a52c64a740d49233e09fb4476b1a96d191f5c8/items/MoM/16_10_2024.md)
-- The first 2 meetings have additional commits after the 48 Hour deadline, but they only consist of formatting changes.
-  The changes only include removing whitespace and informational text added by course staff and refactoring changes.
-  The minutes themselves have not undergone any changes.
-
-<hr>
-
-### Conflict Resolution Protocol
-
-[COMP2100_CONFLICT_RESOLUTION_PROTOCOL](https://gitlab.cecs.anu.edu.au/u7782612/gp-24s2/-/blob/0fb1a3eda114bafe3aeef4ff3f952c80131a4577/items/conflict-resolution-protocol.md)<br>
 
